@@ -1,0 +1,1 @@
+<?php $conn = mysqli_connect('localhost', 'root', '', 'salarfng_sm_db'); ?>

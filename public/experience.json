@@ -1,0 +1,34 @@
+[
+    {
+        "id_yomntu":"2",
+        "company":"Retail Ocean",
+        "job_title":"Software Developer",
+        "start_year":"2014",
+        "ugqibe_nini":"2018",
+        "responsibilities":"<ul><li>Tested stability for over 100 different websites<\/li><li>Worked with team of 50 developers writing security and monitoring software<\/li><li>Aided in training of new developers on in-house systems using PHP and HTML platforms<\/li><\/ul>",
+        "reason_for_leaving":"",
+        "usasebenza_apha":"Hayi",
+        "ck_editor_id":0
+    },
+    {
+        "id_yomntu":"2",
+        "company":"Eskom",
+        "job_title":"Electrician",
+        "start_year":"2010",
+        "ugqibe_nini":"2013",
+        "responsibilities":"<ul><li>Conducted hardware networking systems installations for a professional campus of 5 different buildings<\/li><li>Responded to technical calls reducing turnaround time for resolving outages by 5% over the course of 3 years<\/li><li>Power consumption guidelines and EMF compliance rating improved by 5 points over the course of 3 years<\/li><li>Repair of company machinery reduced equipment expenses by $25,000<\/li><\/ul>","reason_for_leaving":"",
+        "usasebenza_apha":"Hayi",
+        "ck_editor_id":1
+    },
+    {
+        "id_yomntu":"2",
+        "company":"MTN",
+        "job_title":"Sales Consultant",
+        "start_year":"2008",
+        "ugqibe_nini":"2010",
+        "responsibilities":"<ul><li>Drive sales productivity and customer satisfaction within client&#39;s retail locations<\/li><li>Coordinate all outreach and marketing activities to the community<\/li><li>Grew the retailer&#39;s division sales performance and other key metrics through training and marketing promotions<\/li><li>Meet and exceed monthly KPIs as well as monthly quota<\/li><\/ul>",
+        "reason_for_leaving":"",
+        "usasebenza_apha":"Hayi",
+        "ck_editor_id":2
+    }
+]
