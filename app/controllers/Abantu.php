@@ -466,17 +466,19 @@ class Abantu extends Controller {
          * Load Reset Password Page
          */
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            
             $data = [
                 "selector" => $selector,
                 "validator" => $token,
                 ];
             
             if (empty($selector) || empty($token)) {
-                flash("reset_message", "Ikhona into erongo. Make sure uyicofile la link sikuthumelele kwi email address yakho.");
+                flash(
+                    "reset_message",
+                    "Ikhona into erongo. 
+                    Make sure uyicofile la link sikuthumelele kwi email address yakho."
+                );
             } else {
                 if (ctype_xdigit($selector) !== false && ctype_xdigit($token) !== false) {
-                    
                     $this->view("abantu/resetPassword", $data);
                 }
             }
