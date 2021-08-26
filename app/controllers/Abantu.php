@@ -54,65 +54,71 @@ class Abantu extends Controller {
                 "confirm_password_err" => "",
             ];
             
-            if (empty($data["first_name"]) || preg_match("/[0-9]+/", $data["first_name"]) || strlen($data["first_name"]) < 3 || strlen($data["first_name"]) > 25) {
-
+            if (empty($data["first_name"])
+                || preg_match("/[0-9]+/", $data["first_name"])
+                || strlen($data["first_name"]) < 3
+                || strlen($data["first_name"]) > 25
+            ) {
                 $data["first_name_err"] = "Must be between 3-25 characters and without numbers";
-
             }
 
-            if (empty($data["last_name"]) || preg_match("/[0-9]+/", $data["last_name"])) {
-
+            if (empty($data["last_name"])
+                || preg_match("/[0-9]+/", $data["last_name"])
+            ) {
                 $data["last_name_err"] = "Sicela ufake ifani yakho and make sure akukho manani.";
-
             }
 
-            if (!filter_var($data["email"], FILTER_VALIDATE_EMAIL) || empty($data["email"])) {
-
+            if (!filter_var($data["email"], FILTER_VALIDATE_EMAIL)
+                || empty($data["email"])
+            ) {
                 $data["email_err"] = "Check if email address is correct.";
-
             } else {
-
                 if ($this->userModel->findUserByEmail($data["email"])) {
-
                     $data["email_err"] = "Ukhona umntu osebenzisa le email.";
-
                 }
             }
             
             if (empty($data["password"]) || strlen($data["password"]) < 6) {
-
-                $data["password_err"] = "Password yakho should be at least 6 characters.";
-
+                $data["password_err"]
+                    = "Password yakho should be at least 6 characters.";
             }
 
-            if (empty($data["confirm_password"]) || $data["password"] != $data["confirm_password"]) {
-
-                $data["confirm_password_err"] = "Passwords zakho kufuneka zifane.";
-
+            if (empty($data["confirm_password"])
+                || $data["password"] != $data["confirm_password"]
+            ) {
+                $data["confirm_password_err"]
+                    = "Passwords zakho kufuneka zifane.";
             }
+
             //When there no errors
-            if (empty($data["email_err"]) && empty($data["first_name_err"]) && empty($data["last_name_err"]) && empty($data["password_err"]) && empty($data["confirm_password_err"]) ) {
+            if (empty($data["email_err"])
+                && empty($data["first_name_err"])
+                && empty($data["last_name_err"])
+                && empty($data["password_err"])
+                && empty($data["confirm_password_err"])
+            ) {
                 // Create slug first
-                $data["user_slug"] = strtolower($data["first_name"]) . "-" . strtolower($data["last_name"]);
+                $data["user_slug"]
+                    = strtolower($data["first_name"])
+                    . "-" . strtolower($data["last_name"]);
 
                 if (preg_match("/[a-zA-Z\s]+$/", $data["first_name"])) {
                     $data["user_slug"] = explode(" ", $data["user_slug"]);
                     $data["user_slug"] = implode("-", $data["user_slug"]);
                 }
-                
 
                 $results = $this->userModel->findUserBySlug($data);
                 
                 if ($results > 0) {
-
                     $data["user_slug"] = $data["user_slug"] . "-" . $results;
-                    
                 }
                 
-                $data["password"] = password_hash($data["password"], PASSWORD_DEFAULT);
+                $data["password"]
+                    = password_hash($data["password"], PASSWORD_DEFAULT);
                 
                 //Generate verification key
-                $data["verification_key"] = md5(time() . $data["first_name"] . $data["last_name"]);
+                $data["verification_key"]
+                    = md5(time() . $data["first_name"] . $data["last_name"]);
 
                 //Register user
                 if ($this->userModel->registerUser($data)) {
@@ -576,7 +582,6 @@ class Abantu extends Controller {
      */
     public function profile($id)
     {
-        $jb_categories = $this->userModel->getJobCategories();
 
         if (!isset($_SESSION["id_yomntu"])) {
             redirect("abantu/login");
@@ -678,7 +683,6 @@ class Abantu extends Controller {
                 "ndawoni" => $user->ndawoni,
                 "uyasebenza" => $user->uyasebenza,
                 "gender" => $user->gender,
-                "job_categories" => $jb_categories,
                 "updated_at" => date("Y-m-d H:i:s")
             ];
             
