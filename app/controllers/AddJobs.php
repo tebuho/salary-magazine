@@ -225,6 +225,9 @@ class addJobs extends Controller
             //Check if temp slug exists
             if ($results->count > 0) {  
                 $data["slug"] = $data["slug"] . "-" . $results->count;
+            }
+
+            if (!empty($data["image_name"])) {
                 $data["image_name"] = $data["slug"];
             }
             
