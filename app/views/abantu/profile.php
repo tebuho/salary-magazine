@@ -98,9 +98,6 @@
                     </form>
                 </div>
             </div>
-
-            <?php require APPROOT .'/views/abantu/inc/aside.php'; ?>
-
         </div>
     </div>
 <?php require APPROOT .'/views/inc/footer.php'; ?>
