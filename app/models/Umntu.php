@@ -373,518 +373,42 @@ class Umntu
     
     /**
      * Reset Password
+     *
+     * @param [type] $selector
+     * @return void
      */
-     public function resetPassword($selector)
-     {
+    public function resetPassword($selector)
+    {
         $current_date = date("U");
         
-         $this->db->query("SELECT * FROM password_reset WHERE password_reset_selector = :selector AND password_reset_expires >= $current_date");
-         $this->db->bind(":selector", $selector);
-
+        $this->db->query(
+            "SELECT * FROM password_reset
+            WHERE password_reset_selector = :selector
+            AND password_reset_expires >= $current_date"
+        );
+        
+        $this->db->bind(":selector", $selector);
         $row = $this->db->single();
         return $row;
-     }
+    }
     
     /**
      * Update Password
+     *
+     * @param  [type] $email
+     * @param  [type] $new_password
+     * 
+     * @return void
      */
-     public function updatePassword($email, $new_password)
-     {
-        
-         $this->db->query("UPDATE abantu SET password = :new_password WHERE email = :email_yomntu");
-         $this->db->bind(":email_yomntu", $email);
-         $this->db->bind(":new_password", $new_password);
-    
-        //Execute
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
-     }
-
-    /**
-     * Eduction
-     */
-    public function addEducation($data)
+    public function updatePassword($email, $new_password)
     {
         $this->db->query(
-            "INSERT INTO primary_secondary_education (
-                id_yomntu,
-                grade,
-                school,
-                year,
-                created_at,
-                updated_at
-                ) VALUE (
-                    :id_yomntu,
-                    :grade,
-                    :school,
-                    :year,
-                    :created_at,
-                    :updated_at
-                )
-                ON DUPLICATE KEY UPDATE
-                grade = :grade,
-                school = :school,
-                year = :year,
-                updated_at = :updated_at
-                "
-        );
-        $this->db->bind(':grade', $data['grade']);
-        $this->db->bind(':school', $data['school']);
-        $this->db->bind(':year', $data['year']);
-        $this->db->bind(':id_yomntu', $data['id']);
-        $this->db->bind(':created_at', $data['created_at']);
-        $this->db->bind(':updated_at', $data['created_at']);
-
-        //Execute
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    /**
-     * Get Education
-     */
-     public function getEducation($id)
-     {
-         $this->db->query(
-             "SELECT *,
-             primary_secondary_education.id as primary_secondary_education_id, igama, fani
-             FROM primary_secondary_education
-             INNER JOIN abantu
-             ON primary_secondary_education.id_yomntu = abantu.id
-             WHERE primary_secondary_education.id_yomntu = :id
-             ORDER BY primary_secondary_education.created_at DESC"
-             );
-             
-             $this->db->bind(":id", $id);
-
-             $row = $this->db->single();
-             return $row;
-     }
-
-     public function addTertiaryEducation($data)
-     {
-         $this->db->query(
-             "INSERT INTO tertiary_education (
-                 id_yomntu,
-                 level_passed,
-                 course,
-                 institution,
-                 year_passed,
-                 created_at,
-                 updated_at
-                 ) VALUE (
-                     :id_yomntu,
-                     :level_passed,
-                     :course,
-                     :institution,
-                     :year_passed,
-                     :created_at,
-                     :updated_at
-                 )
-                ON DUPLICATE KEY UPDATE
-                id_yomntu = :id_yomntu,
-                level_passed = :level_passed,
-                course = :course,
-                institution = :institution,
-                year_passed = :year_passed,
-                updated_at = :updated_at
-        ");
-         $this->db->bind(':level_passed', $data['level_passed']);
-         $this->db->bind(':course', $data['course']);
-         $this->db->bind(':institution', $data['institution']);
-         $this->db->bind(':year_passed', $data['year_passed']);
-         $this->db->bind(':id_yomntu', $data['id']);
-         $this->db->bind(':created_at', $data['created_at']);
-         $this->db->bind(':updated_at', $data['created_at']);
- 
-         //Execute
-         if ($this->db->execute()) {
-             return true;
-         } else {
-             return false;
-         }
-     }
-
-     public function getTertiaryEducation($id)
-     {
-
-        $this->db->query(
-            "SELECT id_yomntu, level_passed, course, institution, year_passed, igama, fani
-            FROM tertiary_education
-            INNER JOIN abantu
-            ON tertiary_education.id_yomntu = abantu.id
-            WHERE tertiary_education.id_yomntu = :id
-            ORDER BY tertiary_education.created_at DESC"
-            );
-            
-            $this->db->bind(":id", $id);
-            $results = $this->db->resultSet();
-    
-            return $results;
-
-     }
-
-    /**
-     * Experience
-     */
-    public function addExperience($data)
-    {
-        $this->db->query(
-            "INSERT INTO experience (
-                id_yomntu,
-                company,
-                job_title,
-                responsibilities,
-                uqale_nini,
-                ugqibe_nini,
-                reason_for_leaving,
-                usasebenza_apha,
-                created_at,
-                updated_at
-                ) VALUE (
-                    :id_yomntu,
-                    :company,
-                    :job_title,
-                    :responsibilities,
-                    :uqale_nini,
-                    :ugqibe_nini,
-                    :reason_for_leaving,
-                    :usasebenza_apha,
-                    :created_at,
-                    :updated_at
-                ) ON DUPLICATE KEY UPDATE
-                company = :company,
-                job_title = :job_title,
-                responsibilities = :responsibilities,
-                uqale_nini = :uqale_nini,
-                usasebenza_apha = :usasebenza_apha,
-                ugqibe_nini = :ugqibe_nini,
-                reason_for_leaving = :reason_for_leaving,
-                updated_at = :created_at"
-        );
-        $this->db->bind(':id_yomntu', $data['id_yomntu']);
-        $this->db->bind(':company', $data['company']);
-        $this->db->bind(':job_title', $data['job_title']);
-        $this->db->bind(':responsibilities', $data['responsibilities']);
-        $this->db->bind(':uqale_nini', $data['start_year']);
-        $this->db->bind(':ugqibe_nini', $data['ugqibe_nini']);
-        $this->db->bind(':reason_for_leaving', $data['reason_for_leaving']);
-        $this->db->bind(':usasebenza_apha', $data['usasebenza_apha']);
-        $this->db->bind(':created_at', $data['created_at']);
-        $this->db->bind(':updated_at', $data['created_at']);
-        //Execute
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    /**
-     * Get experience
-     */
-     public function getExperience($id)
-     {
-         $this->db->query(
-             "SELECT id_yomntu, igama, fani, company, job_title, responsibilities, uqale_nini, ugqibe_nini, reason_for_leaving, usasebenza_apha, experience.updated_at
-             FROM experience
-             INNER JOIN abantu
-             ON experience.id_yomntu = abantu.id
-             WHERE experience.id_yomntu = :id
-             ORDER BY experience.created_at DESC"
-             );
-             
-             $this->db->bind(":id", $id);
-             $results = $this->db->resultSet();
-             return $results;
-     }
-    
-     /**
-      * Get all experience
-      */
-      public function getUsersExperiences()
-      {
-          $this->db->query(
-              "SELECT id_yomntu, company, job_title, responsibilities, uqale_nini, ugqibe_nini, reason_for_leaving, usasebenza_apha, experience.updated_at
-              FROM experience
-              INNER JOIN abantu
-              ON experience.id_yomntu = abantu.id
-              ORDER BY experience.created_at DESC"
-              );
-              
-              $results = $this->db->resultSet();
-              return $results;
-      }
-
-    /**
-     * Skills
-     */
-    public function addSkills($data)
-    {
-        $this->db->query(
-            "INSERT INTO skills (
-                id_yomntu,
-                skill,
-                created_at,
-                updated_at
-                ) VALUE (
-                    :id_yomntu,
-                    :skill,
-                    :created_at,
-                    :updated_at
-                ) ON DUPLICATE KEY UPDATE
-                    skill = :skill,
-                    created_at = :updated_at
-                "
-        );
-        $this->db->bind(':id_yomntu', $data['id_yomntu']);
-        $this->db->bind(':skill', $data['skill']);
-        $this->db->bind(':created_at', $data['created_at']);
-        $this->db->bind(':updated_at', $data['created_at']);
-        //Execute
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    /**
-     * Get skills
-     */
-     public function getSkills($id)
-     {
-         $this->db->query(
-             "SELECT id_yomntu, igama, fani, skill, skills.created_at, skills.updated_at
-             FROM skills
-             INNER JOIN abantu
-             ON skills.id_yomntu = abantu.id
-             WHERE skills.id_yomntu = :id
-             ORDER BY skills.created_at DESC"
-             );
-             
-             $this->db->bind(":id", $id);
-             $results = $this->db->resultSet();
-             return $results;
-     }
-
-    /**
-     * Achievements
-     */
-    public function addAchievements($data)
-    {
-        $this->db->query(
-            "INSERT INTO achievements (
-                id_yomntu,
-                achievement_name,
-                company,
-                year
-                ) VALUE (
-                    :id_yomntu,
-                    :achievement_name,
-                    :company,
-                    :year
-                )"
-        );
-        $this->db->bind(':id_yomntu', $data['id_yomntu']);
-        $this->db->bind(':achievement_name', $data['achievement_name']);
-        $this->db->bind(':company', $data['company']);
-        $this->db->bind(':year', $data['year']);
-        //Execute
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    /**
-     * Get achievements
-     */
-     public function getAchievements($id)
-     {
-         $this->db->query(
-             "SELECT *,
-             achievements.id as achievements_id,
-             abantu.id as userId
-             FROM achievements
-             INNER JOIN abantu
-             ON achievements.id_yomntu = abantu.id
-             WHERE achievements.id_yomntu = :id
-             ORDER BY achievements.created_at DESC"
-             );
-             
-             $this->db->bind(":id", $id);
-             $results = $this->db->resultSet();
-             return $results;
-     }
-    
-     /**
-      * Get achievements
-      */
-      public function getJobCategories()
-      {
-          $this->db->query(
-              "SELECT ngowantoni FROM imisebenzi GROUP BY ngowantoni"
-              );
-
-              $results = $this->db->resultSet();
-              return $results;
-      }
-
-    public function addJobPreferences($data)
-    {
-
-        $this->db->query(
-            "INSERT INTO user_job_preferences (
-                id_yomntu,
-                job_title,
-                education,
-                experience,
-                onjani,
-                categories,
-                provinces,
-                created_at,
-                updated_at
-                ) VALUE (
-                    :id_yomntu,
-                    :job_title,
-                    :education,
-                    :experience,
-                    :onjani,
-                    :categories,
-                    :provinces,
-                    :created_at,
-                    :updated_at
-                )
-                ON DUPLICATE KEY UPDATE
-                job_title = :job_title,
-                education = :education,
-                experience = :experience,
-                onjani = :onjani,
-                categories = :categories,
-                provinces = :provinces,
-                created_at = :created_at,
-                updated_at = :updated_at
-        ");
-        $this->db->bind(':id_yomntu', $data['id_yomntu']);
-        $this->db->bind(':job_title', $data['job_title']);
-        $this->db->bind(':education', $data['education']);
-        $this->db->bind(':experience', $data['experience']);
-        $this->db->bind(':onjani', $data['onjani']);
-        $this->db->bind(':categories', $data['categories']);
-        $this->db->bind(':provinces', $data['provinces']);
-        $this->db->bind(':created_at', $data['created_at']);
-        $this->db->bind(':updated_at', $data['updated_at']);
-
-        //Execute
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    /**
-     * Get achievements
-     */
-     public function getJobPreferences($id)
-     {
-         $this->db->query(
-
-             "SELECT id_yomntu, job_title, education, experience, onjani, categories, provinces, igama, fani, role
-             FROM user_job_preferences
-             INNER JOIN abantu
-             ON user_job_preferences.id_yomntu = abantu.id
-             WHERE user_job_preferences.id_yomntu = :id
-             ORDER BY user_job_preferences.created_at DESC"
-
-             );
-             
-             $this->db->bind(":id", $id);
-
-             $results = $this->db->resultSet();
-             return $results;
-     }
-    
-     /**
-      * Get achievements
-      */
-      public function getUserJobs($data)
-      {
-          $this->db->query(
- 
-              "SELECT label, requirements, slug, province
-              FROM imisebenzi
-              WHERE mfundo IN (" . $data['jb_education'] . ")
-              AND province IN (" . $data["jb_provinces"] . ")
-              AND experience IN (" . $data["jb_experience"] . ")
-              AND ngowantoni IN (" . $data["jb_categories"] . ")
-              AND msebenzi_onjani IN (" . $data["jb_onjani"] . ")
-              AND imisebenzi.closing_date = '0000-00-00' AND timestampdiff(day, imisebenzi.created_at, now()) <= 7
-              OR mfundo IN (" . $data['jb_education'] . ")
-              AND province IN (" . $data["jb_provinces"] . ")
-              AND experience IN (" . $data["jb_experience"] . ")
-              AND ngowantoni IN (" . $data["jb_categories"] . ")
-              AND msebenzi_onjani IN (" . $data["jb_onjani"] . ")
-              AND closing_date >= :namhlanje
-              ORDER BY created_at DESC LIMIT 10"
-              );
-              $this->db->bind(":namhlanje", date("Y-m-d"));
-              
-              $results = $this->db->resultSet();
-              return $results;
-      }
-
-    /*********************************
-     *                               *
-     *         Get a user's CV       *
-     *                               *
-     *********************************/
-    public function getCV($id)
-    {
-        $this->db->query(
-            "SELECT * FROM abantu
-            LEFT JOIN experience
-            ON abantu.id = experience.id_yomntu
-            LEFT JOIN skills
-            ON abantu.id = skills.id_yomntu
-            LEFT JOIN primary_secondary_education
-            ON abantu.id = primary_secondary_education.id_yomntu
-            LEFT JOIN tertiary_education
-            ON abantu.id = tertiary_education.id_yomntu
-            WHERE abantu.id = :id"
+            "UPDATE abantu SET password = :new_password WHERE email = :email_yomntu"
         );
 
-        $this->db->bind("id", $id);
-        $results = $this->db->resultSet();
-        return $results;
-    }
+        $this->db->bind(":email_yomntu", $email);
+        $this->db->bind(":new_password", $new_password);
 
-    /**********************************
-     *                                *
-     *         Add CV Comments        *
-     *                                *
-     ***********************************/
-    public function addCVComment($data)
-    {
-        $this->db->query(
-            "INSERT INTO cv_comments (id_yomntu, commenter_id, comment, created_at, updated_at)
-            VALUES (:id_yomntu, :commenter_id, :comment, :created_at, :updated_at)"
-        );
-
-        $this->db->bind(":id_yomntu", $data["id"]);
-        $this->db->bind(":commenter_id", $data["commenter_id"]);
-        $this->db->bind(":comment", $data["comment"]);
-        $this->db->bind(":created_at", $data["created_at"]);
-        $this->db->bind(":updated_at", $data["updated_at"]);
-        
         //Execute
         if ($this->db->execute()) {
             return true;
@@ -893,79 +417,18 @@ class Umntu
         }
     }
     
-    /********************************************************************
-     *                                                                  *
-     *                      Get comments                                *
-     *                                                                  *
-     ********************************************************************/
-    
-    public function getImpenduloById($id)
+    /**
+     * Log user ip and login time
+     *
+     * @param [type] $data
+     * @return void
+     */
+    public function updateIp($data)
     {
         $this->db->query(
-            "SELECT comment, commenter_id, id_yomntu, cv_comments.updated_at, igama, fani, zazise
-            FROM cv_comments
-            INNER JOIN abantu
-            ON cv_comments.id_yomntu = abantu.id WHERE cv_comments.id_yomntu = :id
-            ORDER BY created_at DESC
-            ");
-        $this->db->bind(':id', $id);
-        $results = $this->db->resultSet();
-        
-        return ($results);
-
-    }
-    
-    /********************************************************************
-     *                                                                  *
-     *                      Get comments                                *
-     *                                                                  *
-     ********************************************************************/
-    
-    public function getUserEmail($data)
-    {
-        $this->db->query(
-            "SELECT email, igama,
-            job_comments.id_yomntu AS comment_user_id,
-            abantu.id AS userId
-            FROM job_comments
-            INNER JOIN abantu ON job_comments.id_yomntu = abantu.id
-            INNER JOIN imisebenzi ON job_id = imisebenzi.id
-            WHERE abantu.id <> :id AND imisebenzi.id = :job_id
-            ORDER BY update_date DESC
-            ");
-        $this->db->bind(':id', $data['id_yomntu']);
-        $this->db->bind(':job_id', $data['id']);
-        $results = $this->db->resultSet();
-
-        return $results;
-    }
-    
-    /********************************************************************
-     *                                                                  *
-     *                      Get comments                                *
-     *                                                                  *
-     ********************************************************************/
-    
-    public function getJobsByUser($data)
-    {
-        $this->db->query(
-            "SELECT * FROM `imisebenzi` WHERE `id_yomntu` = :id LIMIT 12
-            ");
-        $this->db->bind(':id', $data['id_yomntu']);
-        $results = $this->db->resultSet();
-
-        return $results;
-    }
-    
-    /********************************************************************
-     *                                                                  *
-     *                  Log user ip and login time                      *
-     *                                                                  *
-     ********************************************************************/
-
-    public function updateIp($data) {
-        $this->db->query(
-            "INSERT INTO `last_login`(`verification_key`, `ip`, `province`, `city`, `token`, `time`)
+            "INSERT INTO `last_login`(
+                `verification_key`, `ip`, `province`, `city`, `token`, `time`
+            )
             VALUES(:verification_key, :ip, :province, :city, :token, now())"
         );
 
@@ -990,17 +453,5 @@ class Umntu
         $this->db->bind(":verification_key", $verification_key);
         $results = $this->db->resultSet();
         return $results;
-    }
-
-    // Move data from abantu to registration
-    public function moveFromAbantu() {
-        $this->db->query(
-            "SELECT 
-            id, igama, fani, display_name,, email, `role`, `password`, `verification_key`, `verification_key`, `created_at`
-            FROM abantu"
-        );
-
-        $results = $this->db->resultSet();
-        die($results);
     }
 }
