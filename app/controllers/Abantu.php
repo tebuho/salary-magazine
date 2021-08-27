@@ -15,9 +15,7 @@ class Abantu extends Controller {
      */
     public function __construct()
     {
-        
         $this->userModel = $this->model("Umntu");
-
     }
 
     /**
@@ -27,7 +25,6 @@ class Abantu extends Controller {
      */
     public function register()
     {
-        
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -122,7 +119,6 @@ class Abantu extends Controller {
 
                 //Register user
                 if ($this->userModel->registerUser($data)) {
-
                     $user_info = $this->userModel->findNewUser($data);
                     $data["user_id"] = $user_info->id;
 
@@ -148,25 +144,22 @@ class Abantu extends Controller {
                     $headers .= "Bcc: sisekogwegwe@gmail.com" . "\r\n";
                     mail($to, $subject, $message, $headers);
                     
-                    flash("register_success", "Enkosi ngokubhalisa. Ukuze siqiniseke ukuba email yakho iyasebenza sikuthumelele umyalezo kuyo. Sicela uyijonge emva koko ucofe kula link sikuthumelele yona ukuze ukwazi ukungena kwi preference yakho.");
+                    flash(
+                        "register_success",
+                        "Enkosi ngokubhalisa. Ukuze siqiniseke ukuba email yakho iyasebenza sikuthumelele umyalezo kuyo. Sicela uyijonge emva koko ucofe kula link sikuthumelele yona ukuze ukwazi ukungena kwi preference yakho."
+                    );
 
                     redirect("abantu/login");
-
                 } else {
-
                     die("Ikhona into eyenzekileyo erongo");
                 }
-
             } else {
-
                 //Load view with errors
                 $data["page_title"] = "ERROR";
                 $this->view("abantu/register", $data);
-
             }
 
         } else {
-
             //Init data
             $data = [
                 "page_image" => URLROOT . "/public/img/western-cape-jobs/westernCapeJobs.png",
@@ -204,13 +197,9 @@ class Abantu extends Controller {
         ];
 
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            
             if ($user_info->verified == 0) {
-
                 $user_info = $this->userModel->verifyUmntu($verification_key);
-
                 $this->userModel->getvKey($verification_key);
-
                 $data["user_id"] = $user_info->id;
                 
                 // Update verification status on the database
@@ -222,7 +211,6 @@ class Abantu extends Controller {
                 );
                 
                 redirect("abantu/login");
-
             } else {
                 flash(
                     "confirmation_success",
@@ -259,72 +247,52 @@ class Abantu extends Controller {
 
             //Validate email
             if (empty($data["email"])) {
-
                 $data["email_err"] = "Sicela ufake email yakho";
             }
             
             //Validate password
             if (empty($data["password"])) {
-
                 $data["password_err"] = "Sicela ufake password yakho";
             }
 
             //Check for user/email
             if (!$this->userModel->findUserByEmail($data["email"])) {
-
                 //Akhomntu onjalo apha
                 $data["email_err"] = "Ha a, akakabikho umntu onjalo apha";
-
             }
 
             if (empty($data["email_err"]) && empty($data["password_err"])) {
-
-                //Validated
                 //Jonga umntu then umngenise if ukhona
                 $loggedInUser = $this->userModel->login($data["email"], $data["password"]);
-
                 $data["ip"] = $_SERVER["REMOTE_ADDR"];
-                
                 $ip_data = @json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=" . $data["ip"]));
 
-                if (!empty($ip_data->geoplugin_region) || !empty($ip_data->geoplugin_city)) {
-
+                if (!empty($ip_data->geoplugin_region)
+                    || !empty($ip_data->geoplugin_city)
+                ) {
                     $data["province"] = $ip_data->geoplugin_region;
                     $data["city"] = $ip_data->geoplugin_city;
-
                 }
                 
                 $data["verification_key"] = $loggedInUser->verification_key;
-                
                 $data["token"] = openssl_random_pseudo_bytes(16);
-                
                 $data["token"] = bin2hex($data["token"]);
-                
                 $this->userModel->updateIp($data);
                 
                 $cookie = $loggedInUser->verification_key . ":" . $data["token"];
-                
                 $mac = hash_hmac("sha256", $cookie, "secret");
-                
                 $cookie .= ":" . $mac;
                 
                 setcookie('remember_me', $cookie, time() + 60*60*24*365, "/", "", "", true);
                 
                 if ($loggedInUser && $loggedInUser->verified == 1) {
-                    
                     //Qala i-session
                     $this->createUserSession($loggedInUser);
-
                 } else {
-
                     $data["password_err"] = "Password yakho irongo okanye khange uyicofe la link sikuthumelele kwi email address yakho after ubhalisile.";
-
                     $this->view("abantu/login", $data);
-
                 }
-
             } else {
-
                 //Load view with errors
                 $data["page_title"] = "ERROR";
                 $data["page_url"] = URLROOT . "/" . $_GET["url"];
@@ -332,11 +300,8 @@ class Abantu extends Controller {
                 $data["page_image"] = URLROOT . "/public/img/western-cape-jobs/westernCapeJobs.png";
                 $data["page_description"] = "Check to see awenzanga mistake";
                 $this->view("abantu/login", $data);
-
             }
-
         } else {
-
             //Init data
             $data = [
                 "page_image" => URLROOT . "/public/img/western-cape-jobs/westernCapeJobs.png",
@@ -352,7 +317,6 @@ class Abantu extends Controller {
 
             //Load view
             $this->view("abantu/login", $data);
-
         }
     }
     
@@ -395,7 +359,7 @@ class Abantu extends Controller {
 
     public function isLoggedIn()
     {
-        if(isset($_SESSION["id_yomntu"])) {
+        if (isset($_SESSION["id_yomntu"])) {
             return true;
         } else {
             return false;
@@ -432,7 +396,6 @@ class Abantu extends Controller {
             }
             
             if (empty($data["email_err"])) {
-                
                 $this->userModel->deletePassword($data);
                 $this->userModel->insertPassword($data);
 
@@ -480,7 +443,6 @@ class Abantu extends Controller {
      */
     public function resetPassword($selector, $token)
     {
-
         /**
          * Load Reset Password Page
          */
@@ -509,7 +471,6 @@ class Abantu extends Controller {
          * Process & Reset Password
          */
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            
             //Sanitize POST Array
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             
@@ -520,7 +481,7 @@ class Abantu extends Controller {
                 "confirm_password" => trim($_POST["confirm_password"]),
                 "password_err" => "",
                 "confirm_password_err" => "",
-                ];
+            ];
             
             //Validate password
             if (empty($data["password"])) {
@@ -546,7 +507,6 @@ class Abantu extends Controller {
             if (empty($data["password_err"]) 
                 && empty($data["confirm_password_err"])
             ) {
-                
                 $current_date = date("U");
                 $token_bin = hex2bin($data["validator"]);
                 $db_results = $this->userModel->resetPassword($data["selector"]);
@@ -586,7 +546,6 @@ class Abantu extends Controller {
                 $this->view("abantu/resetPassword", $data);
             }
         } else {
-            
             $data = [
                 "page_image" => URLROOT . "/public/img/western-cape-jobs/westernCapeJobs.png",
                 "page_description" => "Yifake apha i-password yakho entsha.",
@@ -610,7 +569,6 @@ class Abantu extends Controller {
      */
     public function profile($id)
     {
-
         if (!isset($_SESSION["id_yomntu"])) {
             redirect("abantu/login");
         }
@@ -671,7 +629,8 @@ class Abantu extends Controller {
                 $data["phone_number_yesibini_err"]
                     = "Phone number yakho kufuneka ibengamanani odwa and kungabikho space in between";
             } elseif (!empty($data["phone_number_yesibini"]) 
-            && strlen($data["phone_number_yesibini"]) != 10) {
+                && strlen($data["phone_number_yesibini"]) != 10
+            ) {
                 $data["phone_number_yesibini_err"] = "Phone number yakho kufuneka iqale ngo 0 and ibenamanani alishumi";
             }
 
@@ -693,7 +652,6 @@ class Abantu extends Controller {
                     );
                         
                     redirect("abantu/profile/$id");
-
                 } else {
                     die("Ikhona into erongo");
                 }
