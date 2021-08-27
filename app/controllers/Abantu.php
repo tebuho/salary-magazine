@@ -216,14 +216,18 @@ class Abantu extends Controller {
                 // Update verification status on the database
                 $this->userModel->updateVerification($data);
                 
-                flash("confirmation_success", "Enkosi ngokuqinisekisa ukuba i-email address yakho iyasebenza. Ungangena ke ngoku.");
+                flash(
+                    "confirmation_success",
+                    "Enkosi ngokuqinisekisa ukuba i-email address yakho iyasebenza. Ungangena ke ngoku."
+                );
                 
                 redirect("abantu/login");
 
             } else {
-            
-                flash("confirmation_success", "Email address yakho is already verified.");
-                
+                flash(
+                    "confirmation_success",
+                    "Email address yakho is already verified."
+                );
                 redirect("abantu/login");
             }
         }
@@ -410,19 +414,20 @@ class Abantu extends Controller {
             $selector = bin2hex(random_bytes(8));
             $token = random_bytes(32);
             $expires = date("U") + 1800;
+            $forgot_url = "/abantu/resetPassword/" . $selector . "/";
             
             $data = [
                 "selector" => $selector,
                 "token" => $token,
                 "expires" => $expires,
-                "url" => URLROOT . "/abantu/resetPassword/" . $selector . "/" . bin2hex($token),
+                "url" => URLROOT . $forgot_url . bin2hex($token),
                 "email" => trim($_POST["email"]),
                 "email_err" => "",
                 ];
             
             if (empty($data["email"])) {
                 $data["email_err"] = "Kufuneka ufake i-email address yakho.";
-            } elseif ($this->userModel->checkResetEmail($data["email"]) == false) {
+            } elseif (!$this->userModel->checkResetEmail($data["email"])) {
                 $data["email_err"] = "Email efana nale asinayo kwi system yethu.";
             }
             
@@ -441,7 +446,10 @@ class Abantu extends Controller {
                 
                 mail($to, $subject, $message, $headers);
                 
-                flash("password_reset_message", "Sikuthumelele umyalezo nge email. Sicela uwujonge and ucofe kula link sikuthumelele yona.");
+                flash(
+                    "password_reset_message",
+                    "Sikuthumelele umyalezo nge email. Sicela uwujonge and ucofe kula link sikuthumelele yona."
+                );
                 redirect("abantu/forgotPassword");
             } else {
                 $this->view("abantu/forgotPassword", $data);
@@ -489,7 +497,9 @@ class Abantu extends Controller {
                     Make sure uyicofile la link sikuthumelele kwi email address yakho."
                 );
             } else {
-                if (ctype_xdigit($selector) !== false && ctype_xdigit($token) !== false) {
+                if (ctype_xdigit($selector) !== false
+                    && ctype_xdigit($token) !== false
+                ) {
                     $this->view("abantu/resetPassword", $data);
                 }
             }
@@ -517,41 +527,59 @@ class Abantu extends Controller {
                 $data["password_err"] = "Sicela ufake i-password yakho entsha";
             } else {
                 if (strlen($data["password"]) < 6) {
-                    $data["password_err"] = "Password yakho kufuneka ibene characters eziyi 6 at least.";
+                    $data["password_err"]
+                        = "Password yakho kufuneka ibene characters eziyi 6 at least.";
                 }
             }
 
             //Validate password confirmation
             if (empty($data["confirm_password"])) {
-                $data["confirm_password_err"] = "Sicela uphinde ufake i-password yakho entsha nalapha.";
+                $data["confirm_password_err"]
+                    = "Sicela uphinde ufake i-password yakho entsha nalapha.";
             } else {
                 if ($data["password"] != $data["confirm_password"]) {
-                    $data["confirm_password_err"] = "Make sure ii-passwords zakho ziyafana.";
+                    $data["confirm_password_err"]
+                        = "Make sure ii-passwords zakho ziyafana.";
                 }
             }
             
-            if (empty($data["password_err"]) && empty($data["confirm_password_err"])) {
+            if (empty($data["password_err"]) 
+                && empty($data["confirm_password_err"])
+            ) {
                 
                 $current_date = date("U");
                 $token_bin = hex2bin($data["validator"]);
                 $db_results = $this->userModel->resetPassword($data["selector"]);
-                $token_check = password_verify($token_bin, $db_results->password_reset_token);
+                $token_check = password_verify(
+                    $token_bin,
+                    $db_results->password_reset_token
+                );
                 
                 if ($token_check == false) {
-                    flash("reset_message", "Ikhona into erongo eyenzekileyo. Sicela uphinde.");
+                    flash(
+                        "reset_message",
+                        "Ikhona into erongo eyenzekileyo. Sicela uphinde."
+                    );
                     $this->view("abantu/resetPassword", $data);
                 } else {
                     if ($token_check == true) {
                         $token_email = $db_results->password_reset_email;
                         //Get email address yomntu from the database
                         $this->userModel->findUserByEmail($token_email);
-                        $new_password = password_hash($data["password"], PASSWORD_DEFAULT);
-                        $this->userModel->updatePassword($token_email, $new_password);
+                        $new_password = password_hash(
+                            $data["password"], PASSWORD_DEFAULT
+                        );
+                        $this->userModel->updatePassword(
+                            $token_email, $new_password
+                        );
                         $this->userModel->deletePassword($token_email);
                     }
                 }
 
-                flash("password_reset_message", "Password yakho itshintshile. Ungangena ke ngoku.");
+                flash(
+                    "password_reset_message",
+                    "Password yakho itshintshile. Ungangena ke ngoku."
+                );
                 redirect("abantu/login");
 
             } else {
@@ -625,34 +653,55 @@ class Abantu extends Controller {
             }
             
             //Verify phone numbers
-            if (!empty($data["phone_number"]) && !is_numeric($data["phone_number"])) {
-                $data["phone_number_err"] = "Phone number yakho kufuneka ibengamanani odwa and kungabikho space in between";
-            }
-            elseif (!empty($data["phone_number"]) && strlen($data["phone_number"]) != 10) {
-                $data["phone_number_err"] = "Phone number yakho kufuneka iqale ngo 0 and ibenamanani alishumi";
+            if (!empty($data["phone_number"])
+                && !is_numeric($data["phone_number"])
+            ) {
+                $data["phone_number_err"]
+                    = "Phone number yakho kufuneka ibengamanani odwa and kungabikho space in between";
+            } elseif (!empty($data["phone_number"])
+                && strlen($data["phone_number"]) != 10
+            ) {
+                $data["phone_number_err"]
+                    = "Phone number yakho kufuneka iqale ngo 0 and ibenamanani alishumi";
             }
             
-            if (!empty($data["phone_number_yesibini"]) && !is_numeric($data["phone_number_yesibini"])) {
-                $data["phone_number_yesibini_err"] = "Phone number yakho kufuneka ibengamanani odwa and kungabikho space in between";
-            }
-            elseif (!empty($data["phone_number_yesibini"]) && strlen($data["phone_number_yesibini"]) != 10) {
+            if (!empty($data["phone_number_yesibini"])
+                && !is_numeric($data["phone_number_yesibini"])
+            ) {
+                $data["phone_number_yesibini_err"]
+                    = "Phone number yakho kufuneka ibengamanani odwa and kungabikho space in between";
+            } elseif (!empty($data["phone_number_yesibini"]) 
+            && strlen($data["phone_number_yesibini"]) != 10) {
                 $data["phone_number_yesibini_err"] = "Phone number yakho kufuneka iqale ngo 0 and ibenamanani alishumi";
             }
 
             //Make sure there no errors
-            if (empty($data["igama_err"]) && empty($data["province_err"]) && empty($data["ndawoni_err"]) && empty($data["fani_err"]) && empty($data["email_err"]) && empty($data["phone_number_err"]) && empty($data["phone_number_yesibini_err"]) && empty($data["zazise_err"])) {
+            if (empty($data["igama_err"])
+                && empty($data["province_err"])
+                && empty($data["ndawoni_err"]) 
+                && empty($data["fani_err"]) 
+                && empty($data["email_err"]) 
+                && empty($data["phone_number_err"]) 
+                && empty($data["phone_number_yesibini_err"]) 
+                && empty($data["zazise_err"])
+            ) {
                 //Validated
                 if ($this->userModel->updateUmntu($data)) {
-                    flash("message_ye_profile", "Personal details zakho have been updated");
+                    flash(
+                        "message_ye_profile",
+                        "Personal details zakho have been updated"
+                    );
+                        
                     redirect("abantu/profile/$id");
+
                 } else {
                     die("Ikhona into erongo");
                 }
-                } else {
-                    //Load the view with errors
-                    $data["page_title"] = "ERROR";
-                    $this->view("abantu/profile", $data);
-                }
+            } else {
+                //Load the view with errors
+                $data["page_title"] = "ERROR";
+                $this->view("abantu/profile", $data);
+            }
         } else {
             $user = $this->userModel->getUserById($id);
 
