@@ -1,3 +1,4 @@
+
 <?php
 class Employer
 {
@@ -15,7 +16,7 @@ class Employer
     public function getAllEmployers()
     {
         $this->db->query(
-            "SELECT * FROM `employers` ORDER BY `employer`"
+            "SELECT `gama_le_company` FROM `imisebenzi` GROUP BY `gama_le_company` ORDER BY `gama_le_company`"
         );
         $results = $this->db->resultSet();
         return $results;
@@ -33,16 +34,157 @@ class Employer
 
         return $results;
     }
-    
-    //Get employer provinces
-    public function getEmployerProvinces()
+    /**
+    * Get all Employers and their slugs from employers table
+    *
+    * @return void
+    */
+   public function getEmployerSlug()
+   {
+       $this->db->query(
+           "SELECT * FROM `employers` GROUP BY `employer` ORDER BY `employer`"
+       );
+       $results = $this->db->resultSet();
+       return $results;
+   }
+
+   /**
+    * Check if employer exists
+    */
+   public function checkEmployers($employer)
+   {
+       $this->db->query(
+           "SELECT COUNT(employer) AS count FROM employers WHERE employer_slug = :employer_slug"
+       );
+       $this->db->bind(':employer_slug', '');
+       $row = $this->db->single();
+       return $row;
+   }
+
+    /**
+     * Check if employer exists
+     */
+    public function checkEmployer($employer)
     {
         $this->db->query(
-            'SELECT `provinces` FROM employers GROUP BY `provinces`'
+            "SELECT COUNT(employer) AS count FROM employers WHERE employer = :employer"
         );
-        $results = $this->db->resultSet();
+        $this->db->bind(':employer', $employer);
+        $row = $this->db->single();
+        return $row;
+    }
+    // Get employer by slug
+    public function getEmployerBySlug($slug) {
+        $this->db->query(
+            "SELECT * FROM employers WHERE employer_slug = :slug"
+        );
+        $this->db->bind(":slug", $slug);
+        $row = $this->db->single();
+        return $row;
+    }
 
+    // Update slug if empty
+    public function updateSlug($data)
+    {
+        $this->db->query(
+            "UPDATE employers SET employer_slug = :slug WHERE employer = :employer"
+        );
+
+        $this->db->bind(":employer", $data['employer']);
+        $this->db->bind(":slug", $data['employer_slug']);
+        //Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Get an employer's category of employment
+     * from imisebenzi
+     */
+    public function getIndustry($slug)
+    {
+        $this->db->query(
+            "SELECT `ngowantoni` FROM `imisebenzi` WHERE `ngowantoni` != 'TEMPLATE PLACEHOLDER' AND `ngowantoni` != '' GROUP BY `ngowantoni`"
+        );
+        $this->db->bind(':employer', $slug);
+        $results = $this->db->resultSet();
         return $results;
+    }
+
+    /**
+     * Get an employer's category of employment
+     * from employers
+     */
+    public function getIndustryFromEmployers($slug)
+    {
+        $this->db->query(
+            "SELECT `category` FROM `employers` WHERE employer_slug = :employer GROUP BY `category`"
+        );
+        $this->db->bind(':employer', $slug);
+        $row = $this->db->single();
+        return $row;
+    }
+
+    /**
+     * Get an employer's education of employment
+     */
+    public function getEducation($slug)
+    {
+        $this->db->query(
+            "SELECT `mfundo` FROM `imisebenzi` WHERE employer_slug = :employer GROUP BY `mfundo`"
+        );
+        $this->db->bind(':employer', $slug);
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    // Update employer info
+    public function updateEmployer($data)
+    {
+        
+        $this->db->query(
+             "REPLACE INTO employers (`id`, `employer`, `employer_slug`, `vacancies`, `website`, `provinces`, `category`, `type`, `head_office`, `facebook`, `linkedin`, `twitter`, `created_at`) VALUES (:id, :employer, :employer_slug, :vacancies, :website, :provinces, :category, :job_type, :head_office, :facebook, :linkedin, :twitter, :created_at)"
+        );
+
+        $this->db->bind(":id", $data['id']);
+        $this->db->bind(":employer", $data['employer']);
+        $this->db->bind(":employer_slug", $data['employer_slug']);
+        $this->db->bind(":vacancies", $data['vacancies']);
+        $this->db->bind(":website", $data['website']);
+        $this->db->bind(":provinces", $data['provinces']);
+        $this->db->bind(":category", $data['categories']);
+        $this->db->bind(":job_type", $data['type']);
+        $this->db->bind(":head_office", $data['head_office']);
+        $this->db->bind(":facebook", $data['facebook']);
+        $this->db->bind(":linkedin", $data['linkedin']);
+        $this->db->bind(":twitter", $data['twitter']);
+        $this->db->bind(":created_at", $data['created_at']);
+        //Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // delete employer from db
+    public function deleteEmployer($data)
+    {
+        $this->db->query(
+             "DELETE FROM `employers`
+              WHERE employer = :employer"
+        );
+
+        $this->db->bind(":employer", $data['employer']);
+        //Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // Insert employer into database
@@ -81,5 +223,4 @@ class Employer
         $results = $this->db->resultSet();
         return $results;
     }
-    
 }

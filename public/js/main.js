@@ -38,6 +38,17 @@ $(document).ready(function() {
       })
 });
 
+// Show/hide password
+var show = document.getElementById("show");
+var password = document.getElementById("password");
+show.addEventListener("click", () => {
+    if (show.checked) {
+        password.type = "text";
+    } else {
+        password.type = "password";
+    }
+});
+
 const urlPathArray = location.pathname.split("/");
 let deleteEmployer = document.getElementById('deleteEmployer');
 deleteEmployer.addEventListener('click', function() {

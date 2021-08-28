@@ -16,9 +16,6 @@
             </li>
           <?php endif; ?>
           <?php if (!empty($_SESSION) && $_SESSION["role"] === "Admin" ) : ?>
-            <li class="nav-item">
-              <a class="nav-link" href="<?php echo URLROOT; ?>/imibuzo/">Imibuzo <span class="sr-only">(current)</span></a>
-            </li>
           <li class="nav-item">
               <a class="nav-link" href="<?php echo URLROOT; ?>/admins/">Admin Area</a>
               <a class="nav-link d-none" href="<?php echo URLROOT; ?>/employers/">Employers</a>
@@ -28,14 +25,6 @@
           </li>
           <?php endif; ?>
         <?php if (isset($_SESSION['id_yomntu']) ): ?>
-        <li class="nav-item">
-          <a class="nav-link" href="<?php echo URLROOT; ?>/abantu/profile/<?php echo $_SESSION['id_yomntu'] ?>">CV</a>
-          <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="<?php echo URLROOT; ?>/abantu/logout">Logout</a>
-             <a class="dropdown-item" href="<?php echo URLROOT; ?>/addJobs/add">Add Job</a>
-            <a style="display:none" class="dropdown-item" href="<?php echo URLROOT; ?>/abantu/profile/<?php echo $_SESSION['id_yomntu'] ?>">Profile</a>
-          </div> -->
-        </li>
         <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/abantu/logout">Logout</a>
         </li>

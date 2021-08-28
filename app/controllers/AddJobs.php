@@ -282,7 +282,11 @@ class addJobs extends Controller
                 $now = date("Y-m-d"); 
                 $closing_date = date("Y-m-d", strtotime($now . " + 7 days"));
     
-                if ($onjani == "Permanent" || $item->jobtype == "Permanent" || $item->jobtype == "Talent Pool") {
+                if ($onjani == "Permanent"
+                    || $item->jobtype == "Permanent"
+                    || $item->jobtype == "Talent Pool"
+                )
+                {
                     $onjani = "Full-Time";
                 } elseif ($item->jobtype == "Learnerships") {
                     $onjani = "Learnership";
@@ -292,21 +296,19 @@ class addJobs extends Controller
                     $ngowantoni = "General Work";
                 }
                 if (isset($item->state)) {
-
                     $province = trim($item->state);
-
-                } if ($province == "North-West") {
-
+                }
+                
+                if ($province == "North-West") {
                     $province = "North West";
-                } if ($title == "ASP.NET Developer") {
-
+                }
+                
+                if ($title == "ASP.NET Developer") {
                     $ngowantoni = "IT";
-
                 } if ($title == "Pharmacy Manager - Amalinda") {
                     $title = "Pharmacy Manager";
                     $city = "Amalinda, East London";
                     $ngowantoni = "Pharmacy";
-
                 }
 
                 if ($title == "Recruitment Officer ( Temporary position )") {
@@ -315,16 +317,21 @@ class addJobs extends Controller
                     $ngowantoni = "Human Resources";
 
                 }
-                 if ($title == "Pharmacist Assistant (Post-Basic) - Eerste River" || $city == "Eerste River") {
+                
+                if ($title == "Pharmacist Assistant (Post-Basic) - Eerste River"
+                    || $city == "Eerste River"
+                ) {
                     $city = "Eerste River, Cape Town";
                     $title = "Pharmacist Assistant (Post-Basic)";
                     $ngowantoni = "Pharmacy";
                 }
-                if ($title == "Pharmacist's Assistant (Post-Basic) - Medirite Zevenwacht" || $city == "Kuils River") {
-                   $city = "Kuils River, Cape Town";
-                   $title = "Pharmacist Assistant (Post-Basic)";
-                   $ngowantoni = "Pharmacy";
-               }
+                if ($title == "Pharmacist's Assistant (Post-Basic) - Medirite Zevenwacht"
+                    || $city == "Kuils River"
+                ) {
+                    $city = "Kuils River, Cape Town";
+                    $title = "Pharmacist Assistant (Post-Basic)";
+                    $ngowantoni = "Pharmacy";
+                }
                 if ($company == "TB HIV Care" && $city == "Head Office") {
                     $city = "Adderley Street, Cape Town";
                 }
@@ -334,9 +341,7 @@ class addJobs extends Controller
                 }
                 
                 if ($ngowantoni == "TEMPLATE PLACEHOLDER") {
-
                     $ngowantoni = "Logistics";
-
                 }
 
                 if ($city == "OR Tambo" || $city == "O.R. Tambo") {
@@ -355,7 +360,13 @@ class addJobs extends Controller
                     $city = "Charlo, Gqeberha";
                 }
 
-                if ($city == "Port Elizabeth, Phoenix and Elgin" || $city == "East London/ Queenstown/ Mthatha" || $city == "OR Tambo/Amathole/Chris Hani" || $city == "OR Tambo / Chris Hani / Amathole" || $city == "Eastern Cape" || $city == "Mthatha/Queenstown") {
+                if ($city == "Port Elizabeth, Phoenix and Elgin"
+                    || $city == "East London/ Queenstown/ Mthatha"
+                    || $city == "OR Tambo/Amathole/Chris Hani"
+                    || $city == "OR Tambo / Chris Hani / Amathole"
+                    || $city == "Eastern Cape"
+                    || $city == "Mthatha/Queenstown"
+                ) {
                     $city = "Various Areas";
                 }
 
@@ -367,34 +378,57 @@ class addJobs extends Controller
                     $city = "Midrand, Johannesburg";
                 }
 
-                if ($city == "Bellville - Cape Town" || $city == "Cape Town - Bellville") {
+                if ($city == "Bellville - Cape Town" 
+                    || $city == "Cape Town - Bellville"
+                ) {
                     $city = "Bellville, Cape Town";
                 }
 
-                if ($city == "Brackenfell" || $city == "Cape Town, Brackenfell" || $city == "Cape Town/Brackenfell") {
+                if ($city == "Brackenfell"
+                    || $city == "Cape Town, Brackenfell"
+                    || $city == "Cape Town/Brackenfell"
+                ) {
                     $city = "Brackenfell, Cape Town";
                 }
-                if ($title == "Operations Clerk II" && $city == "Cape Town") {
+
+                if ($title == "Operations Clerk II"
+                    && $city == "Cape Town"
+                ) {
                     $city = "Brackenfell, Cape Town";
                 }
-                if ($title == "Transport Clerk - Transpharm (Bellville)" && $city == "Cape Town") {
+
+                if ($title == "Transport Clerk - Transpharm (Bellville)"
+                    && $city == "Cape Town"
+                ) {
                     $city = "Bellville, Cape Town";
                     $title == "Transport Clerk - Transpharm";
                 }
 
-                if ($city == "Retreat" || $title == "Customer Advisor - Retreat") {
+                if ($city == "Retreat"
+                    || $title == "Customer Advisor - Retreat"
+                ) {
                     $city = "Retreat, Cape Town";
                     $title = "Customer Advisor";
                     $ngowantoni = "Call Centre";
                 }
-                if($city == "Durban - Queen Nandi Drive") {
+
+                if ($city == "Durban - Queen Nandi Drive") {
                     $city = "Durban";
                 }
+
                 if ($title == "Pharmacy Sales Assistant - MediRite Edendale Mall") {
                     $city = "Edendale, Pietermaritzburg";
                 }
                 
-                if ($country == "South Africa" || $province != "Country Wide" || $province != "National" || $province != "Not Applicable" || $province != "TEMPLATE PLACEHOLDER" || $province != "Various" || $city != "National" || $city != "Nationwide")) {
+                if ($country == "South Africa"
+                    || $province != "Country Wide"
+                    || $province != "National"
+                    || $province != "Not Applicable"
+                    || $province != "TEMPLATE PLACEHOLDER"
+                    || $province != "Various" 
+                    || $city != "National"
+                    || $city != "Nationwide"
+                ) {
                     $data = [
                     "page_image" => URLROOT . "/public/img/western-cape-jobs/westernCapeJobs.png",
                     "page_description" => "Wufake Apha Umsebenzi",
@@ -492,7 +526,6 @@ class addJobs extends Controller
                         
                     //If job exists and still active
                     $results = $this->postModel->checkIfActive($data);
-                    die(var_dump($results));
                     
                     if (count($results) === 0) {
                         

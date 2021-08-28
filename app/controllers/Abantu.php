@@ -251,8 +251,12 @@ class Abantu extends Controller {
             }
             
             //Validate password
-            if (empty($data["password"])) {
-                $data["password_err"] = "Sicela ufake password yakho";
+            if (empty($data["password"])
+                || !$this->userModel->verifyLoginPass(
+                    $data["email"], $data["password"]
+                )
+            ) {
+                $data["password_err"] = "Check password is correct";
             }
 
             //Check for user/email
@@ -261,11 +265,15 @@ class Abantu extends Controller {
                 $data["email_err"] = "Ha a, akakabikho umntu onjalo apha";
             }
 
-            if (empty($data["email_err"]) && empty($data["password_err"])) {
+            if (empty($data["email_err"])
+                && empty($data["password_err"])
+            ) {
                 //Jonga umntu then umngenise if ukhona
                 $loggedInUser = $this->userModel->login($data["email"], $data["password"]);
                 $data["ip"] = $_SERVER["REMOTE_ADDR"];
-                $ip_data = @json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=" . $data["ip"]));
+                $ip_data = @json_decode(
+                    file_get_contents("http://www.geoplugin.net/json.gp?ip=" . $data["ip"])
+                );
 
                 if (!empty($ip_data->geoplugin_region)
                     || !empty($ip_data->geoplugin_city)
@@ -290,6 +298,12 @@ class Abantu extends Controller {
                     $this->createUserSession($loggedInUser);
                 } else {
                     $data["password_err"] = "Password yakho irongo okanye khange uyicofe la link sikuthumelele kwi email address yakho after ubhalisile.";
+                    //Load view with errors
+                    $data["page_title"] = "ERROR";
+                    $data["page_url"] = URLROOT . "/" . $_GET["url"];
+                    $data["page_type"] = "website";
+                    $data["page_image"] = URLROOT . "/public/img/western-cape-jobs/westernCapeJobs.png";
+                    $data["page_description"] = "Check to see awenzanga mistake";
                     $this->view("abantu/login", $data);
                 }
             } else {
@@ -332,7 +346,10 @@ class Abantu extends Controller {
         $_SESSION["email_yomntu"] = $umntu->email;
         $_SESSION["igama_lomntu"] = $umntu->first_name;
         $_SESSION["role"] = $umntu->role;
-        redirect("abantu/profile/$umntu->id");
+        if ($_SESSION["role"] = "Admin") {
+            redirect("");
+        }
+        redirect("addJobs/add");
     }
     
     /**
@@ -561,139 +578,6 @@ class Abantu extends Controller {
             ];
 
             $this->view("abantu/resetPassword", $data);
-        }
-    }
-
-    /**
-     * Profile yomntu
-     */
-    public function profile($id)
-    {
-        if (!isset($_SESSION["id_yomntu"])) {
-            redirect("abantu/login");
-        }
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            //Sanitize POST array
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            
-            $data = [
-                "id" => $id,
-                "igama" => trim($_POST["igama"]),
-                "fani" => trim($_POST["fani"]),
-                "email" => trim($_POST["email"]),
-                "phone_number" => trim($_POST["phone_number"]),
-                "province" => $_POST["province"],
-                "ndawoni" => trim($_POST["ndawoni"]),
-                "uyasebenza" => $_POST["uyasebenza"],
-                "gender" => isset($_POST["gender"]) ? $_POST["gender"] : "",
-                "zazise" => trim($_POST["zazise"]),
-                "updated_at" => date("Y-m-d H:i:s")
-            ];
-            
-            //Validate data
-            if (empty($data["igama"])) {
-                $data["igama_err"] = "Kufuneka ufake igama le company.";
-            }
-            if (empty($data["fani"])) {
-                $data["fani_err"] = "Job title ithini";
-            }
-            if ($data["province"] == "Khetha") {
-                $data["province_err"] = "Kufuneka ukhethe i-province";
-            }
-            if (empty($data["ndawoni"])) {
-                $data["ndawoni_err"] = "Ndawoni pha?";
-            }
-            if ($data["email"] == "Khetha") {
-                $data["email_err"] = "Ngumsebenzi onjani lo?";
-            }
-            if ($data["uyasebenza"] == "Khetha") {
-                $data["uyasebenza_err"] = "Ngumsebenzi wantoni lo?";
-            }
-            
-            //Verify phone numbers
-            if (!empty($data["phone_number"])
-                && !is_numeric($data["phone_number"])
-            ) {
-                $data["phone_number_err"]
-                    = "Phone number yakho kufuneka ibengamanani odwa and kungabikho space in between";
-            } elseif (!empty($data["phone_number"])
-                && strlen($data["phone_number"]) != 10
-            ) {
-                $data["phone_number_err"]
-                    = "Phone number yakho kufuneka iqale ngo 0 and ibenamanani alishumi";
-            }
-            
-            if (!empty($data["phone_number_yesibini"])
-                && !is_numeric($data["phone_number_yesibini"])
-            ) {
-                $data["phone_number_yesibini_err"]
-                    = "Phone number yakho kufuneka ibengamanani odwa and kungabikho space in between";
-            } elseif (!empty($data["phone_number_yesibini"]) 
-                && strlen($data["phone_number_yesibini"]) != 10
-            ) {
-                $data["phone_number_yesibini_err"] = "Phone number yakho kufuneka iqale ngo 0 and ibenamanani alishumi";
-            }
-
-            //Make sure there no errors
-            if (empty($data["igama_err"])
-                && empty($data["province_err"])
-                && empty($data["ndawoni_err"]) 
-                && empty($data["fani_err"]) 
-                && empty($data["email_err"]) 
-                && empty($data["phone_number_err"]) 
-                && empty($data["phone_number_yesibini_err"]) 
-                && empty($data["zazise_err"])
-            ) {
-                //Validated
-                if ($this->userModel->updateUmntu($data)) {
-                    flash(
-                        "message_ye_profile",
-                        "Personal details zakho have been updated"
-                    );
-                        
-                    redirect("abantu/profile/$id");
-                } else {
-                    die("Ikhona into erongo");
-                }
-            } else {
-                //Load the view with errors
-                $data["page_title"] = "ERROR";
-                $this->view("abantu/profile", $data);
-            }
-        } else {
-            $user = $this->userModel->getUserById($id);
-
-            //Check if ufakwe nguye lomsebenzi lomntu
-            if ($id != $_SESSION["id_yomntu"]) {
-                redirect("abantu/profile/$id");
-            }
-            if (!isset($_SESSION["id_yomntu"])) {
-                redirect("abantu/login");
-            }
-
-            //Default view
-            $data = [
-                "page_image" => URLROOT . "/public/img/western-cape-jobs/westernCapeJobs.png",
-                "page_description" => "Profile Yakho",
-                "page_type" => "website",
-                "page_url" => URLROOT . "/" . $_GET["url"],
-                "page_title" => "Profile Yakho",
-                "id" => $id,
-                "igama" => $user->igama,
-                "fani" => $user->fani,
-                "email" => $user->email,
-                "role" => $user->role,
-                "phone_number" => $user->phone_number,
-                "phone_number_yesibini" => $user->phone_number_yesibini,
-                "zazise" => trim($user->zazise),
-                "province" => $user->province,
-                "ndawoni" => $user->ndawoni,
-                "uyasebenza" => $user->uyasebenza,
-                "gender" => $user->gender,
-                "updated_at" => date("Y-m-d H:i:s")
-            ];
-            
-            $this->view("abantu/profile", $data);
         }
     }
 }

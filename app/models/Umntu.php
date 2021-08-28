@@ -174,11 +174,54 @@ class Umntu
     {
 
         $this->db->query(
-            'SELECT `user_verification`.`verified`, `user_verification`.`verification_key`, `registration`.`password`, `registration`.`id`, `registration`.`email`, `registration`.`role`, `registration`.`first_name`, `registration`.`last_name`
+            'SELECT
+            `user_verification`.`verified`,
+            `user_verification`.`verification_key`,
+            `registration`.`password`,
+            `registration`.`id`,
+            `registration`.`email`, 
+            `registration`.`role`,
+            `registration`.`first_name`,
+            `registration`.`last_name`
             FROM user_verification
             INNER JOIN `registration`
             ON  `user_verification`.`user_id` = `registration`.`id`
-            WHERE `registration`.`email` = :email');
+            WHERE `registration`.`email` = :email'
+        );
+
+        $this->db->bind(':email', $email);
+        
+        $row = $this->db->single();
+        
+        $hashed_password = $row->password;
+        
+        if (password_verify($password, $hashed_password)) {
+
+            return $row;
+
+        } else {
+
+            return false;
+
+        }
+
+    }
+    
+    /**
+     * Log user in
+     *
+     * @param [type] $email
+     * @param [type] $password
+     * @return void
+     */
+    public function verifyLoginPass($email, $password)
+    {
+
+        $this->db->query(
+            'SELECT `password`
+            FROM `registration`
+            WHERE `email` = :email'
+        );
 
         $this->db->bind(':email', $email);
         

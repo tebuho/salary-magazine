@@ -3,6 +3,9 @@
         <div class="container">
             <div class="col-md-12">
                 <h1>Employers</h1>
+                <ul>
+                    <li><a href="http://localhost/new/employers/">Employers</a></li>
+                </ul>
             </div>
         </div>
         <div class="body-container__employers container">
