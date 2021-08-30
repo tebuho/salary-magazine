@@ -338,24 +338,12 @@ class Umntu
         $row = $this->db->single();
         return $row;
     }
-
-    /**
-     * Get all users
-     */
-    public function getAllUsers()
-    {
-        $this->db->query(
-            'SELECT id, igama, fani, email, province, ndawoni, bhalise_nini FROM abantu'
-        );
-        $results = $this->db->resultSet();
-        return $results;
-    }
     /**
      * Check Reset Password
      */
      public function checkResetEmail($email)
      {
-         $this->db->query("SELECT email FROM abantu WHERE email = :email");
+         $this->db->query("SELECT `email` FROM `registration` WHERE email = :email");
          $this->db->bind(":email", $email);
             $row = $this->db->single();
 

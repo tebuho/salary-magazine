@@ -1,6 +1,6 @@
 <?php
 
-require_once APPROOT .'\views\inc\cookies\logged-in.php';
+require_once APPROOT .'\views\inc\functions\cookies\logged-in.php';
 
 /**
  * Province and its associated slug
@@ -105,13 +105,6 @@ function createSlug($slug)
     return $slug;
 }
 
-//Word count
-function limit_words($string, $word_limit)
-{
-    $words = explode(" ", $string);
-    return implode(" ", array_splice($words, 0, $word_limit));
-}
-
 //Convert date
 class Convert
 {
@@ -127,17 +120,6 @@ class Convert
         $this->ka = date('F Y', strtotime($year));
         return $this->ka;
     }
-}
-
-//Implode array
-function createString($x)
-{
-    $count = count($x);
-    for($i = 0; $i < $count; $i++) {
-        $test[] = "'" . $x[$i] . "'";
-    }
-    $test = implode(", ", $test);
-    return $test;
 }
 
 ?>

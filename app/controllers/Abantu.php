@@ -5,10 +5,6 @@
  */
 class Abantu extends Controller {
 
-    public $provinces;
-    public $province;
-    public $province_slug;
-
     /**
      * Constructor
      * Method
@@ -270,6 +266,10 @@ class Abantu extends Controller {
             ) {
                 //Jonga umntu then umngenise if ukhona
                 $loggedInUser = $this->userModel->login($data["email"], $data["password"]);
+
+                if ($loggedInUser && $loggedInUser->verified == 0) {
+                    $data["password_err"] = "Password yakho irongo okanye khange uyicofe la link sikuthumelele kwi email address yakho after ubhalisile.";
+                }
                 $data["ip"] = $_SERVER["REMOTE_ADDR"];
                 $ip_data = @json_decode(
                     file_get_contents("http://www.geoplugin.net/json.gp?ip=" . $data["ip"])
@@ -299,7 +299,7 @@ class Abantu extends Controller {
                 } else {
                     $data["password_err"] = "Password yakho irongo okanye khange uyicofe la link sikuthumelele kwi email address yakho after ubhalisile.";
                     //Load view with errors
-                    $data["page_title"] = "ERROR";
+                    $data["page_title"] = "ERR";
                     $data["page_url"] = URLROOT . "/" . $_GET["url"];
                     $data["page_type"] = "website";
                     $data["page_image"] = URLROOT . "/public/img/western-cape-jobs/westernCapeJobs.png";
@@ -395,6 +395,7 @@ class Abantu extends Controller {
             $selector = bin2hex(random_bytes(8));
             $token = random_bytes(32);
             $expires = date("U") + 1800;
+            $email = trim($_POST["email"]);
             $forgot_url = "/abantu/resetPassword/" . $selector . "/";
             
             $data = [
@@ -402,9 +403,9 @@ class Abantu extends Controller {
                 "token" => $token,
                 "expires" => $expires,
                 "url" => URLROOT . $forgot_url . bin2hex($token),
-                "email" => trim($_POST["email"]),
+                "email" => $email,
                 "email_err" => "",
-                ];
+            ];
             
             if (empty($data["email"])) {
                 $data["email_err"] = "Kufuneka ufake i-email address yakho.";
@@ -413,7 +414,7 @@ class Abantu extends Controller {
             }
             
             if (empty($data["email_err"])) {
-                $this->userModel->deletePassword($data);
+                $this->userModel->deletePassword($data["email"]);
                 $this->userModel->insertPassword($data);
 
                 //Confirm email address
