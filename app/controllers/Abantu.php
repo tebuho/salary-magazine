@@ -142,7 +142,11 @@ class Abantu extends Controller {
                     
                     flash(
                         "register_success",
-                        "Enkosi ngokubhalisa. Ukuze siqiniseke ukuba email yakho iyasebenza sikuthumelele umyalezo kuyo. Sicela uyijonge emva koko ucofe kula link sikuthumelele yona ukuze ukwazi ukungena kwi preference yakho."
+                        "Enkosi ngokubhalisa. 
+                        Ukuze siqiniseke ukuba email yakho iyasebenza sikuthumelele 
+                        umyalezo kuyo. Sicela uyijonge emva koko ucofe kula link 
+                        sikuthumelele yona ukuze ukwazi ukungena kwi preference
+                        yakho."
                     );
 
                     redirect("abantu/login");
@@ -279,7 +283,7 @@ class Abantu extends Controller {
                         "only_admins",
                         "Only admins of the website can log in okwangoku"
                     );
-                    
+
                     redirect("/abantu/login");
                 }
             }
