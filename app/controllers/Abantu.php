@@ -241,35 +241,69 @@ class Abantu extends Controller {
                 "verified_err" => ""
             ];
 
-            //Validate email
             if (empty($data["email"])) {
                 $data["email_err"] = "Sicela ufake email yakho";
             }
+
+            $find_email = $this->userModel->findUserByEmail($data["email"]);
+
+            $password_match = $this->userModel->verifyLoginPass(
+                $data["email"],
+                $data["password"]
+            );
             
             //Validate password
             if (empty($data["password"])
-                || !$this->userModel->verifyLoginPass(
-                    $data["email"], $data["password"]
-                )
+                || !$password_match
+                && $find_email
             ) {
                 $data["password_err"] = "Check password is correct";
             }
 
             //Check for user/email
-            if (!$this->userModel->findUserByEmail($data["email"])) {
+            if (!$find_email) {
                 //Akhomntu onjalo apha
-                $data["email_err"] = "Ha a, akakabikho umntu onjalo apha";
+                $data["email_err"] = "Kufuneka uqale ubhalise";
+            }
+
+            $logged_in_user = $this->userModel->login(
+                $data["email"],
+                $data["password"]
+            );
+
+            if ($logged_in_user != false) {
+                $is_admin = $this->userModel->check_is_admin($logged_in_user->id);
+
+                if (!$is_admin) {
+                    flash(
+                        "only_admins",
+                        "Only admins of the website can log in okwangoku"
+                    );
+                    
+                    redirect("/abantu/login");
+                }
+            }
+
+            if ($find_email
+                && $password_match
+                && $logged_in_user->verified == '0'
+            ) {
+                    
+                // Send request to confirm email address
+                send_confirm_email(
+                    $data["email"],
+                    $logged_in_user->verification_key,
+                    $logged_in_user->first_name
+                );
+
+                $data["password_err"]
+                    = "Sikuthumelele email. Sicela uyijonge.";
             }
 
             if (empty($data["email_err"])
                 && empty($data["password_err"])
             ) {
-                //Jonga umntu then umngenise if ukhona
-                $loggedInUser = $this->userModel->login($data["email"], $data["password"]);
 
-                if ($loggedInUser && $loggedInUser->verified == 0) {
-                    $data["password_err"] = "Password yakho irongo okanye khange uyicofe la link sikuthumelele kwi email address yakho after ubhalisile.";
-                }
                 $data["ip"] = $_SERVER["REMOTE_ADDR"];
                 $ip_data = @json_decode(
                     file_get_contents("http://www.geoplugin.net/json.gp?ip=" . $data["ip"])
@@ -282,29 +316,20 @@ class Abantu extends Controller {
                     $data["city"] = $ip_data->geoplugin_city;
                 }
                 
-                $data["verification_key"] = $loggedInUser->verification_key;
+                $data["verification_key"] = $logged_in_user->verification_key;
                 $data["token"] = openssl_random_pseudo_bytes(16);
                 $data["token"] = bin2hex($data["token"]);
                 $this->userModel->updateIp($data);
                 
-                $cookie = $loggedInUser->verification_key . ":" . $data["token"];
+                $cookie = $logged_in_user->verification_key . ":" . $data["token"];
                 $mac = hash_hmac("sha256", $cookie, "secret");
                 $cookie .= ":" . $mac;
                 
                 setcookie('remember_me', $cookie, time() + 60*60*24*365, "/", "", "", true);
                 
-                if ($loggedInUser && $loggedInUser->verified == 1) {
+                if ($logged_in_user && $logged_in_user->verified == 1) {
                     //Qala i-session
-                    $this->createUserSession($loggedInUser);
-                } else {
-                    $data["password_err"] = "Password yakho irongo okanye khange uyicofe la link sikuthumelele kwi email address yakho after ubhalisile.";
-                    //Load view with errors
-                    $data["page_title"] = "ERR";
-                    $data["page_url"] = URLROOT . "/" . $_GET["url"];
-                    $data["page_type"] = "website";
-                    $data["page_image"] = URLROOT . "/public/img/western-cape-jobs/westernCapeJobs.png";
-                    $data["page_description"] = "Check to see awenzanga mistake";
-                    $this->view("abantu/login", $data);
+                    $this->createUserSession($logged_in_user);
                 }
             } else {
                 //Load view with errors
@@ -366,7 +391,7 @@ class Abantu extends Controller {
 
         setcookie(
             'remember_me', 
-            $loggedInUser->verification_key, 
+            $logged_in_user->verification_key, 
             time() - 60*60*24*365, "/"
         );
 

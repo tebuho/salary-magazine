@@ -206,6 +206,29 @@ class Umntu
         }
 
     }
+
+    /**
+     * Check is admin
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function check_is_admin($id)
+    {
+        $this->db->query(
+            "SELECT `id` FROM `admins` WHERE id = :id"
+        );
+
+        $this->db->bind(":id", $id);
+
+        $row = $this->db->single();
+        
+        if ($row != false) {
+            return true;
+        }
+
+        return $row;
+    }
     
     /**
      * Log user in
@@ -231,7 +254,7 @@ class Umntu
         
         if (password_verify($password, $hashed_password)) {
 
-            return $row;
+            return true;
 
         } else {
 

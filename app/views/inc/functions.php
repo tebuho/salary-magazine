@@ -1,6 +1,7 @@
 <?php
 
-require_once APPROOT .'\views\inc\functions\cookies\logged-in.php';
+require_once 'functions/cookies/logged-in.php';
+require_once 'functions/emails/confirm_email.php';
 
 /**
  * Province and its associated slug

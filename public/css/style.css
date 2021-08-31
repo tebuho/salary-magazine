@@ -1072,6 +1072,14 @@ table {
   display: flex;
   justify-content: center;
 }
+.for-admins {
+  color: #dc3545;
+  padding: 15px!important;
+  border: 1px solid forestgreen;
+}
+.for-admins i {
+  color: #dc3545;
+}
 
 .cke_top {
   border-bottom: none!important;

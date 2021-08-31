@@ -17,6 +17,10 @@
                     <?php flash('password_reset_message'); ?>
                 </div>
                 <div class="card card-body shadow-sm md-4 p-3">
+                    <p class="for-admins">
+                        <span><i class="fas fa-exclamation-triangle"></i></span>
+                        Only admins of the website can log in for now
+                    </p>
                     <form action="<?php echo URLROOT; ?>/abantu/login/" method="post">
                         <div class="form-group">
                             <label for="email">Email Yakho: <sup>*</sup></label>
@@ -34,19 +38,23 @@
                                 <input type="submit" value="Cofa xa ugqibile" class="form-btn__primary btn-block">
                             </div>
                         </div>
-                        <div class="input-label__container">
-                        <div class="input-container mt-3">
-                            <label class="font-weight-normal">Password yakho uyilibele? <a href="<?php echo URLROOT; ?>/abantu/forgotPassword/">Cofa apha</a></label>
-                        </div>
-                    </div>
                     </form>
+                    <!--
+                        <div class="input-label__container">
+                            <div class="input-container mt-3">
+                                <label class="font-weight-normal">Password yakho uyilibele? <a href="<?php echo URLROOT; ?>/abantu/forgotPassword/">Cofa apha</a></label>
+                            </div>
+                        </div>
+                    -->
                 </div>
             </div>
+            <!--
             <div class="page container">
                 <div class="page-container register-login">
                     <label class="font-weight-normal">Ufuna ukubhalisa? <a href="<?php echo URLROOT; ?>/abantu/register/">Cofa apha</a></label>
                 </div>
             </div>
+            -->
         </div>
     </div>
 </div>
