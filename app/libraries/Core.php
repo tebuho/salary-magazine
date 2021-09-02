@@ -27,7 +27,7 @@ class Core {
         }
 
         //Require the controller
-        require_once '../app/controllers/' . $this->currentController . '.php';
+        include_once '../app/controllers/' . $this->currentController . '.php';
 
         //Instantiate current class
         $this->currentController = new $this->currentController;
@@ -45,7 +45,10 @@ class Core {
         $this->params = $url ? array_values($url) : [];
 
         //Call a callback with an array of params
-        call_user_func_array([$this->currentController, $this->currentMethod], $this->params);
+        call_user_func_array(
+            [$this->currentController, $this->currentMethod], 
+            $this->params
+        );
     }
 
     public function getUrl()
