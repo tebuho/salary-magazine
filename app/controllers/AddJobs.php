@@ -7,13 +7,20 @@ class addJobs extends Controller
         if (!isset($_SESSION["id_yomntu"])) {
             redirect("abantu/login");
         }
-        if (isset($_SESSION["role"]) && $_SESSION["role"] !== "Admin") {
+        if (isset($_SESSION["role"])
+            && $_SESSION["role"] !== "Admin"
+        ) {
             redirect("");
         }
         $this->postModel = $this->model("addJob");
         $this->userModel = $this->model("Umntu");
     }
 
+    /**
+     * For Admins to add a new job
+     *
+     * @return void
+     */
     public function add()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
