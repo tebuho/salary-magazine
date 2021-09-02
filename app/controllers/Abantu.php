@@ -409,7 +409,7 @@ class Abantu extends Controller {
         if ($_SESSION["role"] = "Admin") {
             redirect("");
         }
-        
+
         redirect("addJobs/add");
     }
     
@@ -618,6 +618,7 @@ class Abantu extends Controller {
                         "reset_message",
                         "Ikhona into erongo eyenzekileyo. Sicela uphinde."
                     );
+
                     $this->view("abantu/resetPassword", $data);
                 } else {
                     if ($token_check == true) {
@@ -634,10 +635,17 @@ class Abantu extends Controller {
                     }
                 }
 
+                /**
+                 * Flashes a message upon successfully changing password
+                 * 
+                 * @param "password_reset_message" message name
+                 * @param "Password yakho itshintshile. Ungangena ke ngoku." message
+                 */
                 flash(
                     "password_reset_message",
                     "Password yakho itshintshile. Ungangena ke ngoku."
                 );
+
                 redirect("abantu/login");
 
             } else {
