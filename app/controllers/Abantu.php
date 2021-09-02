@@ -1,9 +1,22 @@
 <?php
+/**
+ * @file
+ * User class.
+ * PHP version 8
+ * 
+ * @package Salary_Magazine
+ * @author  Tebuho Mbatu <tebu@salarymagazine.co.za>
+ */
 
 /**
  * User controller
+ * 
+ * @package Salary_Magazine
+ * @author  Tebuho Mbatu <tebu@salarymagazine.co.za>
  */
 class Abantu extends Controller {
+    public $page_image = URLROOT
+    . "/public/img/western-cape-jobs/westernCapeJobs.png";
 
     /**
      * Constructor
@@ -26,8 +39,8 @@ class Abantu extends Controller {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             $data = [
-                "page_image" => URLROOT . "/public/img/western-cape-jobs/westernCapeJobs.png",
-                "page_description" => "Kufuneka ubhalisa apha xa ufuna ukufaka imisebenzi, imibuzo, imithandazo, izaziso, cover letters, blogs nokuba yinxalenye ye Salary Magazine.",
+                "page_image" => $page_image,
+                "page_description" => "Kubhaliswa babhalisa apha",
                 "page_type" => "website",
                 "page_url" => URLROOT . "/" . $_GET["url"],
                 "page_title" => "Kubhaliswa Apha",
@@ -52,13 +65,15 @@ class Abantu extends Controller {
                 || strlen($data["first_name"]) < 3
                 || strlen($data["first_name"]) > 25
             ) {
-                $data["first_name_err"] = "Must be between 3-25 characters and without numbers";
+                $data["first_name_err"] 
+                    = "Must be between 3-25 characters and without numbers";
             }
 
             if (empty($data["last_name"])
                 || preg_match("/[0-9]+/", $data["last_name"])
             ) {
-                $data["last_name_err"] = "Sicela ufake ifani yakho and make sure akukho manani.";
+                $data["last_name_err"] 
+                    = "Sicela ufake ifani yakho and make sure akukho manani.";
             }
 
             if (!filter_var($data["email"], FILTER_VALIDATE_EMAIL)
@@ -124,8 +139,18 @@ class Abantu extends Controller {
                     //Confirm email address
                     $to = $data["email"];
                     $subject = "Confirm email address yakho";
-                    $message = "Hi " . $data['first_name'] . ", enkosi ngokubhalisa kwi website yethu salarymagazine.co.za. Sicela ucofe kule link to confirm le email address and uzokutsho ukwazi ukungena kwi website yethu nje ngomnye wethu. <a href='https://salarymagazine.co.za/abantu/confirm/" . $data['verification_key'] . "'>Cofa apha</a>";
-                    $headers = "From: Salary Magazine <info@salarymagazine.co.za> \r\n";
+                    $message 
+                        = "Hi " . $data['first_name'] 
+                        . ", enkosi ngokubhalisa kwi website yethu 
+                        salarymagazine.co.za. 
+                        Sicela ucofe kule link to confirm le email 
+                        address and uzokutsho 
+                        ukwazi ukungena kwi website yethu nje ngomnye wethu. 
+                        <a href='https://salarymagazine.co.za/abantu/confirm/" 
+                        . $data['verification_key'] . "'>
+                    Cofa apha</a>";
+                    $headers 
+                        = "From: Salary Magazine <info@salarymagazine.co.za> \r\n";
                     $headers .= "MIME-VERSION: 1.0" . "\r\n";
                     $headers .= "Content-type: text/html; charset:utf-8" . "\r\n";
                     mail($to, $subject, $message, $headers);
@@ -133,8 +158,11 @@ class Abantu extends Controller {
                     //New member registration notification
                     $to = "info@salarymagazine.co.za";
                     $subject = "Notification: New Salary Magazine Member";
-                    $message = $data["first_name"] . " " . $data["last_name"] . " usandokubhalisa.";
-                    $headers = "From: Salary Magazine <info@salarymagazine.co.za> \r\n";
+                    $message 
+                        = $data["first_name"] . " " . $data["last_name"] 
+                        . " usandokubhalisa.";
+                    $headers 
+                        = "From: Salary Magazine <info@salarymagazine.co.za> \r\n";
                     $headers .= "MIME-VERSION: 1.0" . "\r\n";
                     $headers .= "Content-type: text/html; charset:utf-8" . "\r\n";
                     $headers .= "Bcc: sisekogwegwe@gmail.com" . "\r\n";
@@ -143,10 +171,9 @@ class Abantu extends Controller {
                     flash(
                         "register_success",
                         "Enkosi ngokubhalisa. 
-                        Ukuze siqiniseke ukuba email yakho iyasebenza sikuthumelele 
-                        umyalezo kuyo. Sicela uyijonge emva koko ucofe kula link 
-                        sikuthumelele yona ukuze ukwazi ukungena kwi preference
-                        yakho."
+                        Check inbox yakho for email esuka kuthi. 
+                        Emva koko ucofe la link ikuyo to confirm 
+                        email address yakho."
                     );
 
                     redirect("abantu/login");
@@ -162,8 +189,8 @@ class Abantu extends Controller {
         } else {
             //Init data
             $data = [
-                "page_image" => URLROOT . "/public/img/western-cape-jobs/westernCapeJobs.png",
-                "page_description" => "Kufuneka ubhalise apha xa ufuna ukufaka imisebenzi, imibuzo, imithandazo, izaziso, cover letters, blogs nokuba yinxalenye ye Salary Magazine.",
+                "page_image" => $page_url,
+                "page_description" => "Kubhaliswa apha",
                 "page_type" => "website",
                 "page_url" => URLROOT . "/" . $_GET["url"],
                 "page_title" => "Kubhaliswa Apha",
@@ -187,7 +214,8 @@ class Abantu extends Controller {
     /**
      * Confirm email address
      *
-     * @param [type] $verification_key
+     * @param [type] $verification_key unique key for user confirmation
+     * 
      * @return void
      */
     public function confirm($verification_key)
@@ -207,7 +235,7 @@ class Abantu extends Controller {
                 
                 flash(
                     "confirmation_success",
-                    "Enkosi ngokuqinisekisa ukuba i-email address yakho iyasebenza. Ungangena ke ngoku."
+                    "Email address yakho has been confirmed. Enkosi."
                 );
                 
                 redirect("abantu/login");
@@ -222,7 +250,8 @@ class Abantu extends Controller {
     }
 
     /**
-     * Log user in
+     * Log user in, collect province and province location,
+     * set cookie, start session
      *
      * @return void
      */
@@ -310,7 +339,9 @@ class Abantu extends Controller {
 
                 $data["ip"] = $_SERVER["REMOTE_ADDR"];
                 $ip_data = @json_decode(
-                    file_get_contents("http://www.geoplugin.net/json.gp?ip=" . $data["ip"])
+                    file_get_contents(
+                        "http://www.geoplugin.net/json.gp?ip=" . $data["ip"]
+                    )
                 );
 
                 if (!empty($ip_data->geoplugin_region)
@@ -329,10 +360,11 @@ class Abantu extends Controller {
                 $mac = hash_hmac("sha256", $cookie, "secret");
                 $cookie .= ":" . $mac;
                 
-                setcookie('remember_me', $cookie, time() + 60*60*24*365, "/", "", "", true);
+                setcookie(
+                    'remember_me', $cookie, time() + 60*60*24*365, "/", "", "", true
+                );
                 
                 if ($logged_in_user && $logged_in_user->verified == 1) {
-                    //Qala i-session
                     $this->createUserSession($logged_in_user);
                 }
             } else {
@@ -340,15 +372,14 @@ class Abantu extends Controller {
                 $data["page_title"] = "ERROR";
                 $data["page_url"] = URLROOT . "/" . $_GET["url"];
                 $data["page_type"] = "website";
-                $data["page_image"] = URLROOT . "/public/img/western-cape-jobs/westernCapeJobs.png";
+                $data["page_image"] = URLROOT
+                . "/public/img/western-cape-jobs/westernCapeJobs.png";
                 $data["page_description"] = "Check to see awenzanga mistake";
                 $this->view("abantu/login", $data);
             }
         } else {
-            //Init data
             $data = [
-                "page_image" => URLROOT . "/public/img/western-cape-jobs/westernCapeJobs.png",
-                "page_description" => "Kufuneka uungene apha xa ufuna ukufaka imisebenzi, imibuzo, imithandazo, izaziso, cover letters, blogs nokuba yinxalenye ye Salary Magazine.",
+                "page_image" => $page_image,
                 "page_type" => "website",
                 "page_url" => URLROOT . "/" . $_GET["url"],
                 "page_title" => "Kungenwa Apha",
@@ -358,7 +389,6 @@ class Abantu extends Controller {
                 "password_err" => "",
             ];
 
-            //Load view
             $this->view("abantu/login", $data);
         }
     }
@@ -366,7 +396,8 @@ class Abantu extends Controller {
     /**
      * Create session
      *
-     * @param [type] $umntu
+     * @param [type] $umntu The user
+     * 
      * @return void
      */
     public function createUserSession($umntu)
@@ -378,6 +409,7 @@ class Abantu extends Controller {
         if ($_SESSION["role"] = "Admin") {
             redirect("");
         }
+        
         redirect("addJobs/add");
     }
     
@@ -403,6 +435,11 @@ class Abantu extends Controller {
         redirect("");
     }
 
+    /**
+     * Is user logged in
+     *
+     * @return boolean
+     */
     public function isLoggedIn()
     {
         if (isset($_SESSION["id_yomntu"])) {
@@ -414,6 +451,8 @@ class Abantu extends Controller {
 
     /**
      * Forgot password
+     * 
+     * @return void 
      */
     public function forgotPassword()
     {
@@ -449,7 +488,13 @@ class Abantu extends Controller {
                 //Confirm email address
                 $to = $data["email"];
                 $subject = "Tshintsha i-Password Yakho";
-                $message = "Hi, sikuthumelele lomyalezo kuba ufuna ukutshintsha i-password yakho kwi website yethu <a href='https://salarymagazine.co.za/'>salarymagazine.co.za</a>. Sicela ucofe kule link ukuze ukwazi ukutshintsha i-password yakho <a href='" . $data['url'] . "'>" . $data['url'] . "</a>. If awufuni ukuyitshintsha, sicela ungawuhoyi lomyalezo.";
+                $message = "Hi, sikuthumelele lomyalezo kuba ufuna ukutshintsha 
+                    i-password yakho kwi website yethu 
+                    <a href='https://salarymagazine.co.za/'>salarymagazine.co.za</a>
+                    . Sicela ucofe kule link ukuze ukwazi ukutshintsha i-password 
+                    yakho <a href='" . $data['url'] . "'>" . $data['url'] 
+                    . "</a>. If awufuni ukuyitshintsha, sicela ungawuhoyi 
+                    lomyalezo.";
                 $headers = "From: Salary Magazine <info@salarymagazine.co.za> \r\n";
                 $headers .= "MIME-VERSION: 1.0" . "\r\n";
                 $headers .= "Content-type: text/html; charset:utf-8" . "\r\n";
@@ -458,8 +503,10 @@ class Abantu extends Controller {
                 
                 flash(
                     "password_reset_message",
-                    "Sikuthumelele umyalezo nge email. Sicela uwujonge and ucofe kula link sikuthumelele yona."
+                    "Sikuthumelele umyalezo nge email. 
+                    Sicela uwujonge and ucofe kula link sikuthumelele yona."
                 );
+
                 redirect("abantu/forgotPassword");
             } else {
                 $this->view("abantu/forgotPassword", $data);
@@ -469,7 +516,8 @@ class Abantu extends Controller {
             
             $data = [
                 "page_image" => URLROOT . $page_url,
-                "page_description" => "Faka i-email address yakho ukuze sizokuthumelela indlela ozokuyitshintsha ngayo i-password yakho.",
+                "page_description" => "Faka i-email address yakho ukuze 
+                sizokuthumelela indlela ozokuyitshintsha ngayo i-password yakho.",
                 "page_type" => "website",
                 "page_url" => URLROOT . "/" . $_GET["url"],
                 "page_title" => "Password Yakho Uyilibele?",
@@ -484,8 +532,9 @@ class Abantu extends Controller {
     /**
      * Reset Password
      *
-     * @param [type] $selector
-     * @param [type] $token
+     * @param [type] $selector Selector
+     * @param [type] $token    token created on user registration
+     *  
      * @return void
      */
     public function resetPassword($selector, $token)
@@ -503,7 +552,8 @@ class Abantu extends Controller {
                 flash(
                     "reset_message",
                     "Ikhona into erongo. 
-                    Make sure uyicofile la link sikuthumelele kwi email address yakho."
+                    Make sure uyicofile la link sikuthumelele kwi 
+                    email address yakho."
                 );
             } else {
                 if (ctype_xdigit($selector) !== false
@@ -536,7 +586,8 @@ class Abantu extends Controller {
             } else {
                 if (strlen($data["password"]) < 6) {
                     $data["password_err"]
-                        = "Password yakho kufuneka ibene characters eziyi 6 at least.";
+                        = "Password yakho kufuneka ibene characters eziyi 6 at 
+                        least.";
                 }
             }
 
@@ -594,7 +645,8 @@ class Abantu extends Controller {
             }
         } else {
             $data = [
-                "page_image" => URLROOT . "/public/img/western-cape-jobs/westernCapeJobs.png",
+                "page_image" => URLROOT 
+                    . "/public/img/western-cape-jobs/westernCapeJobs.png",
                 "page_description" => "Yifake apha i-password yakho entsha.",
                 "page_type" => "website",
                 "page_url" => URLROOT . "/" . $_GET["url"],
