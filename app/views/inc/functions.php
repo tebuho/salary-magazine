@@ -93,6 +93,15 @@ class Provinces
             }
         }
     }
+
+    // replace special chars with whitespace in job label
+    function replace_whitespace_in_job_label($label) {
+        $pattern = "/\W/";
+        if (preg_match($pattern, $label)) {
+            $label = preg_replace($pattern, ' ', $label);
+        }
+    }
+    
 }
 
 //Create url slug
