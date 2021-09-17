@@ -25,37 +25,28 @@ class addJob
     public function addJob($data)
     {
         $this->db->query(
-            "INSERT INTO imisebenzi (
-                gama_le_company,
-                employer_slug,
+            "INSERT INTO jobs (
+                job_employer,
+                job_employer_slug,
                 id_yomntu,
-                province,
-                province_slug,
-                ndawoni,
-                ndawoni_slug,
+                job_province,
+                job_province_slug,
+                job_location,
+                job_location_slug,
                 job_title,
-                label,
-                closing_date,
-                msebenzi_onjani,
-                onjani_slug,
-                mfundo,
-                mfundo_slug,
-                experience,
-                experience_slug,
-                ngowantoni,
-                ngowantoni_slug,
-                purpose,
+                job_label,
+                job_type,
+                job_type_slug,
+                job_education,
+                job_education_slug,
+                job_experience,
+                job_experience_slug,
+                job_categories,
+                job_categories_slug,
                 requirements,
-                skills_competencies,
                 responsibilities,
-                additional_info,
-                jb_specification,
-                apply_nge_website,
-                apply_ngesandla,
-                apply_nge_email,
-                slug,
-                image,
-                created_at
+                job_slug,
+                job_date
                 ) SELECT * FROM (SELECT
                 :gama_le_company AS company,
                 :employer_slug AS employer,
@@ -89,8 +80,14 @@ class addJob
                 :created_at AS pub_date
             ) AS tmp
                 WHERE NOT EXISTS (
-                    SELECT label, province, closing_date FROM imisebenzi WHERE slug= :slug AND label = :label AND province = :province
-            AND closing_date >= :closing_date
+                    SELECT label,
+                    province,
+                    closing_date
+                    FROM imisebenzi 
+                    WHERE slug= :slug 
+                    AND label = :label 
+                    AND province = :province
+                    AND closing_date >= :closing_date
             ) LIMIT 1"
         );
 

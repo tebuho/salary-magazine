@@ -1087,6 +1087,7 @@ table {
 }
 .form-control.is-invalid {
   margin-bottom: 0;
+  appearance: none;
 }
 /* End form */
 

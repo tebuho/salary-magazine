@@ -10,24 +10,36 @@
             <h1>Wufake Apha Umsebenzi</h1>
             <form action="<?php echo URLROOT; ?>/<?php echo $_GET['url']; ?>" method="post" enctype="multipart/form-data">
                 <div class="form-container">
+                    <!-- Job title -->
                     <div class="input-label__container">
                         <div class="label-container">
                             <label for="job_title">Job Title</label>
                         </div>
                         <div class="input-container">
-                            <input type="text" name="job_title" class="form-control form-control-lg <?php echo (!empty($data['job_title_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['job_title']; ?>" autofocus>
-                            <span class="invalid-feedback"><?php echo $data['job_title_err']; ?></span>
+                            <input type="text" name="job_title" class="form-control form-control-lg <?php echo (!empty($data["err_mssg"]['job_title_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['job_title']; ?>" autofocus>
+                            <span class="invalid-feedback"><?php echo $data["err_mssg"]['job_title_err']; ?></span>
                         </div>
                     </div>
+                    <!-- No. of posts -->
+                    <div class="input-label__container">
+                        <div class="label-container">
+                            <label for="posts">No. of Posts</label>
+                        </div>
+                        <div class="input-container">
+                            <input type="number" name="posts" class="form-control form-control-lg" value="<?php echo $data['posts']; ?>">
+                        </div>
+                    </div>
+                    <!-- Employer -->
                     <div class="input-label__container">
                         <div class="label-container">
                             <label for="igama_le_company">Igama le Company</label>
                         </div>
                         <div class="input-container">
-                            <input type="text" name="igama_le_company" id="igama-le-company" class="form-control form-control-lg <?php echo (!empty($data['gama_le_company_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['gama_le_company']; ?>" required="required">
+                            <input type="text" name="igama_le_company" id="igama-le-company" class="form-control form-control-lg <?php echo (!empty($data['gama_le_company_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['gama_le_company']; ?>" >
                             <span class="invalid-feedback"><?php echo $data['gama_le_company_err']; ?></span>
                         </div>
                     </div>
+                    <!-- Provinces -->
                     <div class="input-label__container">
                         <div class="label-container">
                             <label for="Province">Province</label>
@@ -49,22 +61,24 @@
                             <span class="invalid-feedback"><?php echo $data['province_err']; ?></span>
                         </div>
                     </div>
+                    <!-- Location -->
                     <div class="input-label__container">
                         <div class="label-container">
                             <label for="Ndawoni">Ndawoni Pha</label>
                         </div>
                         <div class="input-container">
-                            <input type="text" name="ndawoni_pha" id="igama-le-company" class="form-control form-control-lg <?php echo (!empty($data['ndawoni_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['ndawoni']; ?>" required="required">
+                            <input type="text" name="ndawoni_pha" id="igama-le-company" class="form-control form-control-lg <?php echo (!empty($data['ndawoni_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['ndawoni']; ?>" >
                             <span class="invalid-feedback"><?php echo $data['ndawoni_err']; ?></span>
                         </div>
                     </div>
+                    <!-- Onjani -->
                     <div class="input-label__container">
                         <div class="label-container">
                             <label for="Msebenzi Onjani">Ngumsebenzi Onjani</label>
                         </div>
                         <div class="input-container">
-                            <select name="msebenzi_onjani" class="form-control" id="">
-                                <option class="form-control form-control-lg <?php echo (!empty($data['msebenzi_onjani_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo empty($data['msebenzi_onjani']) ? 'Khetha' : $data['msebenzi_onjani']; ?>"><?php echo empty($data['msebenzi_onjani']) ? 'Khetha' : $data['msebenzi_onjani']; ?></option>
+                            <select name="msebenzi_onjani" class="form-control form-control-lg <?php echo (!empty($data["err_mssg"]['msebenzi_onjani_err'])) ? 'is-invalid' : ''; ?>" id="">
+                                <option class="form-control" value="<?php echo empty($data['msebenzi_onjani']) ? 'Khetha' : $data['msebenzi_onjani']; ?>"><?php echo empty($data['msebenzi_onjani']) ? 'Khetha' : $data['msebenzi_onjani']; ?></option>
                                 <option class="form-control" value="Apprenticeship">Apprenticeship</option>
                                 <option class="form-control" value="Bursary">Bursary</option>
                                 <option class="form-control" value="Casual">Casual</option>
@@ -77,16 +91,17 @@
                                 <option class="form-control" value="Scholarship">Scholarship</option>
                                 <option class="form-control" value="Volunteer">Volunteer</option>
                             </select>
-                            <span class="invalid-feedback"><?php echo $data['msebenzi_onjani_err']; ?></span>
+                            <span class="invalid-feedback"><?php echo $data["err_mssg"]['msebenzi_onjani_err']; ?></span>
                         </div>
                     </div>
+                    <!-- Education -->
                     <div class="input-label__container">
                         <div class="label-container">
                             <label for="Msebenzi Onjani">Level ye Mfundo</label>
                         </div>
                         <div class="input-container">
-                            <select name="mfundo" class="form-control" id="">
-                                <option class="form-control form-control-lg <?php echo (!empty($data['mfundo_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo empty($data['mfundo']) ? 'Khetha' : $data['mfundo']; ?>"><?php echo empty($data['mfundo']) ? 'Khetha' : $data['mfundo']; ?></option>
+                            <select name="mfundo" class="form-control form-control-lg <?php echo (!empty($data["err_mssg"]['mfundo_err'])) ? 'is-invalid' : ''; ?>" id="">
+                                <option class="form-control" value="<?php echo empty($data['mfundo']) ? 'Khetha' : $data['mfundo']; ?>"><?php echo empty($data['mfundo']) ? 'Khetha' : $data['mfundo']; ?></option>
                                 <option class="form-control" value="Grade 4 - 9/NQF Level 1">Grade 4 - 9/NQF Level 1</option>
                                 <option class="form-control" value="Grade 10/N1/NQF Level 2">Grade 10/N1/NQF Level 2</option>
                                 <option class="form-control" value="Grade 11/N2/NQF Level 3">Grade 11/N2/NQF Level 3</option>
@@ -98,16 +113,17 @@
                                 <option class="form-control" value="Master's">Master's</option>
                                 <option class="form-control" value="Doctorate">Doctorate</option>
                             </select>
-                            <span class="invalid-feedback"><?php echo $data["mfundo_err"]; ?></span>
+                            <span class="invalid-feedback"><?php echo $data["err_mssg"]["mfundo_err"]; ?></span>
                         </div>
                     </div>
+                    <!-- Experience -->
                     <div class="input-label__container">
                         <div class="label-container">
                             <label for="Msebenzi Onjani">Iminyaka ye Experience</label>
                         </div>
                         <div class="input-container">
-                            <select name="experience" class="form-control" id="">
-                                <option class="form-control form-control-lg <?php echo (!empty($data["experience_err"])) ? 'is-invalid' : ''; ?>" value="<?php echo empty($data['experience']) ? 'Khetha' : $data['experience']; ?>"><?php echo empty($data['experience']) ? 'Khetha' : $data['experience']; ?></option>
+                            <select name="experience" class="form-control form-control-lg <?php echo (!empty($data["err_mssg"]["experience_err"])) ? 'is-invalid' : ''; ?>" id="">
+                                <option class="form-control" value="<?php echo empty($data['experience']) ? 'Khetha' : $data['experience']; ?>"><?php echo empty($data['experience']) ? 'Khetha' : $data['experience']; ?></option>
                                 <option class="form-control" value="0 years">0 years</option>
                                 <option class="form-control" value="1 - 2 years">1 - 2 years</option>
                                 <option class="form-control" value="3 - 5 years">3 - 5 years</option>
@@ -115,16 +131,17 @@
                                 <option class="form-control" value="10 - 14 years">10 - 14 years</option>
                                 <option class="form-control" value="15+ years">15+ years</option>
                             </select>
-                            <span class="invalid-feedback"><?php echo $data['experience_err']; ?></span>
+                            <span class="invalid-feedback"><?php echo $data["err_mssg"]["experience_err"]; ?></span>
                         </div>
                     </div>
+                    <!-- Ngowantoni -->
                     <div class="input-label__container">
                         <div class="label-container">
                             <label for="Ngowantoni">Ngowantoni</label>
                         </div>
                         <div class="input-container">
-                            <select name="ngowantoni" class="form-control" id="">
-                                <option class="form-control form-control-lg <?php echo (!empty($data['ngowantoni_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo empty($data['ngowantoni']) ? 'Khetha' : $data['ngowantoni']; ?>"><?php echo empty($data['ngowantoni']) ? 'Khetha' : $data['ngowantoni']; ?></option>
+                            <select name="ngowantoni" class="form-control form-control-lg <?php echo (!empty($data["err_mssg"]['ngowantoni_err'])) ? 'is-invalid' : ''; ?>" id="">
+                                <option class="form-control" value="<?php echo empty($data['ngowantoni']) ? 'Khetha' : $data['ngowantoni']; ?>"><?php echo empty($data['ngowantoni']) ? 'Khetha' : $data['ngowantoni']; ?></option>
                                 <option class="form-control" value="Accounting">Accounting</option>
                                 <option class="form-control" value="Actuary">Actuary</option>
                                 <option class="form-control" value="Administration">Administration</option>
@@ -204,9 +221,91 @@
                                 <option class="form-control" value="Waitor/Waitress">Waitor/Waitress</option>
                                 <option class="form-control" value="Warehouse">Warehouse</option>
                             </select>
-                            <span class="invalid-feedback"><?php echo $data['ngowantoni_err']; ?></span>
+                            <span class="invalid-feedback"><?php echo $data["err_mssg"]['ngowantoni_err']; ?></span>
                         </div>
                     </div>
+                    <!-- Ref No. -->
+                    <div class="input-label__container">
+                        <div class="label-container">
+                            <label for="ref_no">Ref No.</label>
+                        </div>
+                        <div class="input-container">
+                            <input type="text" name="ref_no" id="ref-no" class="form-control form-control-lg" value="<?php echo $data['ref_no']; ?>">
+                        </div>
+                    </div>
+                    <!-- Centre -->
+                    <div class="input-label__container">
+                        <div class="label-container">
+                            <label for="centre">Centre</label>
+                        </div>
+                        <div class="input-container">
+                            <input type="text" name="centre" id="centre" class="form-control form-control-lg" value="<?php echo $data['centre']; ?>">
+                        </div>
+                    </div>
+                    <!-- Salary, stipend & benefits -->
+                    <div class="input-label__container">
+                        <div class="label-container">
+                            <label for="remuneration">Remuneration</label>
+                        </div>
+                        <div class="input-container">
+                            <input type="text" name="remuneration" id="remuneration" class="form-control form-control-lg" value="<?php echo $data['remuneration']; ?>">
+                        </div>
+                    </div>
+                    <!-- Driver's license -->
+                    <div class="input-label__container">
+                        <div class="label-container">
+                            <label for="license">Driver's License</label>
+                        </div>
+                        <div class="input-container">
+                            <select name="license" class="form-control form-control-lg" id="license">
+                                <option class="form-control" value="<?php echo empty($data['license']) ? 'Khetha' : $data['license']; ?>"><?php echo empty($data['license']) ? 'Khetha' : $data['license']; ?></option>
+                                <option class="form-control" value="Yes">Yes</option>
+                                <option class="form-control" value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Afrikaans -->
+                    <div class="input-label__container">
+                        <div class="label-container">
+                            <label for="afrikaans">Afrikaans?</label>
+                        </div>
+                        <div class="input-container">
+                            <select name="afrikaans" class="form-control form-control-lg" id="afrikaans">
+                                <option class="form-control" value="<?php echo empty($data['afrikaans']) ? 'Khetha' : $data['afrikaans']; ?>"><?php echo empty($data['afrikaans']) ? 'Khetha' : $data['afrikaans']; ?></option>
+                                <option class="form-control" value="Yes">Yes</option>
+                                <option class="form-control" value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Employer type -->
+                    <div class="input-label__container">
+                        <div class="label-container">
+                            <label for="license">Employer Type</label>
+                        </div>
+                        <div class="input-container">
+                            <select name="employer_type" class="form-control form-control-lg" id="employer_type">
+                                <option class="form-control" value="<?php echo empty($data['employer_type']) ? 'Khetha' : $data['employer_type']; ?>"><?php echo empty($data['employer_type']) ? 'Khetha' : $data['employer_type']; ?></option>
+                                <option class="form-control" value="Company">Company</option>
+                                <option class="form-control" value="Government">Government</option>
+                                <option class="form-control" value="Municipality">Municipality</option>
+                                <option class="form-control" value="NGO">NGO</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Facebook -->
+                    <div class="input-label__container">
+                        <div class="label-container">
+                            <label for="facebook">Facebook Post?</label>
+                        </div>
+                        <div class="input-container">
+                            <select name="facebook" class="form-control form-control-lg" id="facebook">
+                                <option class="form-control" value="<?php echo empty($data['facebook']) ? 'Khetha' : $data['facebook']; ?>"><?php echo empty($data['facebook']) ? 'Khetha' : $data['facebook']; ?></option>
+                                <option class="form-control" value="Yes">Yes</option>
+                                <option class="form-control" value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Closing date -->
                     <div class="input-label__container">
                         <div class="label-container">
                             <label for="closing_date">Closing date</label>
@@ -215,6 +314,7 @@
                             <input type="date" name="closing_date" id="closing_date" class="form-control" data-date-format="DD MMMM YYYY" value="<?php echo $data['closing_date']; ?>">
                         </div>
                     </div>
+                    <!-- Purpose -->
                     <div class="input-label__container">
                         <div class="label-container">
                             <label for="closing_date">Purpose (optional)</label>
@@ -231,12 +331,13 @@
                             </script>
                         </div>
                     </div>
+                    <!-- Requirements -->
                     <div class="input-label__container mt-3">
                         <div class="label-container">
                             <label for="closing_date">Requirements</label>
                         </div>
                         <div class="input-container">
-                            <textarea name="requirements" rows="6" id="requirements" class="form-control form-control-lg <?php echo (!empty($data['requirements_err'])) ? 'is-invalid' : ''; ?>" required="required">
+                            <textarea name="requirements" rows="6" id="requirements" class="form-control form-control-lg <?php echo (!empty($data["err_mssg"]['requirements_err'])) ? 'is-invalid' : ''; ?>" >
                                 <?php echo $data['requirements']; ?>
                             </textarea>
                             <script>
@@ -244,9 +345,10 @@
                                 // instance, using default configuration.
                                 CKEDITOR.replace( 'requirements' );
                             </script>
-                            <span class="invalid-feedback"><?php echo $data['requirements_err']; ?></span>
+                            <span class="invalid-feedback"><?php echo $data["err_mssg"]['requirements_err']; ?></span>
                         </div>
                     </div>
+                    <!-- Skills -->
                     <div class="input-label__container mt-3">
                         <div class="label-container">
                             <label for="closing_date">Skills &amp; Competencies (Optional)</label>
@@ -260,20 +362,58 @@
                             </script>
                         </div>
                     </div>
+                    <!-- Responsibilities -->
                     <div class="input-label__container mt-3">
                         <div class="label-container">
                             <label for="closing_date">Responsibilities</label>
                         </div>
                         <div class="input-container">
-                            <textarea name="responsibilities" rows="6" id="responsibilities" class="form-control form-control-lg <?php echo (!empty($data['responsibilities_err'])) ? 'is-invalid' : ''; ?>" required="required"><?php echo $data['responsibilities']; ?></textarea>
+                            <textarea name="responsibilities" rows="6" id="responsibilities" class="form-control form-control-lg <?php echo (!empty($data["err_mssg"]['responsibilities_err'])) ? 'is-invalid' : ''; ?>" ><?php echo $data['responsibilities']; ?></textarea>
                             <script>
                                 // Replace the <textarea id="editor1"> with a CKEditor
                                 // instance, using default configuration.
                                 CKEDITOR.replace( 'responsibilities' );
                             </script>
-                            <span class="invalid-feedback"><?php echo $data['responsibilities_err']; ?></span>
+                            <span class="invalid-feedback"><?php echo $data["err_mssg"]['responsibilities_err']; ?></span>
                         </div>
                     </div>
+                    <!-- Form -->
+                    <div class="input-label__container">
+                        <div class="label-container">
+                            <label for="enquiries">Application Form</label>
+                        </div>
+                        <div class="input-container">
+                            <input type="text" name="enquiries" id="enquiries" class="form-control form-control-lg" value="<?php echo $data['enquiries']; ?>">
+                        </div>
+                    </div>
+                    <!-- For attention -->
+                    <div class="input-label__container">
+                        <div class="label-container">
+                            <label for="for_attention">For Attention</label>
+                        </div>
+                        <div class="input-container">
+                            <input type="text" name="for_attention" id="for-attention" class="form-control form-control-lg" value="<?php echo $data['for_attention']; ?>">
+                        </div>
+                    </div>
+                    <!-- Form -->
+                    <div class="input-label__container">
+                        <div class="label-container">
+                            <label for="form">Application Form</label>
+                        </div>
+                        <div class="input-container">
+                            <input type="url" name="form" id="form" class="form-control form-control-lg" value="<?php echo $data['form']; ?>">
+                        </div>
+                    </div>
+                    <!-- Full Vacancy -->
+                    <div class="input-label__container">
+                        <div class="label-container">
+                            <label for="full_vacancy">Download Full Vacancy</label>
+                        </div>
+                        <div class="input-container">
+                            <input type="url" name="full_vacancy" id="full_vacancy" class="form-control form-control-lg" value="<?php echo $data['full_vacancy']; ?>">
+                        </div>
+                    </div>
+                    <!-- Additional Info -->
                     <div class="input-label__container mt-3">
                         <div class="label-container">
                             <label for="closing_date">Additional Information</label>
@@ -287,24 +427,13 @@
                             </script>
                         </div>
                     </div>
-                    <div class="input-label__container mt-3 d-none">
-                        <div class="label-container">
-                            <label for="closing_date">Job Specification</label>
-                        </div>
-                        <div class="input-container">
-                            <textarea name="jb_specification" rows="6" id="jb_specification" class="form-control"><?php echo $data['jb_specification']; ?></textarea>
-                            <script>
-                                // Replace the <textarea id="editor1"> with a CKEditor
-                                // instance, using default configuration.
-                                CKEDITOR.replace( 'jb_specification' );
-                            </script>
-                        </div>
-                    </div>
+                    <!-- Screenshot -->
                     <div class="custom-file mt-3 mb-3">
                         <input type="file" name="image" class="custom-file-input <?php echo (!empty($data['image_name_err'])) ? 'is-invalid' : ''; ?>" id="image" value="<?php echo (!empty($data['image'])) ? $data['image'] : ''; ?>">
                         <label class="custom-file-label" for="validatedCustomFile">Faka i-screenshot... (optional)</label>
                         <span class="invalid-feedback"><?php echo $data['image_name_err']; ?></span>
                     </div>
+                    <!-- Application Method -->
                     <div class="input-label__container mb-2">
                         <div class="label-container">
                             <label for="closing_date">Ku Aplaywa Njani</label>
@@ -343,6 +472,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Button -->
                     <div class="input-label__container">
                         <div class="input-container ">
                             <button class="form-btn__primary btn-block">Cofa xa Ugqibile</button>

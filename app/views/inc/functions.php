@@ -2,6 +2,7 @@
 
 require_once 'functions/cookies/logged-in.php';
 require_once 'functions/emails/confirm_email.php';
+require_once 'functions/jobs/add_job.php';
 
 /**
  * Province and its associated slug
