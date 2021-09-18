@@ -80,6 +80,8 @@ function validate_form_input(
     $experience_err,
     $ngowantoni,
     $ngowantoni_err,
+    $employer_type,
+    $employer_type_err,
     $requirements,
     $requirements_err,
     $responsibilities,
@@ -98,6 +100,10 @@ function validate_form_input(
     }
     if ($province == "Khetha") {
         $province_err = "Kufuneka ukhethe i-province";
+    }
+    
+    if ($employer_type == "Khetha") {
+        $employer_type_err = "Employer type?";
     }
     if (empty($job_title)) {
         $job_title_err = "Job title ithini";
@@ -138,6 +144,7 @@ function validate_form_input(
         "mfundo_err" => $mfundo_err,
         "experience_err" => $experience_err,
         "ngowantoni_err" => $ngowantoni_err,
+        "employer_type_err" => $employer_type_err,
         "requirements_err" => $requirements_err,
         "responsibilities_err" => $responsibilities_err,
         "apply_nge_website_err" => $apply_nge_website_err,
