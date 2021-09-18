@@ -17,7 +17,7 @@
     
     //Get ndawoni slug
     foreach ($all_employers as $ndawo_slug) {
-        $ndawoni_slug = $ndawo_slug->ndawoni_slug;
+        $location_slug = $ndawo_slug->location_slug;
     }
     
     $range = 2;
@@ -40,7 +40,7 @@
         'page_url' => URLROOT . "/" . $_GET['url'],
         'page_title' => $employer_name . ' Jobs',
         'ndawoni' => $ndawoni,
-        'ndawoni_slug' => $ndawoni_slug,
+        'location_slug' => $location_slug,
         'ngowantoni' => $ngowantoni,
         'experience' => $experience,
         'mfundo' => $mfundo,

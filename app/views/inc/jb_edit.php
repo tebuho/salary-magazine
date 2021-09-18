@@ -40,24 +40,24 @@
             'page_title' => '',
             'pattern' => '/[^\pN\pL]+/u',
             'slug' => '',
-            'ndawoni_slug' => '',
-            'onjani_slug' => '',
+            'location_slug' => '',
+            'job_type_slug' => '',
             'experience_slug' => '',
-            'mfundo_slug' => '',
-            'ngowantoni_slug' => '',
+            'job_education_slug' => '',
+            'job_category_slug' => '',
             'gama_le_company_err' => '',
             'province_err' => '',
-            'ndawoni_pha_err' => '',
+            'location_err' => '',
             'job_title_err' => '',
-            'msebenzi_onjani_err' => '',
-            'mfundo_err' => '',
+            'job_type_err' => '',
+            'job_education_err' => '',
             'experience_err' => '',
-            'ngowantoni_err' => '',
+            'job_category_err' => '',
             'requirements_err' => '',
             'responsibilities_err' => '',
-            'apply_nge_website_err' => '',
-            'apply_ngesandla_err' => '',
-            'apply_nge_email_err' => '',
+            'job_web_application_err' => '',
+            'job_hand_application_err' => '',
+            'job_email_application_err' => '',
             'image_type_err' => '',
             'image_size_err' => '',
             'duplicate_job_err' => '',
@@ -82,7 +82,7 @@
             $data['province_err'] = 'Kufuneka ukhethe i-province';
         }
         if (empty($data['ndawoni'])) {
-            $data['ndawoni_pha_err'] = 'Ndawoni pha?';
+            $data['location_err'] = 'Ndawoni pha?';
         }
         if ($data['ndawoni'] == "Roodepoort") {
             $data['ndawoni'] = "Roodepoort, Johannesburg";
@@ -91,16 +91,16 @@
             $data['job_title_err'] = 'Job title ithini';
         }
         if ($data['msebenzi_onjani'] == 'Khetha') {
-            $data['msebenzi_onjani_err'] = 'Ngumsebenzi onjani lo?';
+            $data['job_type_err'] = 'Ngumsebenzi onjani lo?';
         }
         if ($data['mfundo'] == 'Khetha') {
-            $dta['mfundo_err'] = 'Level yemfundo ithini';
+            $dta['job_education_err'] = 'Level yemfundo ithini';
         }
         if ($data['experience'] == 'Khetha') {
             $data['experience_err'] = 'Experienceefunwayo ingakanani?';
         }
         if ($data['ngowantoni'] == 'Khetha') {
-            $data['ngowantoni_err'] = 'Ngumsebenzi wantoni lo?';
+            $data['job_category_err'] = 'Ngumsebenzi wantoni lo?';
         }
         if (empty($data['requirements'])) {
             $data['requirements_err'] = 'Requirements zithini?';
@@ -109,32 +109,32 @@
             $data['responsibilities_err'] = 'Responsibilities zithini?';
         }
         if (isset($data['apply_nge_website']) && empty($data['apply_nge_website'])) {
-            $data['apply_nge_website_err'] = 'Sicela i-link';
+            $data['job_web_application_err'] = 'Sicela i-link';
         }
         if (isset($data['apply_ngesandla']) && empty($data['apply_ngesandla'])) {
-            $data['apply_ngesandla_err'] = 'Sicela i-address';
+            $data['job_hand_application_err'] = 'Sicela i-address';
         }
         if (isset($data['apply_nge_email']) && empty($data['apply_nge_email'])) {
-            $data['apply_nge_email_err'] = 'Sicela i-email';
+            $data['job_email_application_err'] = 'Sicela i-email';
         }
 
         //Create employer slug
         $data["employer_slug"] = strtolower(preg_replace($data['pattern'], '-', $data['gama_le_company']));
         
         //Create slug for filtering by location/ndawoni
-        $data['ndawoni_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['ndawoni']));
+        $data['location_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['ndawoni']));
         
         //Create slug for filtering by mfundo
-        $data['mfundo_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['mfundo']));
+        $data['job_education_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['mfundo']));
         
         //Create slug for filtering by experience
         $data['experience_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['experience']));
         
         //Create slug for filtering by msebenzi onjani
-        $data['onjani_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['msebenzi_onjani']));
+        $data['job_type_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['msebenzi_onjani']));
         
         //Create slug for filtering by ngowantoni
-        $data['ngowantoni_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['ngowantoni']));
+        $data['job_category_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['ngowantoni']));
         
         //Create province slug
         switch ($data['province']) {
@@ -206,7 +206,7 @@
         $jb_link = URLROOT . "/" . $data['province_slug'] . "/umsebenzi/" . $data['slug'];
 
         //Make sure there no errors
-        if (empty($data['gama_le_company_err']) && empty($data['province_err']) && empty($data['ndawoni_pha_err']) && empty($data['job_title_err']) && empty($data['msebenzi_onjani_err']) && empty($dta['mfundo_err']) && empty($data['experience_err']) && empty($data['ngowantoni_err']) && empty($data['requirements_err']) && empty($data['responsibilities_err']) && empty($data['application_mode_err'])) {
+        if (empty($data['gama_le_company_err']) && empty($data['province_err']) && empty($data['location_err']) && empty($data['job_title_err']) && empty($data['job_type_err']) && empty($dta['job_education_err']) && empty($data['experience_err']) && empty($data['job_category_err']) && empty($data['requirements_err']) && empty($data['responsibilities_err']) && empty($data['application_mode_err'])) {
             
             //Validated
             if ($this->postModel->updateJob($data)) {

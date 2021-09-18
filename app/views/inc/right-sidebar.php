@@ -26,22 +26,22 @@
         <div class="related-jobs container">
             <ul>
             <?php if(!empty($data['umsebenzi']->msebenzi_onjani)) : ?>
-            <li><p class="jb-recommend m-0 p-0"><a href="<?php echo URLROOT . "/" . $province_slug . '/onjani/' . $data['umsebenzi']->onjani_slug . "/"; ?>"><?php echo $data['umsebenzi']->msebenzi_onjani; ?></a>
+            <li><p class="jb-recommend m-0 p-0"><a href="<?php echo URLROOT . "/" . $province_slug . '/onjani/' . $data['umsebenzi']->job_type_slug . "/"; ?>"><?php echo $data['umsebenzi']->msebenzi_onjani; ?></a>
             </p></li>
             <?php endif; ?>
             <?php if(!empty($data['umsebenzi']->ngowantoni)) : ?>
                 <li>
                 <p class="jb-recommend m-0 p-0">
                 <?php if($data["umsebenzi"]->ngowantoni == "Government") : ?>
-                <a href="<?php echo URLROOT . '/pages' . '/ngowantoni/' . $data['umsebenzi']->ngowantoni_slug . "/"; ?>"><?php echo $data['umsebenzi']->ngowantoni; ?></a>
+                <a href="<?php echo URLROOT . '/pages' . '/ngowantoni/' . $data['umsebenzi']->job_category_slug . "/"; ?>"><?php echo $data['umsebenzi']->ngowantoni; ?></a>
                 <?php elseif($data["umsebenzi"]->ngowantoni == "Driver") : ?>
-                <a href="<?php echo URLROOT . '/pages' . '/ngowantoni/' . $data['umsebenzi']->ngowantoni_slug . "/"; ?>">qhuba</a>
+                <a href="<?php echo URLROOT . '/pages' . '/ngowantoni/' . $data['umsebenzi']->job_category_slug . "/"; ?>">qhuba</a>
                 <?php elseif($data["umsebenzi"]->ngowantoni == "Cashier" || $data["umsebenzi"]->ngowantoni == "Security") : ?>
-                <a href="<?php echo URLROOT . '/pages' . '/ngowantoni/' . $data['umsebenzi']->ngowantoni_slug . "/"; ?>"><?php echo $data['umsebenzi']->ngowantoni; ?></a>
+                <a href="<?php echo URLROOT . '/pages' . '/ngowantoni/' . $data['umsebenzi']->job_category_slug . "/"; ?>"><?php echo $data['umsebenzi']->ngowantoni; ?></a>
                 <?php elseif($data["umsebenzi"]->ngowantoni == "Call Centre" || $data["umsebenzi"]->ngowantoni == "Municipality") : ?>
-                <a href="<?php echo URLROOT . '/pages' . '/ngowantoni/' . $data['umsebenzi']->ngowantoni_slug . "/"; ?>"><?php echo $data['umsebenzi']->ngowantoni; ?></a>
+                <a href="<?php echo URLROOT . '/pages' . '/ngowantoni/' . $data['umsebenzi']->job_category_slug . "/"; ?>"><?php echo $data['umsebenzi']->ngowantoni; ?></a>
                 <?php else : ?>
-                    <a href="<?php echo URLROOT . '/pages' . '/ngowantoni/' . $data['umsebenzi']->ngowantoni_slug . "/"; ?>"><?php echo $data['umsebenzi']->ngowantoni; ?></a>
+                    <a href="<?php echo URLROOT . '/pages' . '/ngowantoni/' . $data['umsebenzi']->job_category_slug . "/"; ?>"><?php echo $data['umsebenzi']->ngowantoni; ?></a>
                 <?php endif; ?>
             </p>
                 </li>
@@ -64,9 +64,9 @@
                 <li>            
                     <p class="jb-recommend m-0 p-0">
                 <?php if($data['umsebenzi']->ndawoni == "Various Areas") : ?>
-                <a href="<?php echo URLROOT . '/' . $province_slug . '/ndawoni/' . $data['umsebenzi']->ndawoni_slug . "/"; ?>">ndawo ezohlukeneyo</a>
+                <a href="<?php echo URLROOT . '/' . $province_slug . '/ndawoni/' . $data['umsebenzi']->location_slug . "/"; ?>">ndawo ezohlukeneyo</a>
                 <?php else : ?>
-                 <a href="<?php echo URLROOT . '/' . $province_slug . '/ndawoni/' . $data['umsebenzi']->ndawoni_slug . "/"; ?>"><?php echo $data['umsebenzi']->ndawoni; ?></a>
+                 <a href="<?php echo URLROOT . '/' . $province_slug . '/ndawoni/' . $data['umsebenzi']->location_slug . "/"; ?>"><?php echo $data['umsebenzi']->ndawoni; ?></a>
                 <?php endif; ?>
                 </p>
             </li>

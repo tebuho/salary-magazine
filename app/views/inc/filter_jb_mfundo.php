@@ -21,8 +21,8 @@
     }
     
     //Get education slug
-    foreach ($imisebenzi_mfundo as $mfundo_slug) {
-        $education_slug = $mfundo_slug->mfundo_slug;
+    foreach ($imisebenzi_mfundo as $job_education_slug) {
+        $education_slug = $job_education_slug->job_education_slug;
     }
     
     $range = 2;
@@ -50,7 +50,7 @@
         'imisebenzi' => $imisebenzi_mfundo,
         'mfundo_jobs_filtered' => $filter_mfundo,
         'mfundo' => $mfundo,
-        'mfundo_slug' => $education_slug,
+        'job_education_slug' => $education_slug,
         'ed' => '',
         'onjani' => $onjani,
         'provinces' => $provinces

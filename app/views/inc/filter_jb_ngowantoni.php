@@ -27,7 +27,7 @@
     
     //Get job function slug
     foreach ($imisebenzi_ngowantoni as $msebenzi_wantoni) {
-        $function_slug = $msebenzi_wantoni->ngowantoni_slug;
+        $function_slug = $msebenzi_wantoni->job_category_slug;
     }
     
     $range = 2;
@@ -51,7 +51,7 @@
         'page_title' => $function,
         'ndawoni' => $ndawoni,
         'ngowantoni' => $ngowantoni,
-        'ngowantoni_slug' => $function_slug,
+        'job_category_slug' => $function_slug,
         'experience' => $experiences,
         'imisebenzi' => $imisebenzi_ngowantoni,
         'mfundo_jobs_filtered' => $filter_mfundo,

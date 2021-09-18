@@ -312,7 +312,7 @@ class Admin
     public function filterImisebenziByLocation()
     {
         $this->db->query(
-            'SELECT ndawoni, ndawoni_slug, COUNT(*) AS count FROM imisebenzi
+            'SELECT ndawoni, location_slug, COUNT(*) AS count FROM imisebenzi
             
             WHERE province = "Eastern Cape" AND closing_date >=  now()
             OR province = "Eastern Cape" AND closing_date = "0000-00-00" AND timestampdiff(day, created_at, now()) <= 7
@@ -336,15 +336,15 @@ class Admin
     public function filterImisebenziByType()
     {
         $this->db->query(
-            'SELECT ngowantoni, ngowantoni_slug, COUNT(*) AS count FROM imisebenzi
+            'SELECT ngowantoni, job_category_slug, COUNT(*) AS count FROM imisebenzi
             
-            WHERE province = "Eastern Cape" AND closing_date >=  now() AND ngowantoni_slug != :empty
+            WHERE province = "Eastern Cape" AND closing_date >=  now() AND job_category_slug != :empty
             OR province = "Eastern Cape" AND closing_date = "0000-00-00" AND timestampdiff(day, created_at, now()) <= 7
-            AND ngowantoni_slug != :empty
+            AND job_category_slug != :empty
             
-            OR province = "Nationwide" AND closing_date >=  now() AND ngowantoni_slug != :empty
+            OR province = "Nationwide" AND closing_date >=  now() AND job_category_slug != :empty
             OR province = "Nationwide" AND closing_date = "0000-00-00" AND timestampdiff(day, created_at, now()) <= 7
-            AND ngowantoni_slug != :empty
+            AND job_category_slug != :empty
             
             GROUP BY ngowantoni
          ');
@@ -411,7 +411,7 @@ class Admin
     public function filterImisebenziByOnjani()
     {
         $this->db->query(
-            'SELECT msebenzi_onjani, onjani_slug, COUNT(*) AS count FROM imisebenzi
+            'SELECT msebenzi_onjani, job_type_slug, COUNT(*) AS count FROM imisebenzi
             
             WHERE province = "Eastern Cape" AND closing_date >=  now()
             OR province = "Eastern Cape" AND closing_date = "0000-00-00" AND timestampdiff(day, created_at, now()) <= 7
@@ -434,7 +434,7 @@ class Admin
     public function filterImisebenziByMfundo()
     {
         $this->db->query(
-            'SELECT mfundo, mfundo_slug, COUNT(*) AS count FROM imisebenzi
+            'SELECT mfundo, job_education_slug, COUNT(*) AS count FROM imisebenzi
             
             WHERE province = "Eastern Cape" AND closing_date >=  now()
             OR province = "Eastern Cape" AND closing_date = "0000-00-00" AND timestampdiff(day, created_at, now()) <= 7

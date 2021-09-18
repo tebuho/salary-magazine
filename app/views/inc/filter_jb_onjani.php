@@ -15,7 +15,7 @@
     }
 
     foreach($onjani_umsebenzi as $njani) {
-        $msebenzi_onjani = $njani->onjani_slug;
+        $msebenzi_onjani = $njani->job_type_slug;
     }
     
     $range = 2;
@@ -42,7 +42,7 @@
         'experience' => $experience,
         'mfundo' => $mfundo,
         'onjani' => $onjani,
-        'onjani_slug' => $msebenzi_onjani,
+        'job_type_slug' => $msebenzi_onjani,
         'area' => '',
         'njani' => '',
         'imisebenzi' => $onjani_umsebenzi,

@@ -99,7 +99,7 @@ class Jobs extends Controller
        
        //Get ndawoni slug
        foreach ($imisebenzi as $ndawo_slug) {
-           $ndawoni_slug = $ndawo_slug->ndawoni_slug;
+           $location_slug = $ndawo_slug->location_slug;
        }
         
         $range = 2;
@@ -122,7 +122,7 @@ class Jobs extends Controller
             'page_url' => URLROOT . "/" . $_GET['url'],
             'page_title' => 'Imisebenzi ese ' . $location . ", Eastern Cape",
             'ndawoni' => $ndawoni,
-            'ndawoni_slug' => $ndawoni_slug,
+            'location_slug' => $location_slug,
             'ngowantoni' => $ngowantoni,
             'experience' => $experience,
             'mfundo' => $mfundo,
@@ -180,7 +180,7 @@ class Jobs extends Controller
        }
        
         foreach($onjani_umsebenzi as $njani) {
-            $msebenzi_onjani = $njani->onjani_slug;
+            $msebenzi_onjani = $njani->job_type_slug;
         }
         
         $range = 2;
@@ -207,7 +207,7 @@ class Jobs extends Controller
             'experience' => $experience,
             'mfundo' => $mfundo,
             'onjani' => $onjani,
-            'onjani_slug' => $msebenzi_onjani,
+            'job_type_slug' => $msebenzi_onjani,
             'area' => '',
             'njani' => '',
             'imisebenzi' => $onjani_umsebenzi,
@@ -262,8 +262,8 @@ class Jobs extends Controller
        }
        
        //Get education slug
-       foreach ($imisebenzi_mfundo as $mfundo_slug) {
-           $education_slug = $mfundo_slug->mfundo_slug;
+       foreach ($imisebenzi_mfundo as $job_education_slug) {
+           $education_slug = $job_education_slug->job_education_slug;
        }
         
         $range = 2;
@@ -291,7 +291,7 @@ class Jobs extends Controller
             'imisebenzi' => $imisebenzi_mfundo,
             'mfundo_jobs_filtered' => $filter_mfundo,
             'mfundo' => $mfundo,
-            'mfundo_slug' => $education_slug,
+            'job_education_slug' => $education_slug,
             'ed' => '',
             'onjani' => $onjani,
             'provinces' => $provinces
@@ -441,7 +441,7 @@ class Jobs extends Controller
        
        //Get job function slug
        foreach ($imisebenzi_ngowantoni as $msebenzi_wantoni) {
-           $function_slug = $msebenzi_wantoni->ngowantoni_slug;
+           $function_slug = $msebenzi_wantoni->job_category_slug;
        }
         
         $range = 2;
@@ -465,7 +465,7 @@ class Jobs extends Controller
             'page_title' => $function,
             'ndawoni' => $ndawoni,
             'ngowantoni' => $ngowantoni,
-            'ngowantoni_slug' => $function_slug,
+            'job_category_slug' => $function_slug,
             'experience' => $experiences,
             'imisebenzi' => $imisebenzi_ngowantoni,
             'mfundo_jobs_filtered' => $filter_mfundo,
@@ -530,41 +530,41 @@ class Jobs extends Controller
                 'dir' => '/home/salarfng/public_html/public/img/imisebenzi/',
                 'pattern' => '/[^\pN\pL]+/u',
                 'slug' => '',
-                'ndawoni_slug' => '',
-                'onjani_slug' => '',
+                'location_slug' => '',
+                'job_type_slug' => '',
                 'experience_slug' => '',
-                'mfundo_slug' => '',
-                'ngowantoni_slug' => '',
+                'job_education_slug' => '',
+                'job_category_slug' => '',
                 'updated_at' => date('Y-m-d'),
                 'gama_le_company_err' => '',
                 'province_err' => '',
-                'ndawoni_pha_err' => '',
+                'location_err' => '',
                 'job_title_err' => '',
-                'msebenzi_onjani_err' => '',
-                'mfundo_err' => '',
+                'job_type_err' => '',
+                'job_education_err' => '',
                 'experience_err' => '',
-                'ngowantoni_err' => '',
+                'job_category_err' => '',
                 'requirements_err' => '',
                 'responsibilities_err' => '',
-                'apply_nge_website_err' => '',
-                'apply_ngesandla_err' => '',
-                'apply_nge_email_err' => '',
+                'job_web_application_err' => '',
+                'job_hand_application_err' => '',
+                'job_email_application_err' => '',
             ];
             
             //Create slug for filtering by location/ndawoni
-            $data['ndawoni_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['ndawoni']));
+            $data['location_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['ndawoni']));
             
             //Create slug for filtering by mfundo
-            $data['mfundo_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['mfundo']));
+            $data['job_education_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['mfundo']));
             
             //Create slug for filtering by experience
             $data['experience_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['experience']));
             
             //Create slug for filtering by msebenzi onjani
-            $data['onjani_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['msebenzi_onjani']));
+            $data['job_type_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['msebenzi_onjani']));
             
             //Create slug for filtering by ngowantoni
-            $data['ngowantoni_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['ngowantoni']));
+            $data['job_category_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['ngowantoni']));
             
             //Validate data
             if (empty($data['gama_le_company'])) {
@@ -574,22 +574,22 @@ class Jobs extends Controller
                 $data['province_err'] = 'Kufuneka ukhethe i-province';
             }
             if (empty($data['ndawoni'])) {
-                $data['ndawoni_pha_err'] = 'Ndawoni pha?';
+                $data['location_err'] = 'Ndawoni pha?';
             }
             if (empty($data['job_title'])) {
                 $data['job_title_err'] = 'Job title ithini';
             }
             if ($data['msebenzi_onjani'] == 'Khetha') {
-                $data['msebenzi_onjani_err'] = 'Ngumsebenzi onjani lo?';
+                $data['job_type_err'] = 'Ngumsebenzi onjani lo?';
             }
             if ($data['mfundo'] == 'Khetha') {
-                $dta['mfundo_err'] = 'Level yemfundo ithini';
+                $dta['job_education_err'] = 'Level yemfundo ithini';
             }
             if ($data['experience'] == 'Khetha') {
                 $data['experience_err'] = 'Experience efunwayo ingakanani?';
             }
             if ($data['ngowantoni'] == 'Khetha') {
-                $data['ngowantoni_err'] = 'Ngumsebenzi wantoni lo?';
+                $data['job_category_err'] = 'Ngumsebenzi wantoni lo?';
             }
             if (empty($data['requirements'])) {
                 $data['requirements_err'] = 'Requirements zithini?';
@@ -598,13 +598,13 @@ class Jobs extends Controller
                 $data['responsibilities_err'] = 'Responsibilities zithini?';
             }
             if (empty($data['apply_nge_website'])) {
-                $data['apply_nge_website_err'] = 'Sicela i-link';
+                $data['job_web_application_err'] = 'Sicela i-link';
             }
             if (empty($data['apply_ngesandla'])) {
-                $data['apply_ngesandla_err'] = 'Sicela i-address';
+                $data['job_hand_application_err'] = 'Sicela i-address';
             }
             if (empty($data['apply_nge_email'])) {
-                $data['apply_nge_email_err'] = 'Sicela i-email';
+                $data['job_email_application_err'] = 'Sicela i-email';
             }
             if (!empty($data['image_name'])) {
                 $data['image_name'] = md5($data['image_name']);
@@ -621,7 +621,7 @@ class Jobs extends Controller
             }
 
             //Make sure there no errors
-            if (empty($data['gama_le_company_err']) && empty($data['province_err']) && empty($data['ndawoni_pha_err']) && empty($data['job_title_err']) && empty($data['msebenzi_onjani_err']) && empty($dta['mfundo_err']) && empty($data['experience_err']) && empty($data['ngowantoni_err']) && empty($data['requirements_err']) && empty($data['responsibilities_err']) && empty($data['application_mode_err'])) {
+            if (empty($data['gama_le_company_err']) && empty($data['province_err']) && empty($data['location_err']) && empty($data['job_title_err']) && empty($data['job_type_err']) && empty($dta['job_education_err']) && empty($data['experience_err']) && empty($data['job_category_err']) && empty($data['requirements_err']) && empty($data['responsibilities_err']) && empty($data['application_mode_err'])) {
                 
                 //Validate image type
                 move_uploaded_file($data['tmp_name'], $data['dir'] . $data['image_name']);

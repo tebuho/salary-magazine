@@ -9,7 +9,7 @@
     <div class="province-container filter-container">
         <ul class="province filter multi-collapse collapse" id="ndawoni">
             <?php foreach ($data['ndawoni'] as $location) : ?>
-            <li><a href="<?php echo URLROOT . '/northWestJobs/ndawoni/' . $location->ndawoni_slug; ?>"><?php echo $location->ndawoni; ?> (<?php echo $location->count; ?>)</a></li>
+            <li><a href="<?php echo URLROOT . '/northWestJobs/ndawoni/' . $location->location_slug; ?>"><?php echo $location->ndawoni; ?> (<?php echo $location->count; ?>)</a></li>
             <?php endforeach; ?>
         </ul>
     </div>
@@ -22,7 +22,7 @@
     <div class="province-container filter-container">
         <ul class="province filter multi-collapse collapse" id="onjani">
             <?php foreach ($data['onjani'] as $onjani) : ?>
-            <li><a href="<?php echo URLROOT . '/northWestJobs/onjani/' . $onjani->onjani_slug; ?>"><?php echo $onjani->msebenzi_onjani; ?> (<?php echo $onjani->count; ?>)</a></li>
+            <li><a href="<?php echo URLROOT . '/northWestJobs/onjani/' . $onjani->job_type_slug; ?>"><?php echo $onjani->msebenzi_onjani; ?> (<?php echo $onjani->count; ?>)</a></li>
             <?php endforeach; ?>
         </ul>
     </div>
@@ -35,7 +35,7 @@
     <div class="province-container filter-container">
         <ul class="province filter multi-collapse collapse" id="imfundo">
             <?php foreach ($data['mfundo'] as $mfundo) : ?>
-            <li><a href="<?php echo URLROOT . '/northWestJobs/mfundo/' . $mfundo->mfundo_slug; ?>"><?php echo $mfundo->mfundo; ?> (<?php echo $mfundo->count; ?>)</a></li>
+            <li><a href="<?php echo URLROOT . '/northWestJobs/mfundo/' . $mfundo->job_education_slug; ?>"><?php echo $mfundo->mfundo; ?> (<?php echo $mfundo->count; ?>)</a></li>
             <?php endforeach; ?>
         </ul>
     </div>   
@@ -61,7 +61,7 @@
     <div class="province-container filter-container">
         <ul class="province filter multi-collapse collapse" id="owantoni">
             <?php foreach ($data['ngowantoni'] as $ngowantoni) : ?>
-            <li><a href="<?php echo URLROOT . '/northWestJobs/ngowantoni/' . $ngowantoni->ngowantoni_slug; ?>"><?php echo $ngowantoni->ngowantoni; ?> (<?php echo $ngowantoni->count; ?>)</a></li>
+            <li><a href="<?php echo URLROOT . '/northWestJobs/ngowantoni/' . $ngowantoni->job_category_slug; ?>"><?php echo $ngowantoni->ngowantoni; ?> (<?php echo $ngowantoni->count; ?>)</a></li>
             <?php endforeach; ?>
         </ul>
     </div>

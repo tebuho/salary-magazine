@@ -1,7 +1,15 @@
 <?php
-
+/**
+ * Receives data from the view
+ * Processes it and sends it to the model
+ */
 class addJobs extends Controller
 {
+    /**
+     * Checks if user is admin
+     * If user is not admin, redirects user
+     * Also connects to the add jobs and users model
+     */
     public function __construct()
     {
         if (!isset($_SESSION["id_yomntu"])) {
@@ -28,10 +36,10 @@ class addJobs extends Controller
             // $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             $data = [
-                "gama_le_company" => trim(
+                "employer" => trim(
                     filter_input(
                         INPUT_POST, 
-                        "igama_le_company", 
+                        "employer", 
                         FILTER_SANITIZE_STRING
                     )
                 ),
@@ -47,10 +55,10 @@ class addJobs extends Controller
                     FILTER_SANITIZE_STRING
                 ),
                 "province_slug" => "",
-                "ndawoni" => trim(
+                "location" => trim(
                     filter_input(
                         INPUT_POST, 
-                        "ndawoni_pha",
+                        "location",
                         FILTER_SANITIZE_STRING
                     )
                 ),
@@ -64,7 +72,7 @@ class addJobs extends Controller
                 "label" => trim(
                     filter_input(
                         INPUT_POST, 
-                        "igama_le_company", 
+                        "employer", 
                         FILTER_SANITIZE_STRING
                     ) . " " . 
                     filter_input(
@@ -74,7 +82,7 @@ class addJobs extends Controller
                     ) . " " . 
                     filter_input(
                         INPUT_POST, 
-                        "ndawoni_pha", 
+                        "location", 
                         FILTER_SANITIZE_STRING
                     )
                 ),
@@ -184,11 +192,6 @@ class addJobs extends Controller
                     "full_vacancy",
                     FILTER_SANITIZE_STRING
                 ),
-                "employer_type" => filter_input(
-                    INPUT_POST,
-                    "employer_type",
-                    FILTER_SANITIZE_STRING
-                ),
                 "image_name" => strip_tags(
                     trim($_FILES["image"]["name"])
                 ),
@@ -202,104 +205,146 @@ class addJobs extends Controller
                 "page_type" => "",
                 "page_title" => "",
                 "pattern" => "/[^\pN\pL]+/u",
-                "slug" => "",
-                "ndawoni_slug" => "",
-                "onjani_slug" => "",
+                "job_slug" => "",
+                "location_slug" => "",
+                "job_type_slug" => "",
                 "experience_slug" => "",
-                "mfundo_slug" => "",
-                "ngowantoni_slug" => "",
+                "job_education_slug" => "",
+                "job_category_slug" => "",
                 "employer_type_err" => "",
-                "gama_le_company_err" => "",
+                "employer_err" => "",
                 "province_err" => "",
-                "ndawoni_pha_err" => "",
+                "location_err" => "",
                 "job_title_err" => "",
-                "msebenzi_onjani_err" => "",
-                "mfundo_err" => "",
+                "posts_err" => "",
+                "job_type_err" => "",
+                "job_education_err" => "",
                 "experience_err" => "",
-                "ngowantoni_err" => "",
+                "job_category_err" => "",
                 "requirements_err" => "",
                 "responsibilities_err" => "",
-                "apply_nge_website_err" => "",
-                "apply_ngesandla_err" => "",
-                "apply_nge_email_err" => "",
+                "job_web_application_err" => "",
+                "job_hand_application_err" => "",
+                "job_email_application_err" => "",
                 "image_type_err" => "",
                 "image_size_err" => "",
                 "duplicate_job_err" => "",
                 "jb_specification" => ""
             ];
-            
-            correct_employer($data["gama_le_company"]);
 
-            correct_location($data["ndawoni"], $data["ndawoni_pha_err"]);
+            $data["location_err"] = Correct_location(
+                $data["location"],
+                $data["location_err"]
+            );
 
-            $data["err_mssg"] = validate_form_input(
+            $data["err_mssg"] = Validate_Form_input(
+                $data["closing_date"],
                 $data["province"],
                 $data["province_err"],
-                $data["closing_date"],
                 $data["job_title"],
                 $data["job_title_err"],
+                $data["employer"],
+                $data["employer_err"],
+                $data["posts"],
+                $data["posts_err"],
                 $data["msebenzi_onjani"],
-                $data["msebenzi_onjani_err"],
+                $data["job_type_err"],
                 $data["mfundo"],
-                $data["mfundo_err"],
+                $data["job_education_err"],
                 $data["experience"],
                 $data["experience_err"],
+                $data["ngowantoni"],
+                $data["job_category_err"],
                 $data["employer_type"],
                 $data["employer_type_err"],
-                $data["ngowantoni"],
-                $data["ngowantoni_err"],
                 $data["requirements"],
                 $data["requirements_err"],
                 $data["responsibilities"],
                 $data["responsibilities_err"],
                 $data["apply_nge_website"],
-                $data["apply_nge_website_err"],
+                $data["job_web_application_err"],
                 $data["apply_ngesandla"],
-                $data["apply_ngesandla_err"],
+                $data["job_hand_application_err"],
                 $data["apply_nge_email"],
-                $data["apply_nge_email_err"]
+                $data["job_email_application_err"]
             );
 
             //Create employer slug
-            $data["employer_slug"] = strtolower(preg_replace($data["pattern"], "-", $data["gama_le_company"]));
+            $data["employer_slug"] = strtolower(
+                preg_replace(
+                    $data["pattern"], "-", $data["employer"]
+                )
+            );
             
-            //Create slug for filtering by location/ndawoni
-            $data["ndawoni_slug"] = strtolower(preg_replace($data["pattern"], "-", $data["ndawoni"]));
+            //Create slug for filtering by location/location
+            $data["location_slug"] = strtolower(
+                preg_replace(
+                    $data["pattern"], "-", $data["location"]
+                )
+            );
             
             //Create slug for filtering by mfundo
-            $data["mfundo_slug"] = strtolower(preg_replace($data["pattern"], "-", $data["mfundo"]));
+            $data["job_education_slug"] = strtolower(
+                preg_replace(
+                    $data["pattern"], "-", $data["mfundo"]
+                )
+            );
             
             //Create slug for filtering by experience
-            $data["experience_slug"] = strtolower(preg_replace($data["pattern"], "-", $data["experience"]));
+            $data["experience_slug"] = strtolower(
+                preg_replace(
+                    $data["pattern"], "-", $data["experience"]
+                )
+            );
             
             //Create slug for filtering by msebenzi onjani
-            $data["onjani_slug"] = strtolower(preg_replace($data["pattern"], "-", $data["msebenzi_onjani"]));
+            $data["job_type_slug"] = strtolower(
+                preg_replace(
+                    $data["pattern"], "-", $data["msebenzi_onjani"]
+                )
+            );
             
             //Create slug for filtering by ngowantoni
-            $data["ngowantoni_slug"] = strtolower(preg_replace($data["pattern"], "-", $data["ngowantoni"]));
+            $data["job_category_slug"] = strtolower(
+                preg_replace(
+                    $data["pattern"], "-", $data["ngowantoni"]
+                )
+            );
             
-            create_province_slug($data["province"], $data["province_slug"]);
+            Create_Province_slug(
+                $data["province"], $data["province_slug"]
+            );
 
             //Create temp slug
-            $data["slug"] = createSlug($data["gama_le_company"] . "-" . $data["job_title"] . "-" . $data["ndawoni"] . "-" . $data["province_slug"]);
+            $data["job_slug"] = createSlug(
+                $data["employer"] . "-" . 
+                $data["job_title"] . "-" . 
+                $data["location"] . "-" . 
+                $data["province_slug"]
+            );
             
             if (!empty($data["image_name"])) {
                 $data["image_name"] = explode(".", $data["image_name"]);
-                $data["image_name"] = $data["slug"] . "-" . time() . "." . $data["image_name"][1];
+                $data["image_name"] = $data["job_slug"] . "-" . 
+                time() . "." . $data["image_name"][1];
 
                 //Validate image type
-                if ($data["image_type"] != "image/jpg" || $data["image_type"] != "image/png") {
-                    $data["image_type_err"] = "Type ye image yakho kufuneka ibe yi jpg or png";
+                if ($data["image_type"] != "image/jpg" || 
+                    $data["image_type"] != "image/png") {
+                    $data["image_type_err"] = 
+                    "Type ye image yakho kufuneka ibe yi jpg or png";
                 }
                 
                 //Validate image size
                 if ($data["image_size"] > 2000000) {
-                    $data["image_size_err"] = "Image yakho akufunekanga ibengaphezulu ko 2 MB";
+                    $data["image_size_err"] = 
+                    "Image yakho akufunekanga ibengaphezulu ko 2 MB";
                 }
             }
                 
             //If job exists and still active
             $results = $this->postModel->checkIfActive($data);
+
             foreach ($results as $result) {
                 if (count($results) > 0) {
                     $data["duplicate_job_err"] = "ERROR";
@@ -308,6 +353,7 @@ class addJobs extends Controller
                     $data["page_type"] = URLROOT . "website";
                     $data["page_url"] = URLROOT . "/" . $_GET["url"];
                     $data["page_title"] = URLROOT . "Wufake Apha Umsebenzi";
+
                     error("message_yomsebenzi", "Ukhona umsebenzi ofana nalo. Ixesha lawo alikaphelelwa. <a target='_blank' href='" . URLROOT . "/" . $result->province_slug . "/umsebenzi/" . $result->slug ."'>Wujonge apha</a>.");
                 }
             }
@@ -315,25 +361,26 @@ class addJobs extends Controller
             
             //Check if temp slug exists
             if ($results->count > 0) {  
-                $data["slug"] = $data["slug"] . "-" . $results->count;
+                $data["job_slug"] = $data["job_slug"] . "-" . $results->count;
             }
 
             if (!empty($data["image_name"])) {
-                $data["image_name"] = $data["slug"];
+                $data["image_name"] = $data["job_slug"];
             }
             
             //Make sure there are no errors
-            if (empty($data["err_mssg"]["job_title_err"]) 
+            if (empty($data["err_mssg"]["job_title_err"])
+                && empty($data["err_mssg"]["posts"]) 
+                && empty($data["err_mssg"]["employer_err"])
+                && empty($data["err_mssg"]["employer_type"])
                 && empty($data["err_mssg"]["province_err"]) 
-                && empty($data["err_mssg"]["ndawoni_pha_err"]) 
-                && empty($data["err_mssg"]["job_title_err"]) 
-                && empty($data["msebenzi_onjani_err"]) 
-                && empty($dta["err_mssg"]["mfundo_err"]) 
+                && empty($data["err_mssg"]["location_err"]) 
+                && empty($data["err_mssg"]["job_type_err"]) 
+                && empty($data["err_mssg"]["job_education_err"]) 
                 && empty($data["err_mssg"]["experience_err"]) 
-                && empty($data["err_mssg"]["ngowantoni_err"]) 
+                && empty($data["err_mssg"]["job_category_err"]) 
                 && empty($data["err_mssg"]["requirements_err"]) 
                 && empty($data["err_mssg"]["responsibilities_err"]) 
-                && empty($data["err_mssg"]["employer_type"])
             ) {
                 
                 //Move temp image
@@ -354,6 +401,7 @@ class addJobs extends Controller
             } else {
                     //Load the view with errors
                     $data["page_title"] = "ERROR";
+
                     error("message_yomsebenzi", "Ikhona into erongo. Please double check akho mistake oyenzileyo.");
                     $this->view("addJobs/add", $data);
                 }
@@ -542,11 +590,11 @@ class addJobs extends Controller
             //         "page_type" => "website",
             //         "page_url" => URLROOT . "/" . $_GET["url"],
             //         "page_title" => "Wufake Apha Umsebenzi",
-            //         "gama_le_company" => filter_var($company, FILTER_SANITIZE_STRING),
+            //         "employer" => filter_var($company, FILTER_SANITIZE_STRING),
             //         "id_yomntu" => 2055,
             //         "province" => filter_var($province, FILTER_SANITIZE_STRING),
             //         "province_slug" => "",
-            //         "ndawoni" => filter_var($city, FILTER_SANITIZE_STRING),
+            //         "location" => filter_var($city, FILTER_SANITIZE_STRING),
             //         "job_title" => filter_var($title, FILTER_SANITIZE_STRING),
             //         "label" => filter_var($company, FILTER_SANITIZE_STRING) . " " . filter_var($title, FILTER_SANITIZE_STRING) . " " . filter_var($city, FILTER_SANITIZE_STRING),
             //         "closing_date" => $closing_date,
@@ -570,33 +618,33 @@ class addJobs extends Controller
             //         "tmp_name" => "",
             //         "dir" => "",
             //         "pattern" => "/[^\pN\pL]+/u",
-            //         "slug" => "",
-            //         "ndawoni_slug" => "",
-            //         "onjani_slug" => "",
+            //         "job_slug" => "",
+            //         "location_slug" => "",
+            //         "job_type_slug" => "",
             //         "experience_slug" => "",
-            //         "mfundo_slug" => "",
-            //         "ngowantoni_slug" => ""
+            //         "job_education_slug" => "",
+            //         "job_category_slug" => ""
             //         ];
                 
-            //         $data["employer_slug"] = strtolower(preg_replace($data["pattern"], "-", $data["gama_le_company"]));
+            //         $data["employer_slug"] = strtolower(preg_replace($data["pattern"], "-", $data["employer"]));
                     
             //         //Validate data
     
                     
-            //         //Create slug for filtering by location/ndawoni
-            //         $data["ndawoni_slug"] = strtolower(preg_replace($data["pattern"], "-", $data["ndawoni"]));
+            //         //Create slug for filtering by location/location
+            //         $data["location_slug"] = strtolower(preg_replace($data["pattern"], "-", $data["location"]));
                     
             //         //Create slug for filtering by mfundo
-            //         $data["mfundo_slug"] = strtolower(preg_replace($data["pattern"], "-", $data["mfundo"]));
+            //         $data["job_education_slug"] = strtolower(preg_replace($data["pattern"], "-", $data["mfundo"]));
                     
             //         //Create slug for filtering by experience
             //         $data["experience_slug"] = strtolower(preg_replace($data["pattern"], "-", $data["experience"]));
                     
             //         //Create slug for filtering by msebenzi onjani
-            //         $data["onjani_slug"] = strtolower(preg_replace($data["pattern"], "-", $data["msebenzi_onjani"]));
+            //         $data["job_type_slug"] = strtolower(preg_replace($data["pattern"], "-", $data["msebenzi_onjani"]));
                     
             //         //Create slug for filtering by ngowantoni
-            //         $data["ngowantoni_slug"] = strtolower(preg_replace($data["pattern"], "-", $data["ngowantoni"]));
+            //         $data["job_category_slug"] = strtolower(preg_replace($data["pattern"], "-", $data["ngowantoni"]));
                     
             //         //Create province slug
             //         switch ($data["province"]) {
@@ -637,14 +685,14 @@ class addJobs extends Controller
             //         if (count($results) === 0) {
                         
             //             //Create temp slug
-            //             $data["slug"] = createSlug($data["gama_le_company"] . "-" . $data["job_title"] . "-" . $data["ndawoni"] . "-" . $data["province_slug"]);
+            //             $data["job_slug"] = createSlug($data["employer"] . "-" . $data["job_title"] . "-" . $data["location"] . "-" . $data["province_slug"]);
                             
             //             $results = $this->postModel->checkSlug($data);
                         
             //             //Check if temp slug exists
             //             if ($results->count > 0) {
                                 
-            //                     $data["slug"] = $data["slug"] . "-" . $results->count;
+            //                     $data["job_slug"] = $data["job_slug"] . "-" . $results->count;
             //             }
             //             $this->postModel->addJob($data);
                        
@@ -656,9 +704,9 @@ class addJobs extends Controller
             $data["page_url"] = URLROOT . "/" . $_GET["url"];
             $data["page_title"] = "Add New Job";
             $data["job_title"] = "";
-            $data["gama_le_company"] = "";
+            $data["employer"] = "";
             $data["province"] = "";
-            $data["ndawoni"] = "";
+            $data["location"] = "";
             $data["msebenzi_onjani"] = "";
             $data["mfundo"] = "";
             $data["closing_date"] = "";

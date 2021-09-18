@@ -54,18 +54,18 @@ class addJob
                 :province AS province_name,
                 :province_slug,
                 :ndawoni AS area,
-                :ndawoni_slug AS area_slug,
+                :location_slug AS area_slug,
                 :job_title AS title,
                 :label AS label,
                 :closing_date AS end_date,
                 :msebenzi_onjani AS jb_onjani,
-                :onjani_slug AS field,
+                :job_type_slug AS field,
                 :mfundo AS education,
-                :mfundo_slug AS education_slug,
+                :job_education_slug AS education_slug,
                 :experience AS iminyaka,
                 :experience_slug AS iminyaka_slug,
                 :ngowantoni AS Category,
-                :ngowantoni_slug AS category_slug,
+                :job_category_slug AS category_slug,
                 :purpose AS job_purpose,
                 :requirements AS job_requirements,
                 :skills_competencies AS job_skills,
@@ -99,18 +99,18 @@ class addJob
         $this->db->bind(':province', $data['province']);
         $this->db->bind(':province_slug', $data['province_slug']);
         $this->db->bind(":ndawoni", $data['ndawoni']);
-        $this->db->bind(":ndawoni_slug", $data['ndawoni_slug']);
+        $this->db->bind(":location_slug", $data['location_slug']);
         $this->db->bind(':job_title', $data['job_title']);
         $this->db->bind(':label', $data['label']);
         $this->db->bind(':closing_date', $data['closing_date']);
         $this->db->bind(':msebenzi_onjani', $data['msebenzi_onjani']);
-        $this->db->bind(':onjani_slug', $data['onjani_slug']);
+        $this->db->bind(':job_type_slug', $data['job_type_slug']);
         $this->db->bind(':mfundo', $data['mfundo']);
-        $this->db->bind(':mfundo_slug', $data['mfundo_slug']);
+        $this->db->bind(':job_education_slug', $data['job_education_slug']);
         $this->db->bind(':experience', $data['experience']);
         $this->db->bind(':experience_slug', $data['experience_slug']);
         $this->db->bind(':ngowantoni', $data['ngowantoni']);
-        $this->db->bind(':ngowantoni_slug', $data['ngowantoni_slug']);
+        $this->db->bind(':job_category_slug', $data['job_category_slug']);
         $this->db->bind(':purpose', $data['purpose']);
         $this->db->bind(':requirements', $data['requirements']);
         $this->db->bind(':skills_competencies', $data['skills_competencies']);

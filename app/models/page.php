@@ -115,31 +115,31 @@ class page
     public function filterImisebenziByLocation()
     {
         $this->db->query(
-            '(SELECT `province`, `ndawoni`, `ndawoni_slug`, COUNT(*) AS count FROM `imisebenzi` WHERE `province` = "Eastern Cape" AND `ndawoni` != "Various Areas" AND `closing_date` >=  now()
+            '(SELECT `province`, `ndawoni`, `location_slug`, COUNT(*) AS count FROM `imisebenzi` WHERE `province` = "Eastern Cape" AND `ndawoni` != "Various Areas" AND `closing_date` >=  now()
             OR `province` = "Eastern Cape" AND `closing_date` = "0000-00-00" AND timestampdiff(day, `created_at`, now()) <= 7 GROUP BY `ndawoni` ORDER BY RAND() LIMIT 6)
             UNION
-            (SELECT `province`, `ndawoni`, `ndawoni_slug`, COUNT(*) AS count FROM `imisebenzi` WHERE `province` = "Western Cape" AND `ndawoni` != "Various Areas" AND `closing_date` >=  now()
+            (SELECT `province`, `ndawoni`, `location_slug`, COUNT(*) AS count FROM `imisebenzi` WHERE `province` = "Western Cape" AND `ndawoni` != "Various Areas" AND `closing_date` >=  now()
             OR `province` = "Western Cape" AND `closing_date` = "0000-00-00" AND timestampdiff(day, `created_at`, now()) <= 7 GROUP BY `ndawoni` ORDER BY RAND() LIMIT 6)
             UNION
-            (SELECT `province`, `ndawoni`, `ndawoni_slug`, COUNT(*) AS count FROM `imisebenzi` WHERE `province` = "Gauteng" AND `ndawoni` != "Various Areas" AND `closing_date` >=  now()
+            (SELECT `province`, `ndawoni`, `location_slug`, COUNT(*) AS count FROM `imisebenzi` WHERE `province` = "Gauteng" AND `ndawoni` != "Various Areas" AND `closing_date` >=  now()
             OR `province` = "Gauteng" AND `closing_date` = "0000-00-00" AND timestampdiff(day, `created_at`, now()) <= 7 GROUP BY `ndawoni` ORDER BY RAND() LIMIT 6)
             UNION
-            (SELECT `province`, `ndawoni`, `ndawoni_slug`, COUNT(*) AS count FROM `imisebenzi` WHERE `province` = "Free State" AND `ndawoni` != "Various Areas" AND `closing_date` >=  now()
+            (SELECT `province`, `ndawoni`, `location_slug`, COUNT(*) AS count FROM `imisebenzi` WHERE `province` = "Free State" AND `ndawoni` != "Various Areas" AND `closing_date` >=  now()
             OR `province` = "Free State" AND `closing_date` = "0000-00-00" AND timestampdiff(day, `created_at`, now()) <= 7 GROUP BY `ndawoni` ORDER BY RAND() LIMIT 6)
             UNION
-            (SELECT `province`, `ndawoni`, `ndawoni_slug`, COUNT(*) AS count FROM `imisebenzi` WHERE `province` = "KwaZulu-Natal" AND `ndawoni` != "Various Areas" AND `closing_date` >=  now()
+            (SELECT `province`, `ndawoni`, `location_slug`, COUNT(*) AS count FROM `imisebenzi` WHERE `province` = "KwaZulu-Natal" AND `ndawoni` != "Various Areas" AND `closing_date` >=  now()
             OR `province` = "KwaZulu-Natal" AND `closing_date` = "0000-00-00" AND timestampdiff(day, `created_at`, now()) <= 7 GROUP BY `ndawoni` ORDER BY RAND() LIMIT 6)
             UNION
-            (SELECT `province`, `ndawoni`, `ndawoni_slug`, COUNT(*) AS count FROM `imisebenzi` WHERE `province` = "Limpopo" AND `ndawoni` != "Various Areas" AND `closing_date` >=  now()
+            (SELECT `province`, `ndawoni`, `location_slug`, COUNT(*) AS count FROM `imisebenzi` WHERE `province` = "Limpopo" AND `ndawoni` != "Various Areas" AND `closing_date` >=  now()
             OR `province` = "Limpopo" AND `closing_date` = "0000-00-00" AND timestampdiff(day, `created_at`, now()) <= 7 GROUP BY `ndawoni` ORDER BY RAND() LIMIT 6)
             UNION
-            (SELECT `province`, `ndawoni`, `ndawoni_slug`, COUNT(*) AS count FROM `imisebenzi` WHERE `province` = "Mpumalanga" AND `ndawoni` != "Various Areas" AND `closing_date` >=  now()
+            (SELECT `province`, `ndawoni`, `location_slug`, COUNT(*) AS count FROM `imisebenzi` WHERE `province` = "Mpumalanga" AND `ndawoni` != "Various Areas" AND `closing_date` >=  now()
             OR `province` = "Mpumalanga" AND `closing_date` = "0000-00-00" AND timestampdiff(day, `created_at`, now()) <= 7 GROUP BY `ndawoni` ORDER BY RAND() LIMIT 6)
             UNION
-            (SELECT `province`, `ndawoni`, `ndawoni_slug`, COUNT(*) AS count FROM `imisebenzi` WHERE `province` = "Northern Cape" AND `ndawoni` != "Various Areas" AND `closing_date` >=  now()
+            (SELECT `province`, `ndawoni`, `location_slug`, COUNT(*) AS count FROM `imisebenzi` WHERE `province` = "Northern Cape" AND `ndawoni` != "Various Areas" AND `closing_date` >=  now()
             OR `province` = "Northern Cape" AND `closing_date` = "0000-00-00" AND timestampdiff(day, `created_at`, now()) <= 7 GROUP BY `ndawoni` ORDER BY RAND() LIMIT 6)
             UNION
-            (SELECT `province`, `ndawoni`, `ndawoni_slug`, COUNT(*) AS count FROM `imisebenzi` WHERE `province` = "North West" AND `ndawoni` != "Various Areas" AND `closing_date` >=  now()
+            (SELECT `province`, `ndawoni`, `location_slug`, COUNT(*) AS count FROM `imisebenzi` WHERE `province` = "North West" AND `ndawoni` != "Various Areas" AND `closing_date` >=  now()
             OR `province` = "North West" AND `closing_date` = "0000-00-00" AND timestampdiff(day, `created_at`, now()) <= 7 GROUP BY `ndawoni` ORDER BY RAND() LIMIT 6)
          ');
         $results = $this->db->resultSet();
@@ -157,13 +157,13 @@ class page
         $this->db->query(
             'SELECT * FROM imisebenzi
             
-            WHERE province = "Western Cape" AND closing_date >=  now() AND ndawoni_slug = :ndawoni
+            WHERE province = "Western Cape" AND closing_date >=  now() AND location_slug = :ndawoni
             OR province = "Western Cape" AND closing_date = "0000-00-00" AND timestampdiff(day, created_at, now()) <= 7
-            AND ndawoni_slug = :ndawoni
+            AND location_slug = :ndawoni
             
-            OR province = "Nationwide" AND closing_date >=  now() AND ndawoni_slug = :ndawoni
+            OR province = "Nationwide" AND closing_date >=  now() AND location_slug = :ndawoni
             OR province = "Nationwide" AND closing_date = "0000-00-00" AND timestampdiff(day, created_at, now()) <= 7
-            AND ndawoni_slug = :ndawoni
+            AND location_slug = :ndawoni
             
             ORDER BY created_at DESC
          ');
@@ -220,11 +220,11 @@ class page
     public function filterImisebenziByType()
     {
         $this->db->query(
-            'SELECT ngowantoni, ngowantoni_slug, COUNT(*) AS count FROM imisebenzi
+            'SELECT ngowantoni, job_category_slug, COUNT(*) AS count FROM imisebenzi
             
-            WHERE closing_date >=  now() AND ngowantoni_slug != :empty
+            WHERE closing_date >=  now() AND job_category_slug != :empty
             OR closing_date = "0000-00-00" AND timestampdiff(day, created_at, now()) <= 7
-            AND ngowantoni_slug != :empty
+            AND job_category_slug != :empty
             GROUP BY ngowantoni
          ');
         $this->db->bind(":namhlanje", date("Y-m-d"));
@@ -244,9 +244,9 @@ class page
         $this->db->query(
             'SELECT * FROM imisebenzi
             
-            WHERE closing_date >=  now() AND ngowantoni_slug = :ngowantoni
+            WHERE closing_date >=  now() AND job_category_slug = :ngowantoni
             OR closing_date = "0000-00-00" AND timestampdiff(day, created_at, now()) <= 7
-            AND ngowantoni_slug = :ngowantoni
+            AND job_category_slug = :ngowantoni
             ORDER BY created_at DESC
          ');
         $this->db->bind(":ngowantoni", $type);
@@ -462,7 +462,7 @@ class page
     public function filterImisebenziByOnjani()
     {
         $this->db->query(
-            'SELECT msebenzi_onjani, onjani_slug, COUNT(*) AS count FROM imisebenzi
+            'SELECT msebenzi_onjani, job_type_slug, COUNT(*) AS count FROM imisebenzi
             
             WHERE closing_date >=  now()
             OR closing_date = "0000-00-00" AND timestampdiff(day, created_at, now()) <= 7
@@ -487,13 +487,13 @@ class page
         $this->db->query(
             'SELECT * FROM imisebenzi
             
-            WHERE closing_date >=  now() AND onjani_slug = :onjani
+            WHERE closing_date >=  now() AND job_type_slug = :onjani
             OR closing_date = "0000-00-00" AND timestampdiff(day, created_at, now()) <= 7
-            AND onjani_slug = :onjani
+            AND job_type_slug = :onjani
             
-            OR province = closing_date >=  now() AND onjani_slug = :onjani
+            OR province = closing_date >=  now() AND job_type_slug = :onjani
             OR province = closing_date = "0000-00-00" AND timestampdiff(day, created_at, now()) <= 7
-            AND onjani_slug = :onjani
+            AND job_type_slug = :onjani
             
             ORDER BY created_at DESC
          ');
@@ -549,7 +549,7 @@ class page
     public function filterImisebenziByMfundo()
     {
         $this->db->query(
-            'SELECT mfundo, mfundo_slug, COUNT(*) AS count FROM imisebenzi
+            'SELECT mfundo, job_education_slug, COUNT(*) AS count FROM imisebenzi
             
             WHERE province = "Western Cape" AND closing_date >=  now()
             OR province = "Western Cape" AND closing_date = "0000-00-00" AND timestampdiff(day, created_at, now()) <= 7
@@ -575,13 +575,13 @@ class page
         $this->db->query(
             'SELECT * FROM imisebenzi
             
-            WHERE province = "Western Cape" AND closing_date >=  now() AND mfundo_slug = :mfundo
+            WHERE province = "Western Cape" AND closing_date >=  now() AND job_education_slug = :mfundo
             OR province = "Western Cape" AND closing_date = "0000-00-00" AND timestampdiff(day, created_at, now()) <= 7
-            AND mfundo_slug = :mfundo
+            AND job_education_slug = :mfundo
             
-            OR province = "Nationwide" AND closing_date >=  now() AND mfundo_slug = :mfundo
+            OR province = "Nationwide" AND closing_date >=  now() AND job_education_slug = :mfundo
             OR province = "Nationwide" AND closing_date = "0000-00-00" AND timestampdiff(day, created_at, now()) <= 7
-            AND mfundo_slug = :mfundo
+            AND job_education_slug = :mfundo
             
             ORDER BY created_at DESC
          ');
@@ -685,18 +685,18 @@ class page
                 gama_le_company = :gama_le_company,
                 province = :province,
                 ndawoni = :ndawoni,
-                ndawoni_slug = :ndawoni_slug,
+                location_slug = :location_slug,
                 job_title = :job_title,
                 label = :label,
                 closing_date = :closing_date,
                 msebenzi_onjani = :msebenzi_onjani,
-                onjani_slug = :onjani_slug,
+                job_type_slug = :job_type_slug,
                 mfundo = :mfundo,
-                mfundo_slug = :mfundo_slug,
+                job_education_slug = :job_education_slug,
                 experience = :experience,
                 experience_slug = :experience_slug,
                 ngowantoni = :ngowantoni,
-                ngowantoni_slug = :ngowantoni_slug,
+                job_category_slug = :job_category_slug,
                 purpose = :purpose,
                 requirements = :requirements,
                 skills_competencies = :skills_competencies,
@@ -717,18 +717,18 @@ class page
         $this->db->bind(':gama_le_company', $data['gama_le_company']);
         $this->db->bind(':province', $data['province']);
         $this->db->bind(":ndawoni", $data['ndawoni']);
-        $this->db->bind(":ndawoni_slug", $data['ndawoni_slug']);
+        $this->db->bind(":location_slug", $data['location_slug']);
         $this->db->bind(':job_title', $data['job_title']);
         $this->db->bind(':label', $data['label']);
         $this->db->bind(':closing_date', $data['closing_date']);
         $this->db->bind(':msebenzi_onjani', $data['msebenzi_onjani']);
-        $this->db->bind(':onjani_slug', $data['onjani_slug']);
+        $this->db->bind(':job_type_slug', $data['job_type_slug']);
         $this->db->bind(':mfundo', $data['mfundo']);
-        $this->db->bind(':mfundo_slug', $data['mfundo_slug']);
+        $this->db->bind(':job_education_slug', $data['job_education_slug']);
         $this->db->bind(':experience', $data['experience']);
         $this->db->bind(':experience_slug', $data['experience_slug']);
         $this->db->bind(':ngowantoni', $data['ngowantoni']);
-        $this->db->bind(':ngowantoni_slug', $data['ngowantoni_slug']);
+        $this->db->bind(':job_category_slug', $data['job_category_slug']);
         $this->db->bind(':purpose', $data['purpose']);
         $this->db->bind(':requirements', $data['requirements']);
         $this->db->bind(':skills_competencies', $data['skills_competencies']);
@@ -758,8 +758,8 @@ class page
     {
         $this->db->query(
             "SELECT gama_le_company, employer_slug, province,
-            ndawoni, ndawoni_slug, job_title, msebenzi_onjani, onjani_slug, mfundo,
-            experience, ngowantoni, ngowantoni_slug, requirements, purpose, skills_competencies, 
+            ndawoni, location_slug, job_title, msebenzi_onjani, job_type_slug, mfundo,
+            experience, ngowantoni, job_category_slug, requirements, purpose, skills_competencies, 
             responsibilities, additional_info, apply_nge_website, apply_ngesandla,
             apply_nge_email, image, id_yomntu, label, closing_date,
             jb_specification, slug, id, created_at,

@@ -26,17 +26,34 @@
                             <label for="posts">No. of Posts</label>
                         </div>
                         <div class="input-container">
-                            <input type="number" name="posts" class="form-control form-control-lg" value="<?php echo $data['posts']; ?>">
+                            <input type="number" name="posts" class="form-control form-control-lg <?php echo (!empty($data["err_mssg"]['posts_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['posts']; ?>">
+                            <span class="invalid-feedback"><?php echo $data["err_mssg"]['posts_err']; ?></span>
                         </div>
                     </div>
                     <!-- Employer -->
                     <div class="input-label__container">
                         <div class="label-container">
-                            <label for="igama_le_company">Igama le Company</label>
+                            <label for="employer">Employer Name</label>
                         </div>
                         <div class="input-container">
-                            <input type="text" name="igama_le_company" id="igama-le-company" class="form-control form-control-lg <?php echo (!empty($data['gama_le_company_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['gama_le_company']; ?>" >
-                            <span class="invalid-feedback"><?php echo $data['gama_le_company_err']; ?></span>
+                            <input type="text" name="employer" id="igama-le-company" class="form-control form-control-lg <?php echo (!empty($data["err_mssg"]['employer_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['employer']; ?>" >
+                            <span class="invalid-feedback"><?php echo $data["err_mssg"]['employer_err']; ?></span>
+                        </div>
+                    </div>
+                    <!-- Employer type -->
+                    <div class="input-label__container">
+                        <div class="label-container">
+                            <label for="license">Employer Type</label>
+                        </div>
+                        <div class="input-container">
+                            <select name="employer_type" class="form-control form-control-lg <?php echo (!empty($data["err_mssg"]['job_education_err'])) ? 'is-invalid' : ''; ?>" id="employer_type">
+                                <option class="form-control" value="<?php echo empty($data['employer_type']) ? 'Khetha' : $data['employer_type']; ?>"><?php echo empty($data['employer_type']) ? 'Khetha' : $data['employer_type']; ?></option>
+                                <option class="form-control" value="Company">Company</option>
+                                <option class="form-control" value="Government">Government</option>
+                                <option class="form-control" value="Municipality">Municipality</option>
+                                <option class="form-control" value="NGO">NGO</option>
+                            </select>
+                            <span class="invalid-feedback"><?php echo $data["err_mssg"]['employer_type_err']; ?></span>
                         </div>
                     </div>
                     <!-- Provinces -->
@@ -45,7 +62,7 @@
                             <label for="Province">Province</label>
                         </div>
                         <div class="input-container">
-                            <select name="job_province" class="form-control form-control-lg <?php echo (!empty($data['province_err'])) ? 'is-invalid' : ''; ?>" id="">
+                            <select name="job_province" class="form-control form-control-lg <?php echo (!empty($data["err_mssg"]['province_err'])) ? 'is-invalid' : ''; ?>" id="">
                                 <option class="form-control" value="<?php echo empty($data['province']) ? 'Khetha' : $data['province']; ?>"><?php echo empty($data['province']) ? 'Khetha' : $data['province']; ?></option>
                                 <option class="form-control" value="Eastern Cape">Eastern Cape</option>
                                 <option class="form-control" value="Free State">Free State</option>
@@ -58,26 +75,26 @@
                                 <option class="form-control" value="Western Cape">Western Cape</option>
                                 <option class="form-control" value="Nationwide">Nationwide</option>
                             </select>
-                            <span class="invalid-feedback"><?php echo $data['province_err']; ?></span>
+                            <span class="invalid-feedback"><?php echo $data["err_mssg"]['province_err']; ?></span>
                         </div>
                     </div>
                     <!-- Location -->
                     <div class="input-label__container">
                         <div class="label-container">
-                            <label for="Ndawoni">Ndawoni Pha</label>
+                            <label for="location">Location</label>
                         </div>
                         <div class="input-container">
-                            <input type="text" name="ndawoni_pha" id="igama-le-company" class="form-control form-control-lg <?php echo (!empty($data['ndawoni_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['ndawoni']; ?>" >
-                            <span class="invalid-feedback"><?php echo $data['ndawoni_err']; ?></span>
+                            <input type="text" name="location" id="location" class="form-control form-control-lg <?php echo (!empty($data['location_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['location']; ?>" >
+                            <span class="invalid-feedback"><?php echo $data['location_err']; ?></span>
                         </div>
                     </div>
-                    <!-- Onjani -->
+                    <!-- Job type -->
                     <div class="input-label__container">
                         <div class="label-container">
                             <label for="Msebenzi Onjani">Ngumsebenzi Onjani</label>
                         </div>
                         <div class="input-container">
-                            <select name="msebenzi_onjani" class="form-control form-control-lg <?php echo (!empty($data["err_mssg"]['msebenzi_onjani_err'])) ? 'is-invalid' : ''; ?>" id="">
+                            <select name="msebenzi_onjani" class="form-control form-control-lg <?php echo (!empty($data["err_mssg"]['job_type_err'])) ? 'is-invalid' : ''; ?>" id="">
                                 <option class="form-control" value="<?php echo empty($data['msebenzi_onjani']) ? 'Khetha' : $data['msebenzi_onjani']; ?>"><?php echo empty($data['msebenzi_onjani']) ? 'Khetha' : $data['msebenzi_onjani']; ?></option>
                                 <option class="form-control" value="Apprenticeship">Apprenticeship</option>
                                 <option class="form-control" value="Bursary">Bursary</option>
@@ -91,7 +108,7 @@
                                 <option class="form-control" value="Scholarship">Scholarship</option>
                                 <option class="form-control" value="Volunteer">Volunteer</option>
                             </select>
-                            <span class="invalid-feedback"><?php echo $data["err_mssg"]['msebenzi_onjani_err']; ?></span>
+                            <span class="invalid-feedback"><?php echo $data["err_mssg"]['job_type_err']; ?></span>
                         </div>
                     </div>
                     <!-- Education -->
@@ -100,7 +117,7 @@
                             <label for="Msebenzi Onjani">Level ye Mfundo</label>
                         </div>
                         <div class="input-container">
-                            <select name="mfundo" class="form-control form-control-lg <?php echo (!empty($data["err_mssg"]['mfundo_err'])) ? 'is-invalid' : ''; ?>" id="">
+                            <select name="mfundo" class="form-control form-control-lg <?php echo (!empty($data["err_mssg"]['job_education_err'])) ? 'is-invalid' : ''; ?>" id="">
                                 <option class="form-control" value="<?php echo empty($data['mfundo']) ? 'Khetha' : $data['mfundo']; ?>"><?php echo empty($data['mfundo']) ? 'Khetha' : $data['mfundo']; ?></option>
                                 <option class="form-control" value="Grade 4 - 9/NQF Level 1">Grade 4 - 9/NQF Level 1</option>
                                 <option class="form-control" value="Grade 10/N1/NQF Level 2">Grade 10/N1/NQF Level 2</option>
@@ -113,7 +130,7 @@
                                 <option class="form-control" value="Master's">Master's</option>
                                 <option class="form-control" value="Doctorate">Doctorate</option>
                             </select>
-                            <span class="invalid-feedback"><?php echo $data["err_mssg"]["mfundo_err"]; ?></span>
+                            <span class="invalid-feedback"><?php echo $data["err_mssg"]["job_education_err"]; ?></span>
                         </div>
                     </div>
                     <!-- Experience -->
@@ -140,7 +157,7 @@
                             <label for="Ngowantoni">Ngowantoni</label>
                         </div>
                         <div class="input-container">
-                            <select name="ngowantoni" class="form-control form-control-lg <?php echo (!empty($data["err_mssg"]['ngowantoni_err'])) ? 'is-invalid' : ''; ?>" id="">
+                            <select name="ngowantoni" class="form-control form-control-lg <?php echo (!empty($data["err_mssg"]['job_category_err'])) ? 'is-invalid' : ''; ?>" id="">
                                 <option class="form-control" value="<?php echo empty($data['ngowantoni']) ? 'Khetha' : $data['ngowantoni']; ?>"><?php echo empty($data['ngowantoni']) ? 'Khetha' : $data['ngowantoni']; ?></option>
                                 <option class="form-control" value="Accounting">Accounting</option>
                                 <option class="form-control" value="Actuary">Actuary</option>
@@ -221,7 +238,7 @@
                                 <option class="form-control" value="Waitor/Waitress">Waitor/Waitress</option>
                                 <option class="form-control" value="Warehouse">Warehouse</option>
                             </select>
-                            <span class="invalid-feedback"><?php echo $data["err_mssg"]['ngowantoni_err']; ?></span>
+                            <span class="invalid-feedback"><?php echo $data["err_mssg"]['job_category_err']; ?></span>
                         </div>
                     </div>
                     <!-- Ref No. -->
@@ -275,22 +292,6 @@
                                 <option class="form-control" value="Yes">Yes</option>
                                 <option class="form-control" value="No">No</option>
                             </select>
-                        </div>
-                    </div>
-                    <!-- Employer type -->
-                    <div class="input-label__container">
-                        <div class="label-container">
-                            <label for="license">Employer Type</label>
-                        </div>
-                        <div class="input-container">
-                            <select name="employer_type" class="form-control form-control-lg <?php echo (!empty($data["err_mssg"]['mfundo_err'])) ? 'is-invalid' : ''; ?>" id="employer_type">
-                                <option class="form-control" value="<?php echo empty($data['employer_type']) ? 'Khetha' : $data['employer_type']; ?>"><?php echo empty($data['employer_type']) ? 'Khetha' : $data['employer_type']; ?></option>
-                                <option class="form-control" value="Company">Company</option>
-                                <option class="form-control" value="Government">Government</option>
-                                <option class="form-control" value="Municipality">Municipality</option>
-                                <option class="form-control" value="NGO">NGO</option>
-                            </select>
-                            <span class="invalid-feedback"><?php echo $data["err_mssg"]['employer_type_err']; ?></span>
                         </div>
                     </div>
                     <!-- Facebook -->
