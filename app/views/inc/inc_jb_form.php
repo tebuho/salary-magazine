@@ -283,13 +283,14 @@
                             <label for="license">Employer Type</label>
                         </div>
                         <div class="input-container">
-                            <select name="employer_type" class="form-control form-control-lg" id="employer_type">
+                            <select name="employer_type" class="form-control form-control-lg <?php echo (!empty($data["err_mssg"]['mfundo_err'])) ? 'is-invalid' : ''; ?>" id="employer_type">
                                 <option class="form-control" value="<?php echo empty($data['employer_type']) ? 'Khetha' : $data['employer_type']; ?>"><?php echo empty($data['employer_type']) ? 'Khetha' : $data['employer_type']; ?></option>
                                 <option class="form-control" value="Company">Company</option>
                                 <option class="form-control" value="Government">Government</option>
                                 <option class="form-control" value="Municipality">Municipality</option>
                                 <option class="form-control" value="NGO">NGO</option>
                             </select>
+                            <span class="invalid-feedback"><?php echo $data["err_mssg"]['employer_type_err']; ?></span>
                         </div>
                     </div>
                     <!-- Facebook -->
@@ -380,7 +381,7 @@
                     <!-- Form -->
                     <div class="input-label__container">
                         <div class="label-container">
-                            <label for="enquiries">Application Form</label>
+                            <label for="enquiries">Enquiries</label>
                         </div>
                         <div class="input-container">
                             <input type="text" name="enquiries" id="enquiries" class="form-control form-control-lg" value="<?php echo $data['enquiries']; ?>">
