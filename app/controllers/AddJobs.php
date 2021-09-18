@@ -184,6 +184,11 @@ class addJobs extends Controller
                     "full_vacancy",
                     FILTER_SANITIZE_STRING
                 ),
+                "employer_type" => filter_input(
+                    INPUT_POST,
+                    "employer_type",
+                    FILTER_SANITIZE_STRING
+                ),
                 "image_name" => strip_tags(
                     trim($_FILES["image"]["name"])
                 ),
@@ -203,6 +208,7 @@ class addJobs extends Controller
                 "experience_slug" => "",
                 "mfundo_slug" => "",
                 "ngowantoni_slug" => "",
+                "employer_type_err" => "",
                 "gama_le_company_err" => "",
                 "province_err" => "",
                 "ndawoni_pha_err" => "",
@@ -238,6 +244,8 @@ class addJobs extends Controller
                 $data["mfundo_err"],
                 $data["experience"],
                 $data["experience_err"],
+                $data["employer_type"],
+                $data["employer_type_err"],
                 $data["ngowantoni"],
                 $data["ngowantoni_err"],
                 $data["requirements"],
@@ -315,10 +323,25 @@ class addJobs extends Controller
             }
             
             //Make sure there are no errors
-            if (empty($data["err_mssg"]["job_title_err"]) && empty($data["province_err"]) && empty($data["ndawoni_pha_err"]) && empty($data["job_title_err"]) && empty($data["msebenzi_onjani_err"]) && empty($dta["mfundo_err"]) && empty($data["experience_err"]) && empty($data["ngowantoni_err"]) && empty($data["requirements_err"]) && empty($data["responsibilities_err"]) && empty( $data["duplicate_job_err"])) {
+            if (empty($data["err_mssg"]["job_title_err"]) 
+                && empty($data["err_mssg"]["province_err"]) 
+                && empty($data["err_mssg"]["ndawoni_pha_err"]) 
+                && empty($data["err_mssg"]["job_title_err"]) 
+                && empty($data["msebenzi_onjani_err"]) 
+                && empty($dta["err_mssg"]["mfundo_err"]) 
+                && empty($data["err_mssg"]["experience_err"]) 
+                && empty($data["err_mssg"]["ngowantoni_err"]) 
+                && empty($data["err_mssg"]["requirements_err"]) 
+                && empty($data["err_mssg"]["responsibilities_err"]) 
+                && empty($data["err_mssg"]["employer_type"])
+            ) {
                 
                 //Move temp image
-                move_uploaded_file($data["tmp_name"], $data["dir"] . $data["image_name"]);
+                move_uploaded_file(
+                    $data["tmp_name"], 
+                    $data["dir"] . 
+                    $data["image_name"]
+                );
                 
                 //Validated
                 if ($this->postModel->addJob($data)) {
@@ -658,7 +681,7 @@ class addJobs extends Controller
             $data["posts"] = "";
             $data["afrikaans"] = "";
             $data["enquiries"] = "";
-            $data["attention"] = "";
+            $data["for_attention"] = "";
             $data["form"] = "";
             $data["full_vacancy"] = "";
             $this->view("addJobs/add", $data);
