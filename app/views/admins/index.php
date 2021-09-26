@@ -80,7 +80,7 @@
                                     <td style="white-space:nowrap"><?php echo $data['imisebenzi'][$x]->province; ?></td>
                                     <td><?php echo $data['imisebenzi'][$x]->date_created; ?></td>
                                     
-                                    <td><?php echo $data['imisebenzi'][$x]->closing_date == "0/0/0" ? "0/0/0000" : $data['imisebenzi'][$x]->closing_date; ?></td>
+                                    <td><?php echo $data['imisebenzi'][$x]->job_closing_date == "0/0/0" ? "0/0/0000" : $data['imisebenzi'][$x]->job_closing_date; ?></td>
                                     <!-- Edit Job -->
                                     <td class="text-center"><a href='<?php echo URLROOT . "/" . $data['imisebenzi'][$x]->province_slug . "/edit/" . $data['imisebenzi'][$x]->slug; ?>' target="_blank" data-toggle='tooltip' data-html='true' data-placement='top' title='<?php echo $data['imisebenzi'][$x]->slug ?>'><i class="far fa-edit"></i></a></td>
                                     <!-- View Job -->

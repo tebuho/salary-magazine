@@ -2,7 +2,14 @@
 
 require_once 'functions/cookies/logged-in.php';
 require_once 'functions/emails/confirm_email.php';
+require_once 'functions/jobs/sanitize_data.php';
 require_once 'functions/jobs/add_job.php';
+require_once 'functions/jobs/relational_data.php';
+require_once 'functions/jobs/form_data.php';
+require_once 'functions/jobs/create_slugs.php';
+require_once 'functions/jobs/show_job_exists.php';
+require_once 'functions/jobs/job_errors.php';
+require_once 'functions/jobs/insert_new_job.php';
 
 /**
  * Province and its associated slug

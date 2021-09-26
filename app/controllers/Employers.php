@@ -16,11 +16,11 @@ class Employers extends Controller
      ********************************************************************/
     public function index($page = 0)
     {
-        if (!isset($_SESSION['id_yomntu']) && $_SESSION['id_yomntu'] !== 2 || !isset($_SESSION['id_yomntu']) && $_SESSION['id_yomntu'] !== 3) {
+        if (!isset($_SESSION['user_id']) && $_SESSION['user_id'] !== 2 || !isset($_SESSION['user_id']) && $_SESSION['user_id'] !== 3) {
             redirect("");
         }
         //Check if user is not Admin
-        // if ($_SESSION['id_yomntu'] != 2 || $_SESSION['id_yomntu'] != 3) {
+        // if ($_SESSION['user_id'] != 2 || $_SESSION['user_id'] != 3) {
         //     redirect("employers/");
         // }
         // include_once "../app/views/inc/filter_employer.php";
@@ -77,7 +77,7 @@ class Employers extends Controller
             $data['employer'] = $employer->employer;
             $data['employer_slug'] = $employer->employer_slug;
 
-            $results = $this->postModel->getEmployerBySlug($data["employer_slug"]);
+            $results = $this->postModel->getEmployerBySlug($data["job_employer_slug"]);
 
             if ($results == false) {
                 // Update slug
@@ -88,7 +88,7 @@ class Employers extends Controller
             
             if ($results->count != 1) {
                 //Create temp slug
-                $data["employer_slug"] = createSlug($data["employer"]);
+                $data["job_employer_slug"] = createSlug($data["job_employer"]);
                 $this->postModel->addEmployer($data);
             }
             
@@ -101,7 +101,7 @@ class Employers extends Controller
     // Update employer
     public function edit($slug)
     {
-        if (!isset($_SESSION['id_yomntu']) && $_SESSION['id_yomntu'] !== 2 || !isset($_SESSION['id_yomntu']) && $_SESSION['id_yomntu'] !== 3) {
+        if (!isset($_SESSION['user_id']) && $_SESSION['user_id'] !== 2 || !isset($_SESSION['user_id']) && $_SESSION['user_id'] !== 3) {
             redirect("");
         }
 
@@ -144,10 +144,10 @@ class Employers extends Controller
 
         $cat_arr = array();
         foreach ($categories as $category) {
-            if ($category->ngowantoni == "Safety, Health & Environment Quality") {
-                $category->ngowantoni = "SHEQ";
+            if ($category->category == "Safety, Health & Environment Quality") {
+                $category->category = "SHEQ";
             }
-            $cat_arr[] = $category->ngowantoni;
+            $cat_arr[] = $category->category;
         }
         $categories = $cat_arr;
         
@@ -183,7 +183,7 @@ class Employers extends Controller
                 // Update employer slug when employer has changed
                 if ($data['employer'] !== trim($_POST['employer'])) {
                     $data['employer'] = trim($_POST['employer']);
-                    $data['employer_slug'] = createSlug($data["employer"]);
+                    $data['employer_slug'] = createSlug($data["job_employer"]);
                 }
 
                 // Update employer info on db

@@ -105,7 +105,7 @@ arrows:
     - history
     - level-down-alt
     - level-up-alt
-    - location-arrow
+    - job_location-arrow
     - long-arrow-alt-down
     - long-arrow-alt-left
     - long-arrow-alt-right
@@ -1395,7 +1395,7 @@ maps:
     - lemon
     - life-ring
     - lightbulb
-    - location-arrow
+    - job_location-arrow
     - low-vision
     - magnet
     - male
@@ -1489,7 +1489,7 @@ marketing:
     - poll
     - poll-h
     - search-dollar
-    - search-location
+    - search-job_location
   label: Marketing
 mathematics:
   icons:

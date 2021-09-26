@@ -98,7 +98,7 @@ in new free programs; and that you know you can do these things.
 
   To protect your rights, we need to make restrictions that forbid
 anyone to deny you these rights or to ask you to surrender the rights.
-These restrictions translate to certain responsibilities for you if you
+These restrictions translate to certain job_responsibilities for you if you
 distribute copies of the software, or if you modify it.
 
   For example, if you distribute copies of such a program, whether
@@ -182,7 +182,7 @@ above, provided that you also meet all of these conditions:
     does not normally print such an announcement, your work based on
     the Program is not required to print an announcement.)
 
-These requirements apply to the modified work as a whole.  If
+These job_requirements apply to the modified work as a whole.  If
 identifiable sections of that work are not derived from the Program,
 and can be reasonably considered independent and separate works in
 themselves, then this License, and its terms, do not apply to those
@@ -391,7 +391,7 @@ these things.
 
   To protect your rights, we need to make restrictions that forbid
 distributors to deny you these rights or to ask you to surrender these
-rights.  These restrictions translate to certain responsibilities for
+rights.  These restrictions translate to certain job_responsibilities for
 you if you distribute copies of the library or if you modify it.
 
   For example, if you distribute copies of the library, whether gratis
@@ -544,7 +544,7 @@ above, provided that you also meet all of these conditions:
     be optional: if the application does not supply it, the square
     root function must still compute square roots.)
 
-These requirements apply to the modified work as a whole.  If
+These job_requirements apply to the modified work as a whole.  If
 identifiable sections of that work are not derived from the Library,
 and can be reasonably considered independent and separate works in
 themselves, then this License, and its terms, do not apply to those
@@ -1030,7 +1030,7 @@ Version 1.1
      You must duplicate the notice in Exhibit A in each file of the Source
      Code.  If it is not possible to put such notice in a particular Source
      Code file due to its structure, then You must include such notice in a
-     location (such as a relevant directory) where a user would be likely
+     job_location (such as a relevant directory) where a user would be likely
      to look for such a notice.  If You created one or more Modification(s)
      You may add your name as a Contributor to the notice described in
      Exhibit A.  You must also duplicate this License in any documentation
@@ -1048,7 +1048,7 @@ Version 1.1
 
      3.6. Distribution of Executable Versions.
      You may distribute Covered Code in Executable form only if the
-     requirements of Section 3.1-3.5 have been met for that Covered Code,
+     job_requirements of Section 3.1-3.5 have been met for that Covered Code,
      and if You include a notice stating that the Source Code version of
      the Covered Code is available under the terms of this License,
      including a description of how and where You have fulfilled the
@@ -1073,7 +1073,7 @@ Version 1.1
      You may create a Larger Work by combining Covered Code with other code
      not governed by the terms of this License and distribute the Larger
      Work as a single product. In such a case, You must make sure the
-     requirements of this License are fulfilled for the Covered Code.
+     job_requirements of this License are fulfilled for the Covered Code.
 
 4. Inability to Comply Due to Statute or Regulation.
 

@@ -24,7 +24,7 @@
               <a class="nav-link" href="<?php echo URLROOT; ?>/addJobs/add">Faka Umsebenzi</a>
           </li>
           <?php endif; ?>
-        <?php if (isset($_SESSION['id_yomntu']) ): ?>
+        <?php if (isset($_SESSION['user_id']) ): ?>
         <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/abantu/logout">Logout</a>
         </li>

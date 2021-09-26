@@ -7,195 +7,142 @@
  * 
  * @return string
  */
-function Create_Province_slug($province, $province_slug) 
-{
-    //Create province slug
-    switch ($province) {
-        case "Eastern Cape":
-            return $province_slug = "easternCapeJobs";
-            break;
-        case "Free State":
-            return $province_slug = "freeStateJobs";
-            break;
-        case "Gauteng":
-            return $province_slug = "gautengJobs";
-            break;
-        case "KwaZulu-Natal":
-            return $province_slug = "kwaZuluNatalJobs";
-            break;
-        case "Limpopo":
-            return $province_slug = "limpopoJobs";
-            break;
-        case "Mpumalanga":
-            return $province_slug = "mpumalangaJobs";
-            break;
-        case "North West":
-            return $province_slug = "northWestJobs";
-            break;
-        case "Northern Cape":
-            return $province_slug = "northernCapeJobs";
-            break;
-        case "Western Cape":
-            return $province_slug = "westernCapeJobs";
-            break;
-        case "Nationwide":
-            return $province_slug = "nationwide";
-    }
-}
-
-/**
- * Corrects location provided by user
- *
- * @param string $location 
- * @param string $location_err 
- * 
- * @return string
- */
-function Correct_location($location, $location_err)
-{
-    if (empty($location)) {
-        return $location_err = "Location?";
-    }
-    if ($location == "Roodepoort") {
-        $location = "Roodepoort, Johannesburg";
-    }
-    if ($location == "King Williams Town") {
-        $location = "King William's Town";
-    }
-    return $location;
-}
 
 /**
  * Validates form fields and returns error messages
  *
- * @param string $closing_date 
- * @param string $province 
- * @param string $province_err 
- * @param string $job_title 
- * @param string $job_title_err 
- * @param string $employer 
- * @param string $employer_err 
- * @param int    $posts 
- * @param string $posts_err 
- * @param string $msebenzi_onjani 
- * @param string $job_type_err 
- * @param string $mfundo 
- * @param string $job_education_err 
- * @param string $experience 
- * @param string $experience_err 
- * @param string $ngowantoni 
- * @param string $job_category_err 
- * @param string $employer_type 
- * @param string $employer_type_err 
- * @param string $requirements 
- * @param string $requirements_err 
- * @param string $responsibilities 
- * @param string $responsibilities_err 
- * @param string $apply_nge_website 
- * @param string $job_web_application_err 
- * @param string $apply_ngesandla 
- * @param string $job_hand_application_err 
- * @param string $apply_nge_email 
- * @param string $job_email_application_err 
+ * @param array $data 
  * 
  * @return array
  */
-function Validate_Form_input(
-    $closing_date,
-    $province,
-    $province_err,
-    $job_title,
-    $job_title_err,
-    $employer,
-    $employer_err,
-    $posts,
-    $posts_err,
-    $msebenzi_onjani,
-    $job_type_err,
-    $mfundo,
-    $job_education_err,
-    $experience,
-    $experience_err,
-    $ngowantoni,
-    $job_category_err,
-    $employer_type,
-    $employer_type_err,
-    $requirements,
-    $requirements_err,
-    $responsibilities,
-    $responsibilities_err,
-    $apply_nge_website,
-    $job_web_application_err,
-    $apply_ngesandla,
-    $job_hand_application_err,
-    $apply_nge_email,
-    $job_email_application_err
-) {
+function Validate_Form_input($data) {
     
-    if ($closing_date === "") {
-        $closing_date = "0000-00-00";
-    }
-    if ($province == "Khetha") {
-        $province_err = "Select province";
+    if ($data["job_province"] == "Select") {
+        $data["job_province_err"] = "Select province";
     }
     
-    if ($employer_type == "Khetha") {
-        $employer_type_err = "Employer type?";
-    }
-    if (empty($job_title)) {
-        $job_title_err = "Job title ithini";
-    }
-    if (empty($employer)) {
-        $employer_err = "Employer name?";
-    }
-    if (empty($posts)) {
-        $posts_err = "How many posts?";
-    }
-    if ($msebenzi_onjani == "Khetha") {
-        $job_type_err = "Ngumsebenzi onjani lo?";
-    }
-    if ($mfundo == "Khetha") {
-        $job_education_err = "Level yemfundo ithini";
-    }
-    if ($experience == "Khetha") {
-        $experience_err = "Experience efunwayo ingakanani?";
-    }
-    if ($ngowantoni == "Khetha") {
-        $job_category_err = "Ngumsebenzi wantoni lo?";
-    }
-    if (empty($requirements)) {
-        $requirements_err = "Requirements zithini?";
-    }
-    if (empty($responsibilities)) {
-        $responsibilities_err = "Responsibilities zithini?";
-    }
-    if (isset($apply_nge_website) && empty($apply_nge_website)) {
-        $job_web_application_err = "Sicela i-link";
-    }
-    if (isset($apply_ngesandla) && empty($apply_ngesandla)) {
-        $job_hand_application_err = "Sicela i-address";
-    }
-    if (isset($apply_nge_email) && empty($apply_nge_email)) {
-        $job_email_application_err = "Sicela i-email";
+    if (empty($data["job_location"])) {
+        $data["job_location_err"] = "Location?";
+    } else {
+        if ($data["job_location"] == "Roodepoort") {
+            $data["job_location"] = "Roodepoort, Johannesburg";
+        }
+        if ($data["job_location"] == "King Williams Town") {
+            $data["job_location"] = "King William's Town";
+        }
     }
 
-    return [
-        "closing_date" => $closing_date,
-        "province"=> $province,
-        "province_err" => $province_err,
-        "job_title_err" => $job_title_err,
-        "posts_err" => $posts_err,
-        "employer_err" => $employer_err,
-        "job_type_err" => $job_type_err,
-        "job_education_err" => $job_education_err,
-        "experience_err" => $experience_err,
-        "job_category_err" => $job_category_err,
-        "employer_type_err" => $employer_type_err,
-        "requirements_err" => $requirements_err,
-        "responsibilities_err" => $responsibilities_err,
-        "job_web_application_err" => $job_web_application_err,
-        "job_hand_application_err" => $job_hand_application_err,
-        "job_email_application_err" => $job_email_application_err
-    ];
+    if ($data["job_employer_type"] == "Select") {
+        $data["job_employer_type_err"] = "Select employer type?";
+    }
+
+    if (empty($data["job_title"])) {
+        $data["job_title_err"] = "Job title ithini";
+    }
+
+    if (empty($data["job_employer"])) {
+        $data["job_employer_err"] = "Employer name?";
+    }
+
+    if (empty($data["job_num_posts"])) {
+        $data["job_num_posts_err"] = "How many posts?";
+    }
+
+    if ($data["job_type"] == "Select") {
+        $data["job_type_err"] = "Select job type";
+    }
+
+    if ($data["job_type"] == "Contract" && empty($data["job_duration"])) {
+        $data["job_duration_err"] = "Contract duration";
+    }
+
+    if ($data["job_education"] == "Select") {
+        $data["job_education_err"] = "Education";
+    }
+
+    if ($data["job_experience"] == "Select") {
+        $data["job_experience_err"] = "Select experience";
+    }
+
+    if ($data["job_category"] == "Select") {
+        $data["job_category_err"] = "Select job category";
+    }
+
+    if ($data["job_drivers_license"] == "Select") {
+        $data["job_drivers_license_err"] = "Select Yes or No";
+    }
+
+    if ($data["job_afrikaans_required"] == "Select") {
+        $data["job_afrikaans_required_err"] = "Required";
+    }
+
+    if ($data["job_facebook_post"] == "Select") {
+        $data["job_facebook_post_err"] = "Select Yes or No";
+    }
+
+    if ($data["job_closing_date"] === "") {
+        $data["job_closing_date"] = "1970-01-01";
+    }
+
+    if (empty($data["job_requirements"])) {
+        $data["job_requirements_err"] = "Requirements zithini?";
+    }
+
+    if (empty($data["job_responsibilities"])) {
+        $data["job_responsibilities_err"] = "Responsibilities zithini?";
+    }
+
+    if (empty($data["job_web_application"]) 
+        && empty($data["job_hand_application"]) 
+        && empty($data["job_postal_application"]) 
+        && empty($data["job_email_application"])
+    ) {
+        $data["application_method_err"] = "Provide application method";
+    }
+
+    //Create employer slug
+    $data["job_employer_slug"] = strtolower(
+        preg_replace(
+            $data["pattern"], "-", $data["job_employer"]
+        )
+    );
+    
+    //Create slug for filtering by job_location/job_location
+    $data["job_location_slug"] = strtolower(
+        preg_replace(
+            $data["pattern"], "-", $data["job_location"]
+        )
+    );
+    
+    //Create slug for filtering by job_education
+    $data["job_education_slug"] = strtolower(
+        preg_replace(
+            $data["pattern"], "-", $data["job_education"]
+        )
+    );
+    
+    //Create slug for filtering by experience
+    $data["job_experience_slug"] = strtolower(
+        preg_replace(
+            $data["pattern"], "-", $data["job_experience"]
+        )
+    );
+    
+    //Create slug for filtering by job type
+    $data["job_type_slug"] = strtolower(
+        preg_replace(
+            $data["pattern"], "-", $data["job_type"]
+        )
+    );
+    
+    //Create slug for filtering by category
+    $data["job_category_slug"] = strtolower(
+        preg_replace(
+            $data["pattern"], "-", $data["job_category"]
+        )
+    );
+
+    return $data;
+    
 }
 ?>

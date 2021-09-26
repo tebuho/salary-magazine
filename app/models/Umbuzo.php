@@ -10,11 +10,11 @@ class Umbuzo
     public function getImibuzo()
     {
         $this->db->query(
-            'SELECT imibuzo.id, imibuzo.id_yomntu, imibuzo.umbuzo, buzwe_nini, igama, LEFT(fani, 1) AS fani, CONCAT(LEFT(igama, 1),LEFT(fani, 1)) AS initials,
+            'SELECT imibuzo.id, imibuzo.user_id, imibuzo.umbuzo, buzwe_nini, igama, LEFT(fani, 1) AS fani, CONCAT(LEFT(igama, 1),LEFT(fani, 1)) AS initials,
             COUNT(impendulo) AS "comments"
             FROM imibuzo
             INNER JOIN abantu
-            ON imibuzo.id_yomntu = abantu.id
+            ON imibuzo.user_id = abantu.id
             LEFT JOIN imibuzo_comments
             ON imibuzo.id = imibuzo_comments.id_yombuzo
             GROUP BY imibuzo.buzwe_nini DESC'
@@ -27,10 +27,10 @@ class Umbuzo
     public function paginateImibuzo($data)
     {
         $this->db->query(
-            'SELECT imibuzo.id, imibuzo.id_yomntu, umbuzo, slug, buzwe_nini, igama, LEFT(fani, 1) AS fani, CONCAT(LEFT(igama, 1), LEFT(fani, 1)) AS initials, COUNT(impendulo) AS "comments"
+            'SELECT imibuzo.id, imibuzo.user_id, umbuzo, slug, buzwe_nini, igama, LEFT(fani, 1) AS fani, CONCAT(LEFT(igama, 1), LEFT(fani, 1)) AS initials, COUNT(impendulo) AS "comments"
              FROM imibuzo
             INNER JOIN abantu
-            ON imibuzo.id_yomntu = abantu.id
+            ON imibuzo.user_id = abantu.id
             LEFT JOIN imibuzo_comments
             ON imibuzo_comments.id_yombuzo = imibuzo.id
             GROUP BY buzwe_nini DESC
@@ -49,20 +49,20 @@ class Umbuzo
             "INSERT INTO imibuzo (
                 ungantoni,
                 slug,
-                id_yomntu,
+                user_id,
                 umbuzo,
                 buzwe_nini
                 ) VALUE (
                 :ungantoni,
                 :slug,
-                :id_yomntu,
+                :user_id,
                 :umbuzo,
                 :buzwe_nini
             )"
         );
         $this->db->bind(':ungantoni', $data['ungantoni']);
         $this->db->bind(':slug', $data['slug']);
-        $this->db->bind(':id_yomntu', $data['id_yomntu']);
+        $this->db->bind(':user_id', $data['user_id']);
         $this->db->bind(':umbuzo', $data['umbuzo']);
         $this->db->bind(':buzwe_nini', date("Y-m-d H:i:s"));
 
@@ -98,10 +98,10 @@ class Umbuzo
     public function getUmbuzoById($slug)
     {
         $this->db->query(
-            "SELECT id_yomntu, umbuzo, ungantoni, slug, buzwe_nini, igama, LEFT(fani, 1) AS fani, CONCAT(LEFT(igama, 1),LEFT(fani, 1)) AS initials, imibuzo.id as umbuzoId
+            "SELECT user_id, umbuzo, ungantoni, slug, buzwe_nini, igama, LEFT(fani, 1) AS fani, CONCAT(LEFT(igama, 1),LEFT(fani, 1)) AS initials, imibuzo.id as umbuzoId
             FROM imibuzo
             INNER JOIN abantu
-            ON imibuzo.id_yomntu = abantu.id WHERE slug = :slug"
+            ON imibuzo.user_id = abantu.id WHERE slug = :slug"
         );
         $this->db->bind(':slug', $slug);
 
@@ -140,18 +140,18 @@ class Umbuzo
     {
         $this->db->query(
             "INSERT INTO imibuzo_comments (
-                id_yomntu,
+                user_id,
                 id_yombuzo,
                 impendulo,
                 date
             ) VALUE (
-                :id_yomntu,
+                :user_id,
                 :id_yombuzo,
                 :impendulo,
                 :date
             )"
         );
-        $this->db->bind(':id_yomntu', $data['id_yomntu']);
+        $this->db->bind(':user_id', $data['user_id']);
         $this->db->bind(':id_yombuzo', $data['id']);
         $this->db->bind(':impendulo', $data['impendulo']);
         $this->db->bind(':date', date("Y-m-d H:i:s"));
@@ -170,13 +170,13 @@ class Umbuzo
     public function getImpenduloById($id)
     {
         $this->db->query(
-            "SELECT imibuzo_comments.id_yomntu, id_yombuzo, impendulo, date, igama, LEFT(fani, 1) AS fani, CONCAT(LEFT(igama, 1),LEFT(fani, 1)) AS initials, role,
+            "SELECT imibuzo_comments.user_id, id_yombuzo, impendulo, date, igama, LEFT(fani, 1) AS fani, CONCAT(LEFT(igama, 1),LEFT(fani, 1)) AS initials, role,
             imibuzo_comments.id_yombuzo as umbuzoId,
             abantu.id as userId,
             abantu.igama as igama_lomphenduli
             FROM imibuzo_comments
             INNER JOIN abantu
-            ON imibuzo_comments.id_yomntu = abantu.id
+            ON imibuzo_comments.user_id = abantu.id
             INNER JOIN imibuzo
             ON imibuzo.id = id_yombuzo
             WHERE slug = :id

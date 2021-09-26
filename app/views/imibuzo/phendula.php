@@ -44,7 +44,7 @@
                 <?php if (empty($data['comments'])) {?>
                     <div class="comments-box no-comments d-none">
                         <div class="comments-container">
-                            <div class="commenting-user" data-post="<?php echo $data['id_yombuzo']; ?>" data-username="<?php echo $data['username']; ?>" id="<?php echo $_SESSION['id_yomntu']; ?>" style="visibility:hidden"></div>
+                            <div class="commenting-user" data-post="<?php echo $data['id_yombuzo']; ?>" data-username="<?php echo $data['username']; ?>" id="<?php echo $_SESSION['user_id']; ?>" style="visibility:hidden"></div>
                             <?php foreach ($data['comments'] as $comment) : ?>
                                 <div class="card comment-card">
                                     <div class="responder-box">
@@ -71,13 +71,13 @@
                         </div>
                     </div>
                     <div class="card comment-card" id="no-comment">
-                        <div class="commenting-user" data-post="<?php echo $data['id_yombuzo']; ?>" data-username="<?php echo $data['username']; ?>" id="<?php echo $_SESSION['id_yomntu']; ?>" style="visibility:hidden"></div>
+                        <div class="commenting-user" data-post="<?php echo $data['id_yombuzo']; ?>" data-username="<?php echo $data['username']; ?>" id="<?php echo $_SESSION['user_id']; ?>" style="visibility:hidden"></div>
                         <ul><li class="pb-2"><em>Akho mpendulo</em></li></ul>
                     </div>
                 <?php } else { ?>
                 <div class="comments-box">
                     <div class="comments-container">
-                        <div class="commenting-user" data-post="<?php echo $data['id_yombuzo']; ?>" data-username="<?php echo $data['username']; ?>" id="<?php echo $_SESSION['id_yomntu']; ?>" style="visibility:hidden"></div>
+                        <div class="commenting-user" data-post="<?php echo $data['id_yombuzo']; ?>" data-username="<?php echo $data['username']; ?>" id="<?php echo $_SESSION['user_id']; ?>" style="visibility:hidden"></div>
                         <?php foreach ($data['comments'] as $comment) : ?>
                             <div class="card comment-card">
                                 <div class="responder-box">
@@ -104,7 +104,7 @@
                     </div>
                 </div>
                 <?php } ?>
-                <?php if (isset($_SESSION['id_yomntu'])) { ?>
+                <?php if (isset($_SESSION['user_id'])) { ?>
                     <div class="label-container mt-3">
                         <label for="imibuzo">Phendula apha</label>
                     </div>

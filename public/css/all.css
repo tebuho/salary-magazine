@@ -2420,7 +2420,7 @@ readers do not read off random characters that represent icons */
 .fa-list-ul:before {
   content: "\f0ca"; }
 
-.fa-location-arrow:before {
+.fa-job_location-arrow:before {
   content: "\f124"; }
 
 .fa-lock:before {
@@ -3242,7 +3242,7 @@ readers do not read off random characters that represent icons */
 .fa-search-dollar:before {
   content: "\f688"; }
 
-.fa-search-location:before {
+.fa-search-job_location:before {
   content: "\f689"; }
 
 .fa-search-minus:before {

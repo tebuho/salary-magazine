@@ -9,24 +9,24 @@
             'id' => $id,
             'job_id' => $umsebenzi->id,
             'gama_le_company' => filter_input(INPUT_POST, 'igama_le_company', FILTER_SANITIZE_STRING),
-            'id_yomntu' => $_SESSION['id_yomntu'],
+            'user_id' => $_SESSION['user_id'],
             'province' => filter_input(INPUT_POST, 'job_province', FILTER_SANITIZE_STRING),
             'province_slug' => '',
             'ndawoni' => trim(filter_input(INPUT_POST, 'ndawoni_pha', FILTER_SANITIZE_STRING)),
             'job_title' => trim(filter_input(INPUT_POST, 'job_title', FILTER_SANITIZE_STRING)),
             'label' => filter_input(INPUT_POST, 'igama_le_company', FILTER_SANITIZE_STRING) . " " . filter_input(INPUT_POST, 'job_title', FILTER_SANITIZE_STRING) . " " . filter_input(INPUT_POST, 'ndawoni_pha', FILTER_SANITIZE_STRING),
-            'closing_date' => filter_input(INPUT_POST, 'closing_date', FILTER_SANITIZE_STRING),
-            'msebenzi_onjani' => filter_input(INPUT_POST, 'msebenzi_onjani', FILTER_SANITIZE_STRING),
-            'mfundo' => filter_input(INPUT_POST, 'mfundo', FILTER_SANITIZE_STRING),
+            'job_closing_date' => filter_input(INPUT_POST, 'job_closing_date', FILTER_SANITIZE_STRING),
+            'job_type' => filter_input(INPUT_POST, 'job_type', FILTER_SANITIZE_STRING),
+            'job_education' => filter_input(INPUT_POST, 'job_education', FILTER_SANITIZE_STRING),
             'experience' => filter_input(INPUT_POST, 'experience', FILTER_SANITIZE_STRING),
-            'ngowantoni' => filter_input(INPUT_POST, 'ngowantoni', FILTER_SANITIZE_STRING),
-            'requirements' => trim($_POST['requirements']),
+            'category' => filter_input(INPUT_POST, 'category', FILTER_SANITIZE_STRING),
+            'job_requirements' => trim($_POST['job_requirements']),
             'purpose' => trim($_POST['purpose']),
             'skills_competencies' => trim($_POST['skills_competencies']),
-            'responsibilities' => trim($_POST['responsibilities']),
+            'job_responsibilities' => trim($_POST['job_responsibilities']),
             'additional_info' => trim($_POST['additional_info']),
             'apply_nge_website' => filter_input(INPUT_POST, 'website', FILTER_SANITIZE_STRING),
-            'apply_ngesandla' => trim($_POST['ngesandla']),
+            'job_hand_application' => trim($_POST['ngesandla']),
             'apply_nge_email' => filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING),
             'image_name' => strip_tags(trim($_FILES['image']['name'])),
             'image_size' => trim($_FILES['image']['size']),
@@ -34,27 +34,27 @@
             'tmp_name' => trim($_FILES['image']['tmp_name']),
             'dir' => '/home/salarfng/public_html/public/img/imisebenzi/',
             'page_image' . '/public/img/western-cape-jobs/westernCapeJobs.png',
-            "employer_slug" => "",
+            "job_employer_slug" => "",
             'page_description' => '',
             'page_type' => '',
             'page_title' => '',
             'pattern' => '/[^\pN\pL]+/u',
             'slug' => '',
-            'location_slug' => '',
+            'job_location_slug' => '',
             'job_type_slug' => '',
             'experience_slug' => '',
             'job_education_slug' => '',
             'job_category_slug' => '',
             'gama_le_company_err' => '',
             'province_err' => '',
-            'location_err' => '',
+            'job_location_err' => '',
             'job_title_err' => '',
             'job_type_err' => '',
             'job_education_err' => '',
             'experience_err' => '',
             'job_category_err' => '',
-            'requirements_err' => '',
-            'responsibilities_err' => '',
+            'job_requirements_err' => '',
+            'job_responsibilities_err' => '',
             'job_web_application_err' => '',
             'job_hand_application_err' => '',
             'job_email_application_err' => '',
@@ -64,8 +64,8 @@
             'jb_specification' => ''
         ];
             
-        if ($data['closing_date'] === "") {
-            $data['closing_date'] = "0000-00-00";
+        if ($data['job_closing_date'] === "") {
+            $data['job_closing_date'] = "1970-01-01";
         }
         
         if ($data['gama_le_company'] == "Premier Foods") {
@@ -78,11 +78,11 @@
         }if ($data['gama_le_company'] === "Pioneer") {
             $data['gama_le_company'] = "Pioneer Foods";
         }
-        if ($data['province'] == 'Khetha') {
+        if ($data['province'] == 'Select') {
             $data['province_err'] = 'Kufuneka ukhethe i-province';
         }
         if (empty($data['ndawoni'])) {
-            $data['location_err'] = 'Ndawoni pha?';
+            $data['job_location_err'] = 'Ndawoni pha?';
         }
         if ($data['ndawoni'] == "Roodepoort") {
             $data['ndawoni'] = "Roodepoort, Johannesburg";
@@ -90,28 +90,28 @@
         if (empty($data['job_title'])) {
             $data['job_title_err'] = 'Job title ithini';
         }
-        if ($data['msebenzi_onjani'] == 'Khetha') {
+        if ($data['job_type'] == 'Select') {
             $data['job_type_err'] = 'Ngumsebenzi onjani lo?';
         }
-        if ($data['mfundo'] == 'Khetha') {
-            $dta['job_education_err'] = 'Level yemfundo ithini';
+        if ($data['job_education'] == 'Select') {
+            $dta['job_education_err'] = 'Level yejob_education ithini';
         }
-        if ($data['experience'] == 'Khetha') {
+        if ($data['experience'] == 'Select') {
             $data['experience_err'] = 'Experienceefunwayo ingakanani?';
         }
-        if ($data['ngowantoni'] == 'Khetha') {
+        if ($data['category'] == 'Select') {
             $data['job_category_err'] = 'Ngumsebenzi wantoni lo?';
         }
-        if (empty($data['requirements'])) {
-            $data['requirements_err'] = 'Requirements zithini?';
+        if (empty($data['job_requirements'])) {
+            $data['job_requirements_err'] = 'Requirements zithini?';
         }
-        if (empty($data['responsibilities']))  {
-            $data['responsibilities_err'] = 'Responsibilities zithini?';
+        if (empty($data['job_responsibilities']))  {
+            $data['job_responsibilities_err'] = 'Responsibilities zithini?';
         }
         if (isset($data['apply_nge_website']) && empty($data['apply_nge_website'])) {
             $data['job_web_application_err'] = 'Sicela i-link';
         }
-        if (isset($data['apply_ngesandla']) && empty($data['apply_ngesandla'])) {
+        if (isset($data['job_hand_application']) && empty($data['job_hand_application'])) {
             $data['job_hand_application_err'] = 'Sicela i-address';
         }
         if (isset($data['apply_nge_email']) && empty($data['apply_nge_email'])) {
@@ -119,22 +119,22 @@
         }
 
         //Create employer slug
-        $data["employer_slug"] = strtolower(preg_replace($data['pattern'], '-', $data['gama_le_company']));
+        $data["job_employer_slug"] = strtolower(preg_replace($data['pattern'], '-', $data['gama_le_company']));
         
-        //Create slug for filtering by location/ndawoni
-        $data['location_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['ndawoni']));
+        //Create slug for filtering by job_location/ndawoni
+        $data['job_location_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['ndawoni']));
         
-        //Create slug for filtering by mfundo
-        $data['job_education_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['mfundo']));
+        //Create slug for filtering by job_education
+        $data['job_education_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['job_education']));
         
         //Create slug for filtering by experience
         $data['experience_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['experience']));
         
         //Create slug for filtering by msebenzi onjani
-        $data['job_type_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['msebenzi_onjani']));
+        $data['job_type_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['job_type']));
         
-        //Create slug for filtering by ngowantoni
-        $data['job_category_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['ngowantoni']));
+        //Create slug for filtering by category
+        $data['job_category_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['category']));
         
         //Create province slug
         switch ($data['province']) {
@@ -206,7 +206,7 @@
         $jb_link = URLROOT . "/" . $data['province_slug'] . "/umsebenzi/" . $data['slug'];
 
         //Make sure there no errors
-        if (empty($data['gama_le_company_err']) && empty($data['province_err']) && empty($data['location_err']) && empty($data['job_title_err']) && empty($data['job_type_err']) && empty($dta['job_education_err']) && empty($data['experience_err']) && empty($data['job_category_err']) && empty($data['requirements_err']) && empty($data['responsibilities_err']) && empty($data['application_mode_err'])) {
+        if (empty($data['gama_le_company_err']) && empty($data['province_err']) && empty($data['job_location_err']) && empty($data['job_title_err']) && empty($data['job_type_err']) && empty($dta['job_education_err']) && empty($data['experience_err']) && empty($data['job_category_err']) && empty($data['job_requirements_err']) && empty($data['job_responsibilities_err']) && empty($data['application_mode_err'])) {
             
             //Validated
             if ($this->postModel->updateJob($data)) {
@@ -230,19 +230,19 @@
                     'ndawoni' => $umsebenzi->ndawoni,
                     'job_title' => $umsebenzi->job_title,
                     'label' => $umsebenzi->label,
-                    'closing_date' => $umsebenzi->closing_date,
-                    'msebenzi_onjani' => $umsebenzi->msebenzi_onjani,
-                    'mfundo' => $umsebenzi->mfundo,
+                    'job_closing_date' => $umsebenzi->job_closing_date,
+                    'job_type' => $umsebenzi->job_type,
+                    'job_education' => $umsebenzi->job_education,
                     'experience' => $umsebenzi->experience,
-                    'ngowantoni' => $umsebenzi->ngowantoni,
+                    'category' => $umsebenzi->category,
                     'purpose' => $umsebenzi->purpose,
-                    'requirements' => $umsebenzi->requirements,
+                    'job_requirements' => $umsebenzi->job_requirements,
                     'skills_competencies' => $umsebenzi->skills_competencies,
-                    'responsibilities' => $umsebenzi->responsibilities,
+                    'job_responsibilities' => $umsebenzi->job_responsibilities,
                     'additional_info' => $umsebenzi->additional_info,
                     'jb_specification' => $umsebenzi->jb_specification,
                     'apply_nge_website' => $umsebenzi->apply_nge_website, 
-                    'apply_ngesandla' => $umsebenzi->apply_ngesandla,
+                    'job_hand_application' => $umsebenzi->job_hand_application,
                     'apply_nge_email' => $umsebenzi->apply_nge_email,
                     'image' => $umsebenzi->image,
                     'updated_at' => date("Y-m-d H:i:s")
@@ -255,7 +255,7 @@
         $umsebenzi = $this->postModel->getPostBySlug($id);
 
         //Check if ufakwe nguye lomsebenzi lomntu
-        if ($umsebenzi->id_yomntu != $_SESSION['id_yomntu'] && $_SESSION['role'] != "Admin") {
+        if ($umsebenzi->user_id != $_SESSION['user_id'] && $_SESSION['role'] != "Admin") {
             redirect($this->province_slug . "/");
         }
 
@@ -271,19 +271,19 @@
             'ndawoni' => $umsebenzi->ndawoni,
             'job_title' => $umsebenzi->job_title,
             'label' => $umsebenzi->label,
-            'closing_date' => $umsebenzi->closing_date,
-            'msebenzi_onjani' => $umsebenzi->msebenzi_onjani,
-            'mfundo' => $umsebenzi->mfundo,
+            'job_closing_date' => $umsebenzi->job_closing_date,
+            'job_type' => $umsebenzi->job_type,
+            'job_education' => $umsebenzi->job_education,
             'experience' => $umsebenzi->experience,
-            'ngowantoni' => $umsebenzi->ngowantoni,
+            'category' => $umsebenzi->category,
             'purpose' => $umsebenzi->purpose,
-            'requirements' => $umsebenzi->requirements,
+            'job_requirements' => $umsebenzi->job_requirements,
             'skills_competencies' => $umsebenzi->skills_competencies,
-            'responsibilities' => $umsebenzi->responsibilities,
+            'job_responsibilities' => $umsebenzi->job_responsibilities,
             'additional_info' => $umsebenzi->additional_info,
             'jb_specification' => $umsebenzi->jb_specification,
             'apply_nge_website' => $umsebenzi->apply_nge_website, 
-            'apply_ngesandla' => $umsebenzi->apply_ngesandla,
+            'job_hand_application' => $umsebenzi->job_hand_application,
             'apply_nge_email' => $umsebenzi->apply_nge_email,
             'image' => $umsebenzi->image,
             'updated_at' => date("Y-m-d H:i:s")

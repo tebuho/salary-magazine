@@ -45,7 +45,7 @@ if (isset($_COOKIE["remember_me"])) {
         
         $row = $conn->single();
         
-        $_SESSION["id_yomntu"] = $row->id;
+        $_SESSION["user_id"] = $row->id;
         
         $_SESSION["email_yomntu"] = $row->email;
         

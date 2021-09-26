@@ -2,22 +2,22 @@
 
     //Get imisebenzi
     $ndawoni = $this->postModel->filterImisebenziByLocation();
-    $ngowantoni = $this->postModel->filterImisebenziByType();
+    $category = $this->postModel->filterImisebenziByType();
     $experience = $this->postModel->filterImisebenziByExperience();
     $onjani = $this->postModel->filterImisebenziByOnjani();
-    $mfundo = $this->postModel->filterImisebenziByMfundo();
+    $job_education = $this->postModel->filterImisebenziByMfundo();
     $provinces = $this->postModel->getProvinces();
     $all_employers = $this->postModel->getImisebenziByEmployer($employer);
     $employers = $this->postModel->filterImisebenziByEmployer();
     
-    //Get location for title tag
+    //Get job_location for title tag
     foreach ($all_employers as $employer) {
         $employer_name = $employer->gama_le_company;
     }
     
     //Get ndawoni slug
     foreach ($all_employers as $ndawo_slug) {
-        $location_slug = $ndawo_slug->location_slug;
+        $job_location_slug = $ndawo_slug->job_location_slug;
     }
     
     $range = 2;
@@ -40,16 +40,16 @@
         'page_url' => URLROOT . "/" . $_GET['url'],
         'page_title' => $employer_name . ' Jobs',
         'ndawoni' => $ndawoni,
-        'location_slug' => $location_slug,
-        'ngowantoni' => $ngowantoni,
+        'job_location_slug' => $job_location_slug,
+        'category' => $category,
         'experience' => $experience,
-        'mfundo' => $mfundo,
+        'job_education' => $job_education,
         'onjani' => $onjani,
         'area' => '',
         'imisebenzi' => $all_employers,
         'provinces' => $provinces,
         "employers" => $employers,
-        "employer" => $employer_name
+        "job_employer" => $employer_name
     ];
     
     if ($page > 1) {

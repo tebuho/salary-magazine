@@ -21,10 +21,10 @@ class Jobs extends Controller
         //Get imisebenzi
         $imisebenzi = $this->postModel->getImisebenzi();
         $ndawoni = $this->postModel->filterImisebenziByLocation();
-        $ngowantoni = $this->postModel->filterImisebenziByType();
+        $category = $this->postModel->filterImisebenziByType();
         $experience = $this->postModel->filterImisebenziByExperience();
         $onjani = $this->postModel->filterImisebenziByOnjani();
-        $mfundo = $this->postModel->filterImisebenziByMfundo();
+        $job_education = $this->postModel->filterImisebenziByMfundo();
         $provinces = $this->postModel->getProvinces();
         
         $range = 2;
@@ -47,9 +47,9 @@ class Jobs extends Controller
             'page_url' => URLROOT . "/" . $_GET['url'],
             'page_title' => 'Imisebenzi ese Eastern Cape',
             'ndawoni' => $ndawoni,
-            'ngowantoni' => $ngowantoni,
+            'category' => $category,
             'experience' => $experience,
-            'mfundo' => $mfundo,
+            'job_education' => $job_education,
             'onjani' => $onjani,
             'imisebenzi' => $imisebenzi,
             'provinces' => $provinces
@@ -72,18 +72,18 @@ class Jobs extends Controller
 
     /********************************************************************
      *                                                                  *
-     *                  Filter jobs by location                         *
+     *                  Filter jobs by job_location                         *
      *                                                                  *
      ********************************************************************/
-    public function ndawoni($location, $page = 0)
+    public function ndawoni($job_location, $page = 0)
     {
         //Get imisebenzi
-        $imisebenzi = $this->postModel->getImisebenziByLocation($location);
+        $imisebenzi = $this->postModel->getImisebenziByLocation($job_location);
         $ndawoni = $this->postModel->filterImisebenziByLocation();
-        $ngowantoni = $this->postModel->filterImisebenziByType();
+        $category = $this->postModel->filterImisebenziByType();
         $experience = $this->postModel->filterImisebenziByExperience();
         $onjani = $this->postModel->filterImisebenziByOnjani();
-        $mfundo = $this->postModel->filterImisebenziByMfundo();
+        $job_education = $this->postModel->filterImisebenziByMfundo();
         $provinces = $this->postModel->getProvinces();
         
        if (isset($_GET['url'])) {
@@ -92,14 +92,14 @@ class Jobs extends Controller
            $page = 0;
        }
        
-       //Get location for title tag
+       //Get job_location for title tag
        foreach ($imisebenzi as $ndawo) {
-           $location = $ndawo->ndawoni;
+           $job_location = $ndawo->ndawoni;
        }
        
        //Get ndawoni slug
        foreach ($imisebenzi as $ndawo_slug) {
-           $location_slug = $ndawo_slug->location_slug;
+           $job_location_slug = $ndawo_slug->job_location_slug;
        }
         
         $range = 2;
@@ -117,15 +117,15 @@ class Jobs extends Controller
             'initial_num' => $page - $range,
             'condition_limit_num' => ($page + 1)  + 1,
             'page_image' => URLROOT . '/img/imisebenzi/' . $imisebenzi[0]->image,
-            'page_description' => 'If ukhangela imisebenzi ese ' . $location . ' ungayijonga apha.',
+            'page_description' => 'If ukhangela imisebenzi ese ' . $job_location . ' ungayijonga apha.',
             'page_type' => 'website',
             'page_url' => URLROOT . "/" . $_GET['url'],
-            'page_title' => 'Imisebenzi ese ' . $location . ", Eastern Cape",
+            'page_title' => 'Imisebenzi ese ' . $job_location . ", Eastern Cape",
             'ndawoni' => $ndawoni,
-            'location_slug' => $location_slug,
-            'ngowantoni' => $ngowantoni,
+            'job_location_slug' => $job_location_slug,
+            'category' => $category,
             'experience' => $experience,
-            'mfundo' => $mfundo,
+            'job_education' => $job_education,
             'onjani' => $onjani,
             'area' => '',
             'imisebenzi' => $imisebenzi,
@@ -156,15 +156,15 @@ class Jobs extends Controller
      *                  Filter jobs by msebenzi onjani                  *
      *                                                                  *
      ********************************************************************/
-    public function onjani($msebenzi_onjani, $page = 0)
+    public function onjani($job_type, $page = 0)
     {
          
         //Get imisebenzi
         $ndawoni = $this->postModel->filterImisebenziByLocation();
-        $ngowantoni = $this->postModel->filterImisebenziByType();
+        $category = $this->postModel->filterImisebenziByType();
         $experience = $this->postModel->filterImisebenziByExperience();
-        $mfundo = $this->postModel->filterImisebenziByMfundo();
-        $onjani_umsebenzi = $this->postModel->getImisebenziByOnjani($msebenzi_onjani);
+        $job_education = $this->postModel->filterImisebenziByMfundo();
+        $onjani_umsebenzi = $this->postModel->getImisebenziByOnjani($job_type);
         $onjani = $this->postModel->filterImisebenziByOnjani();
         $provinces = $this->postModel->getProvinces();
         
@@ -176,11 +176,11 @@ class Jobs extends Controller
        
        //Get job type for title tag
        foreach ($onjani_umsebenzi as $job_type) {
-           $type = $job_type->msebenzi_onjani;
+           $type = $job_type->job_type;
        }
        
         foreach($onjani_umsebenzi as $njani) {
-            $msebenzi_onjani = $njani->job_type_slug;
+            $job_type = $njani->job_type_slug;
         }
         
         $range = 2;
@@ -203,11 +203,11 @@ class Jobs extends Controller
             'page_url' => URLROOT . "/" . $_GET['url'],
             'page_title' => 'Imisebenzi ye ' .  $type,
             'ndawoni' => $ndawoni,
-            'ngowantoni' => $ngowantoni,
+            'category' => $category,
             'experience' => $experience,
-            'mfundo' => $mfundo,
+            'job_education' => $job_education,
             'onjani' => $onjani,
-            'job_type_slug' => $msebenzi_onjani,
+            'job_type_slug' => $job_type,
             'area' => '',
             'njani' => '',
             'imisebenzi' => $onjani_umsebenzi,
@@ -221,7 +221,7 @@ class Jobs extends Controller
         }
         
         foreach ($data['imisebenzi'] as $onjani) {
-            $data['njani'] = $onjani->msebenzi_onjani;
+            $data['njani'] = $onjani->job_type;
         }
         
         $data['total_pages'] = ceil(count($data['imisebenzi'])/$data['results_per_page']);
@@ -235,18 +235,18 @@ class Jobs extends Controller
 
     /********************************************************************
      *                                                                  *
-     *                      Filter jobs by mfundo                       *
+     *                      Filter jobs by job_education                       *
      *                                                                  *
      ********************************************************************/
-    public function mfundo($education, $page = 0)
+    public function job_education($education, $page = 0)
     {
         //Get imisebenzi
         $onjani = $this->postModel->filterImisebenziByOnjani();
-        $imisebenzi_mfundo = $this->postModel->getImisebenziByMfundo($education);
-        $filter_mfundo = $this->postModel->filterImisebenziByMfundo();
-        $mfundo = $this->postModel->filterImisebenziByMfundo();
+        $imisebenzi_job_education = $this->postModel->getImisebenziByMfundo($education);
+        $filter_job_education = $this->postModel->filterImisebenziByMfundo();
+        $job_education = $this->postModel->filterImisebenziByMfundo();
         $ndawoni = $this->postModel->filterImisebenziByLocation();
-        $ngowantoni = $this->postModel->filterImisebenziByType();
+        $category = $this->postModel->filterImisebenziByType();
         $experience = $this->postModel->filterImisebenziByExperience();
         $provinces = $this->postModel->getProvinces();
         
@@ -257,12 +257,12 @@ class Jobs extends Controller
        }
        
        //Get education for title tag
-       foreach ($imisebenzi_mfundo as $mfundo_type) {
-           $education = $mfundo_type->mfundo;
+       foreach ($imisebenzi_job_education as $job_education_type) {
+           $education = $job_education_type->job_education;
        }
        
        //Get education slug
-       foreach ($imisebenzi_mfundo as $job_education_slug) {
+       foreach ($imisebenzi_job_education as $job_education_slug) {
            $education_slug = $job_education_slug->job_education_slug;
        }
         
@@ -280,17 +280,17 @@ class Jobs extends Controller
             'page' => $page,
             'initial_num' => $page - $range,
             'condition_limit_num' => ($page + 1)  + 1,
-            'page_image' => URLROOT . '/img/imisebenzi/' . $imisebenzi_mfundo[0]->image,
+            'page_image' => URLROOT . '/img/imisebenzi/' . $imisebenzi_job_education[0]->image,
             'page_description' => 'If ukhangela imisebenzi efuna i-' . $education . ' ungayijonga apha.',
             'page_type' => 'website',
             'page_url' => URLROOT . "/" . $_GET['url'],
             'page_title' => 'Imisebenzi efuna i-' . $education,
             'ndawoni' => $ndawoni,
-            'ngowantoni' => $ngowantoni,
+            'category' => $category,
             'experience' => $experience,
-            'imisebenzi' => $imisebenzi_mfundo,
-            'mfundo_jobs_filtered' => $filter_mfundo,
-            'mfundo' => $mfundo,
+            'imisebenzi' => $imisebenzi_job_education,
+            'job_education_jobs_filtered' => $filter_job_education,
+            'job_education' => $job_education,
             'job_education_slug' => $education_slug,
             'ed' => '',
             'onjani' => $onjani,
@@ -304,7 +304,7 @@ class Jobs extends Controller
         }
         
         foreach ($data['imisebenzi'] as $imisebenzi) {
-            $data['ed'] = $imisebenzi->mfundo;
+            $data['ed'] = $imisebenzi->job_education;
         }
         
         $data['total_pages'] = ceil(count($data['imisebenzi'])/$data['results_per_page']);
@@ -313,7 +313,7 @@ class Jobs extends Controller
         $imisebenzi = $this->postModel->paginateImisebenziNgeMfundo($data);
         $data['imisebenzi'] = $imisebenzi;
         
-        $this->view('easternCapeJobs/mfundo', $data);
+        $this->view('easternCapeJobs/job_education', $data);
     }
 
     /********************************************************************
@@ -327,10 +327,10 @@ class Jobs extends Controller
         
         //Get imisebenzi
         $onjani = $this->postModel->filterImisebenziByOnjani();
-        $filter_mfundo = $this->postModel->filterImisebenziByMfundo();
-        $mfundo = $this->postModel->filterImisebenziByMfundo();
+        $filter_job_education = $this->postModel->filterImisebenziByMfundo();
+        $job_education = $this->postModel->filterImisebenziByMfundo();
         $ndawoni = $this->postModel->filterImisebenziByLocation();
-        $ngowantoni = $this->postModel->filterImisebenziByType();
+        $category = $this->postModel->filterImisebenziByType();
         $experiences = $this->postModel->filterImisebenziByExperience();
         $imisebenzi_experience = $this->postModel->getImisebenziByExperience($exp);
         $provinces = $this->postModel->getProvinces();
@@ -375,12 +375,12 @@ class Jobs extends Controller
             'page_url' => URLROOT . "/" . $_GET['url'],
             'page_title' => $experience_years,
             'ndawoni' => $ndawoni,
-            'ngowantoni' => $ngowantoni,
+            'category' => $category,
             'experience' => $experiences,
             'experience_slug' => $experience_slug,
             'imisebenzi' => $imisebenzi_experience,
-            'mfundo_jobs_filtered' => $filter_mfundo,
-            'mfundo' => $mfundo,
+            'job_education_jobs_filtered' => $filter_job_education,
+            'job_education' => $job_education,
             'years' => '',
             'onjani' => $onjani,
             'provinces' => $provinces
@@ -410,18 +410,18 @@ class Jobs extends Controller
      *                      Filter jobs by industry                       *
      *                                                                  *
      ********************************************************************/
-    public function ngowantoni($type, $page = 0)
+    public function category($type, $page = 0)
     {
          
         
         //Get imisebenzi
         $onjani = $this->postModel->filterImisebenziByOnjani();
-        $filter_mfundo = $this->postModel->filterImisebenziByMfundo();
-        $mfundo = $this->postModel->filterImisebenziByMfundo();
+        $filter_job_education = $this->postModel->filterImisebenziByMfundo();
+        $job_education = $this->postModel->filterImisebenziByMfundo();
         $ndawoni = $this->postModel->filterImisebenziByLocation();
-        $ngowantoni = $this->postModel->filterImisebenziByType();
+        $category = $this->postModel->filterImisebenziByType();
         $experiences = $this->postModel->filterImisebenziByExperience();
-        $imisebenzi_ngowantoni = $this->postModel->getImisebenziByType($type);
+        $imisebenzi_category = $this->postModel->getImisebenziByType($type);
         $provinces = $this->postModel->getProvinces();
         
        if (isset($_GET['url'])) {
@@ -431,16 +431,16 @@ class Jobs extends Controller
        }
        
        //Get job function for title tag
-       foreach ($imisebenzi_ngowantoni as $msebenzi_wantoni) {
-           if ($msebenzi_wantoni->ngowantoni == "Government") {
+       foreach ($imisebenzi_category as $msebenzi_wantoni) {
+           if ($msebenzi_wantoni->category == "Government") {
                $function = "Imisebenzi yakwa government";
            } else {
-             $function = "Imisebenzi ye " . $msebenzi_wantoni->ngowantoni;   
+             $function = "Imisebenzi ye " . $msebenzi_wantoni->category;   
            }
        }
        
        //Get job function slug
-       foreach ($imisebenzi_ngowantoni as $msebenzi_wantoni) {
+       foreach ($imisebenzi_category as $msebenzi_wantoni) {
            $function_slug = $msebenzi_wantoni->job_category_slug;
        }
         
@@ -458,18 +458,18 @@ class Jobs extends Controller
             'page' => $page,
             'initial_num' => $page - $range,
             'condition_limit_num' => ($page + 1)  + 1,
-            'page_image' => URLROOT . '/img/imisebenzi/' . $imisebenzi_ngowantoni[0]->image,
+            'page_image' => URLROOT . '/img/imisebenzi/' . $imisebenzi_category[0]->image,
             'page_description' => 'If ukhangela imisebenzi ye ' . $function . ' ungayijonga apha.',
             'page_type' => 'website',
             'page_url' => URLROOT . "/" . $_GET['url'],
             'page_title' => $function,
             'ndawoni' => $ndawoni,
-            'ngowantoni' => $ngowantoni,
+            'category' => $category,
             'job_category_slug' => $function_slug,
             'experience' => $experiences,
-            'imisebenzi' => $imisebenzi_ngowantoni,
-            'mfundo_jobs_filtered' => $filter_mfundo,
-            'mfundo' => $mfundo,
+            'imisebenzi' => $imisebenzi_category,
+            'job_education_jobs_filtered' => $filter_job_education,
+            'job_education' => $job_education,
             'type' => '',
             'onjani' => $onjani,
             'provinces' => $provinces
@@ -482,7 +482,7 @@ class Jobs extends Controller
         }
         
         foreach ($data['imisebenzi'] as $umsebenzi) {
-            $data['type'] = $umsebenzi->ngowantoni;
+            $data['type'] = $umsebenzi->category;
         }
         
         $data['total_pages'] = ceil(count($data['imisebenzi'])/$data['results_per_page']);
@@ -491,7 +491,7 @@ class Jobs extends Controller
         $imisebenzi = $this->postModel->paginateImisebenziByType($data);
         $data['imisebenzi'] = $imisebenzi;
         
-        $this->view('easternCapeJobs/ngowantoni', $data);
+        $this->view('easternCapeJobs/category', $data);
     }
 
     public function edit($id)
@@ -505,23 +505,23 @@ class Jobs extends Controller
                 'id' => $id,
                 'job_id' => $umsebenzi->id,
                 'gama_le_company' => filter_input(INPUT_POST, 'igama_le_company', FILTER_SANITIZE_STRING),
-                'id_yomntu' => $_SESSION['id_yomntu'],
+                'user_id' => $_SESSION['user_id'],
                 'province' => filter_input(INPUT_POST, 'job_province', FILTER_SANITIZE_STRING),
                 'ndawoni' => filter_input(INPUT_POST, 'ndawoni_pha', FILTER_SANITIZE_STRING),
                 'job_title' => filter_input(INPUT_POST, 'job_title', FILTER_SANITIZE_STRING),
                 'label' => filter_input(INPUT_POST, 'igama_le_company', FILTER_SANITIZE_STRING) . " " . filter_input(INPUT_POST, 'job_title', FILTER_SANITIZE_STRING) . " " . filter_input(INPUT_POST, 'ndawoni_pha', FILTER_SANITIZE_STRING),
-                'closing_date' => filter_input(INPUT_POST, 'closing_date', FILTER_SANITIZE_STRING),
-                'msebenzi_onjani' => filter_input(INPUT_POST, 'msebenzi_onjani', FILTER_SANITIZE_STRING),
-                'mfundo' => filter_input(INPUT_POST, 'mfundo', FILTER_SANITIZE_STRING),
+                'job_closing_date' => filter_input(INPUT_POST, 'job_closing_date', FILTER_SANITIZE_STRING),
+                'job_type' => filter_input(INPUT_POST, 'job_type', FILTER_SANITIZE_STRING),
+                'job_education' => filter_input(INPUT_POST, 'job_education', FILTER_SANITIZE_STRING),
                 'experience' => filter_input(INPUT_POST, 'experience', FILTER_SANITIZE_STRING),
-                'ngowantoni' => filter_input(INPUT_POST, 'ngowantoni', FILTER_SANITIZE_STRING),
+                'category' => filter_input(INPUT_POST, 'category', FILTER_SANITIZE_STRING),
                 'purpose' => trim($_POST['purpose']),
-                'requirements' => trim($_POST['requirements']),
+                'job_requirements' => trim($_POST['job_requirements']),
                 'skills_competencies' => trim($_POST['skills_competencies']),
-                'responsibilities' => trim($_POST['responsibilities']),
+                'job_responsibilities' => trim($_POST['job_responsibilities']),
                 'additional_info' => trim($_POST['additional_info']),
                 'apply_nge_website' => filter_input(INPUT_POST, 'website', FILTER_SANITIZE_STRING),
-                'apply_ngesandla' => trim($_POST['ngesandla']),
+                'job_hand_application' => trim($_POST['ngesandla']),
                 'apply_nge_email' => filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING),
                 'image_name' => strip_tags(trim($_FILES['image']['name'])),
                 'image_size' => trim($_FILES['image']['size']),
@@ -530,7 +530,7 @@ class Jobs extends Controller
                 'dir' => '/home/salarfng/public_html/public/img/imisebenzi/',
                 'pattern' => '/[^\pN\pL]+/u',
                 'slug' => '',
-                'location_slug' => '',
+                'job_location_slug' => '',
                 'job_type_slug' => '',
                 'experience_slug' => '',
                 'job_education_slug' => '',
@@ -538,69 +538,69 @@ class Jobs extends Controller
                 'updated_at' => date('Y-m-d'),
                 'gama_le_company_err' => '',
                 'province_err' => '',
-                'location_err' => '',
+                'job_location_err' => '',
                 'job_title_err' => '',
                 'job_type_err' => '',
                 'job_education_err' => '',
                 'experience_err' => '',
                 'job_category_err' => '',
-                'requirements_err' => '',
-                'responsibilities_err' => '',
+                'job_requirements_err' => '',
+                'job_responsibilities_err' => '',
                 'job_web_application_err' => '',
                 'job_hand_application_err' => '',
                 'job_email_application_err' => '',
             ];
             
-            //Create slug for filtering by location/ndawoni
-            $data['location_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['ndawoni']));
+            //Create slug for filtering by job_location/ndawoni
+            $data['job_location_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['ndawoni']));
             
-            //Create slug for filtering by mfundo
-            $data['job_education_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['mfundo']));
+            //Create slug for filtering by job_education
+            $data['job_education_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['job_education']));
             
             //Create slug for filtering by experience
             $data['experience_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['experience']));
             
             //Create slug for filtering by msebenzi onjani
-            $data['job_type_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['msebenzi_onjani']));
+            $data['job_type_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['job_type']));
             
-            //Create slug for filtering by ngowantoni
-            $data['job_category_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['ngowantoni']));
+            //Create slug for filtering by category
+            $data['job_category_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['category']));
             
             //Validate data
             if (empty($data['gama_le_company'])) {
                 $data['gama_le_company_err'] = 'Kufuneka ufake igama le company.';
             }
-            if ($data['province'] == 'Khetha') {
+            if ($data['province'] == 'Select') {
                 $data['province_err'] = 'Kufuneka ukhethe i-province';
             }
             if (empty($data['ndawoni'])) {
-                $data['location_err'] = 'Ndawoni pha?';
+                $data['job_location_err'] = 'Ndawoni pha?';
             }
             if (empty($data['job_title'])) {
                 $data['job_title_err'] = 'Job title ithini';
             }
-            if ($data['msebenzi_onjani'] == 'Khetha') {
+            if ($data['job_type'] == 'Select') {
                 $data['job_type_err'] = 'Ngumsebenzi onjani lo?';
             }
-            if ($data['mfundo'] == 'Khetha') {
-                $dta['job_education_err'] = 'Level yemfundo ithini';
+            if ($data['job_education'] == 'Select') {
+                $dta['job_education_err'] = 'Level yejob_education ithini';
             }
-            if ($data['experience'] == 'Khetha') {
+            if ($data['experience'] == 'Select') {
                 $data['experience_err'] = 'Experience efunwayo ingakanani?';
             }
-            if ($data['ngowantoni'] == 'Khetha') {
+            if ($data['category'] == 'Select') {
                 $data['job_category_err'] = 'Ngumsebenzi wantoni lo?';
             }
-            if (empty($data['requirements'])) {
-                $data['requirements_err'] = 'Requirements zithini?';
+            if (empty($data['job_requirements'])) {
+                $data['job_requirements_err'] = 'Requirements zithini?';
             }
-            if (empty($data['responsibilities']))  {
-                $data['responsibilities_err'] = 'Responsibilities zithini?';
+            if (empty($data['job_responsibilities']))  {
+                $data['job_responsibilities_err'] = 'Responsibilities zithini?';
             }
             if (empty($data['apply_nge_website'])) {
                 $data['job_web_application_err'] = 'Sicela i-link';
             }
-            if (empty($data['apply_ngesandla'])) {
+            if (empty($data['job_hand_application'])) {
                 $data['job_hand_application_err'] = 'Sicela i-address';
             }
             if (empty($data['apply_nge_email'])) {
@@ -621,7 +621,7 @@ class Jobs extends Controller
             }
 
             //Make sure there no errors
-            if (empty($data['gama_le_company_err']) && empty($data['province_err']) && empty($data['location_err']) && empty($data['job_title_err']) && empty($data['job_type_err']) && empty($dta['job_education_err']) && empty($data['experience_err']) && empty($data['job_category_err']) && empty($data['requirements_err']) && empty($data['responsibilities_err']) && empty($data['application_mode_err'])) {
+            if (empty($data['gama_le_company_err']) && empty($data['province_err']) && empty($data['job_location_err']) && empty($data['job_title_err']) && empty($data['job_type_err']) && empty($dta['job_education_err']) && empty($data['experience_err']) && empty($data['job_category_err']) && empty($data['job_requirements_err']) && empty($data['job_responsibilities_err']) && empty($data['application_mode_err'])) {
                 
                 //Validate image type
                 move_uploaded_file($data['tmp_name'], $data['dir'] . $data['image_name']);
@@ -652,7 +652,7 @@ class Jobs extends Controller
             $umsebenzi = $this->postModel->getPostBySlug($id);
 
             //Check if ufakwe nguye lomsebenzi lomntu
-            if ($umsebenzi->id_yomntu != $_SESSION['id_yomntu']) {
+            if ($umsebenzi->user_id != $_SESSION['user_id']) {
                 redirect("easternCapeJobs");
             }
 
@@ -668,18 +668,18 @@ class Jobs extends Controller
                 'province' => $umsebenzi->province,
                 'ndawoni' => $umsebenzi->ndawoni,
                 'job_title' => $umsebenzi->job_title,
-                'closing_date' => $umsebenzi->closing_date,
-                'msebenzi_onjani' => $umsebenzi->msebenzi_onjani,
-                'mfundo' => $umsebenzi->mfundo,
+                'job_closing_date' => $umsebenzi->job_closing_date,
+                'job_type' => $umsebenzi->job_type,
+                'job_education' => $umsebenzi->job_education,
                 'experience' => $umsebenzi->experience,
-                'ngowantoni' => $umsebenzi->ngowantoni,
+                'category' => $umsebenzi->category,
                 'purpose' => $umsebenzi->purpose,
-                'requirements' => $umsebenzi->requirements,
+                'job_requirements' => $umsebenzi->job_requirements,
                 'skills_competencies' => $umsebenzi->skills_competencies,
-                'responsibilities' => $umsebenzi->responsibilities,
+                'job_responsibilities' => $umsebenzi->job_responsibilities,
                 'additional_info' => $umsebenzi->additional_info,
                 'apply_nge_website' => $umsebenzi->apply_nge_website, 
-                'apply_ngesandla' => $umsebenzi->apply_ngesandla,
+                'job_hand_application' => $umsebenzi->job_hand_application,
                 'apply_nge_email' => $umsebenzi->apply_nge_email,
                 'image' => $umsebenzi->image,
                 'updated_at' => date("Y-m-d H:i:s")
@@ -691,11 +691,11 @@ class Jobs extends Controller
         
     public function umsebenzi($slug) {
         $umsebenzi = $this->postModel->getPostBySlug($slug);
-        $user = $this->userModel->getUserById($umsebenzi->id_yomntu);
+        $user = $this->userModel->getUserById($umsebenzi->user_id);
         
         $data = [
             'page_image' => URLROOT. '/img/imisebenzi/' . $umsebenzi->image,
-            'page_description' => strip_tags($umsebenzi->requirements),
+            'page_description' => strip_tags($umsebenzi->job_requirements),
             'page_type' => 'website',
             'page_url' => URLROOT . "/" . $_GET['url'],
             'page_title' => $umsebenzi->label,
@@ -703,10 +703,10 @@ class Jobs extends Controller
             'slug' => $umsebenzi->slug,
             'gama_le_company' => $umsebenzi->gama_le_company,
             'experience' => $umsebenzi->experience,
-            'ngowantoni' => $umsebenzi->ngowantoni,
-            'msebenzi_onjani' => $umsebenzi->msebenzi_onjani,
+            'category' => $umsebenzi->category,
+            'job_type' => $umsebenzi->job_type,
             'ndawoni' => $umsebenzi->ndawoni,
-            'mfundo' => $umsebenzi->mfundo,
+            'job_education' => $umsebenzi->job_education,
             'jb_specification' => $umsebenzi->jb_specification,
             'today' => time(),
             'pub_date' => strtotime($umsebenzi->created_at),
@@ -718,40 +718,40 @@ class Jobs extends Controller
 
         if (!empty($data['umsebenzi']->purpose) AND !empty($data['umsebenzi']->skills_competencies) AND !empty($data['umsebenzi']->additional_info)) {
             $data['jb_specification'] = "<h3>Purose</h3>" . $data['umsebenzi']->purpose;
-            $data['jb_specification'] .= "<h3>Requirements</h3>" . $data['umsebenzi']->requirements;
+            $data['jb_specification'] .= "<h3>Requirements</h3>" . $data['umsebenzi']->job_requirements;
             $data['jb_specification'] .= "<h3>Skills & Competencies</h3>" . $data['umsebenzi']->skills_competencies;
-            $data['jb_specification'] .= "<h3>Responsibilities</h3>" . $data['umsebenzi']->responsibilities;
+            $data['jb_specification'] .= "<h3>Responsibilities</h3>" . $data['umsebenzi']->job_responsibilities;
             $data['jb_specification'] .= "<h3>Additional Information</h3>" . $data['umsebenzi']->additional_info;
         } elseif (!empty($data['umsebenzi']->purpose) AND !empty($data['umsebenzi']->skills_competencies)) {
             $data['jb_specification'] = "<h3>Purose</h3>" . $data['umsebenzi']->purpose;
-            $data['jb_specification'] .= "<h3>Requirements</h3>" . $data['umsebenzi']->requirements;
+            $data['jb_specification'] .= "<h3>Requirements</h3>" . $data['umsebenzi']->job_requirements;
             $data['jb_specification'] .= "<h3>Skills & Competencies</h3>" . $data['umsebenzi']->skills_competencies;
-            $data['jb_specification'] .= "<h3>Responsibilities</h3>" . $data['umsebenzi']->responsibilities;
+            $data['jb_specification'] .= "<h3>Responsibilities</h3>" . $data['umsebenzi']->job_responsibilities;
         } elseif (!empty($data['umsebenzi']->purpose) AND !empty($data['umsebenzi']->additional_info)) {
             $data['jb_specification'] = "<h3>Purose</h3>" . $data['umsebenzi']->purpose;
-            $data['jb_specification'] .= "<h3>Requirements</h3>" . $data['umsebenzi']->requirements;
-            $data['jb_specification'] .= "<h3>Responsibilities</h3>" . $data['umsebenzi']->responsibilities;
+            $data['jb_specification'] .= "<h3>Requirements</h3>" . $data['umsebenzi']->job_requirements;
+            $data['jb_specification'] .= "<h3>Responsibilities</h3>" . $data['umsebenzi']->job_responsibilities;
             $data['jb_specification'] .= "<h3>Skills & Competencies</h3>" . $data['umsebenzi']->additional_info;
         } elseif (!empty($data['umsebenzi']->purpose)) {
             $data['jb_specification'] = "<h3>Purose</h3>" . $data['umsebenzi']->purpose;
-            $data['jb_specification'] .= "<h3>Requirements</h3>" . $data['umsebenzi']->requirements;
-            $data['jb_specification'] .= "<h3>Responsibilities</h3>" . $data['umsebenzi']->responsibilities;
+            $data['jb_specification'] .= "<h3>Requirements</h3>" . $data['umsebenzi']->job_requirements;
+            $data['jb_specification'] .= "<h3>Responsibilities</h3>" . $data['umsebenzi']->job_responsibilities;
         } elseif (!empty($data['umsebenzi']->skills_competencies) AND !empty($data['umsebenzi']->additional_info)) {
-            $data['jb_specification'] = "<h3>Requirements</h3>" . $data['umsebenzi']->requirements;
+            $data['jb_specification'] = "<h3>Requirements</h3>" . $data['umsebenzi']->job_requirements;
             $data['jb_specification'] .= "<h3>Skills & Competencies</h3>" . $data['umsebenzi']->skills_competencies;
-            $data['jb_specification'] .= "<h3>Responsibilities</h3>" . $data['umsebenzi']->responsibilities;
+            $data['jb_specification'] .= "<h3>Responsibilities</h3>" . $data['umsebenzi']->job_responsibilities;
             $data['jb_specification'] .= "<h3>Additional Information</h3>" . $data['umsebenzi']->additional_info;
         } elseif (!empty($data['umsebenzi']->skills_competencies)) {
-            $data['jb_specification'] = "<h3>Requirements</h3>" . $data['umsebenzi']->requirements;
+            $data['jb_specification'] = "<h3>Requirements</h3>" . $data['umsebenzi']->job_requirements;
             $data['jb_specification'] .= "<h3>Skills & Competencies</h3>" . $data['umsebenzi']->skills_competencies;
-            $data['jb_specification'] .= "<h3>Responsibilities</h3>" . $data['umsebenzi']->responsibilities;
+            $data['jb_specification'] .= "<h3>Responsibilities</h3>" . $data['umsebenzi']->job_responsibilities;
         } elseif (!empty($data['umsebenzi']->additional_info)) {
-            $data['jb_specification'] = "<h3>Requirements</h3>" . $data['umsebenzi']->requirements;
-            $data['jb_specification'] .= "<h3>Responsibilities</h3>" . $data['umsebenzi']->responsibilities;
+            $data['jb_specification'] = "<h3>Requirements</h3>" . $data['umsebenzi']->job_requirements;
+            $data['jb_specification'] .= "<h3>Responsibilities</h3>" . $data['umsebenzi']->job_responsibilities;
             $data['jb_specification'] .= "<h3>Additional Information</h3>" . $data['umsebenzi']->additional_info;
-        } elseif (!empty($data['umsebenzi']->requirements) AND !empty($data['umsebenzi']->responsibilities)) {
-            $data['jb_specification'] = "<h3>Requirements</h3>" . $data['umsebenzi']->requirements;
-            $data['jb_specification'] .= "<h3>Responsibilities</h3>" . $data['umsebenzi']->responsibilities;  
+        } elseif (!empty($data['umsebenzi']->job_requirements) AND !empty($data['umsebenzi']->job_responsibilities)) {
+            $data['jb_specification'] = "<h3>Requirements</h3>" . $data['umsebenzi']->job_requirements;
+            $data['jb_specification'] .= "<h3>Responsibilities</h3>" . $data['umsebenzi']->job_responsibilities;  
         }
       
         $data['date_diff'] = ($data['today'] - $data['pub_date']);
@@ -773,7 +773,7 @@ class Jobs extends Controller
             $umsebenzi = $this->postModel->getPostBySlug($slug);
 
             //Check for owner
-            if ($umsebenzi->id_yomntu != $_SESSION['id_yomntu']) {
+            if ($umsebenzi->user_id != $_SESSION['user_id']) {
                 redirect('easternCapeJobs');
             }
             if ($this->postModel->deleteJob($slug)) {

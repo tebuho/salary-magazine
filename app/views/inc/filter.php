@@ -9,8 +9,8 @@
         </div>
         <div class="province-container filter-container">
             <ul class="province filter jb-recommend" id="ndawoni">
-                <?php foreach ($data['ndawoni'] as $location) : ?>
-                <li class="p-0"><a href="<?php echo URLROOT . '/' .$province_slug . '/ndawoni/' . $location->location_slug . "/"; ?>"><?php echo $location->ndawoni; ?></a></li>
+                <?php foreach ($data['ndawoni'] as $job_location) : ?>
+                <li class="p-0"><a href="<?php echo URLROOT . '/' .$province_slug . '/ndawoni/' . $job_location->job_location_slug . "/"; ?>"><?php echo $job_location->ndawoni; ?></a></li>
                 <?php endforeach; ?>
             </ul>
         </div>
@@ -24,20 +24,20 @@
         <div class="province-container filter-container">
             <ul class="province filter multi-collapse collapse" id="onjani">
                 <?php foreach ($data['onjani'] as $onjani) : ?>
-                <li><a href="<?php echo URLROOT . '/' .$province_slug . '/onjani/' . $onjani->job_type_slug . "/"; ?>"><?php echo $onjani->msebenzi_onjani; ?> (<?php echo $onjani->count; ?>)</a></li>
+                <li><a href="<?php echo URLROOT . '/' .$province_slug . '/onjani/' . $onjani->job_type_slug . "/"; ?>"><?php echo $onjani->job_type; ?> (<?php echo $onjani->count; ?>)</a></li>
                 <?php endforeach; ?>
             </ul>
         </div>
         <!-- <div class="province-header mb-1">
-            <a data-toggle="collapse" role="button" aria-expanded="false" aria-controls="imfundo" href="#imfundo" class="collapsed jb-collapse">
-                <span class="label">Imfundo</span>
+            <a data-toggle="collapse" role="button" aria-expanded="false" aria-controls="ijob_education" href="#ijob_education" class="collapsed jb-collapse">
+                <span class="label">Ijob_education</span>
                 <span class="rsaquo">&rsaquo;</span>
             </a>
         </div>
         <div class="province-container filter-container">
-            <ul class="province filter multi-collapse collapse" id="imfundo">
-                <?php foreach ($data['mfundo'] as $mfundo) : ?>
-                <li><a href="<?php echo URLROOT . '/' .$province_slug . '/mfundo/' . $mfundo->job_education_slug . "/"; ?>"><?php echo $mfundo->mfundo; ?> (<?php echo $mfundo->count; ?>)</a></li>
+            <ul class="province filter multi-collapse collapse" id="ijob_education">
+                <?php foreach ($data['job_education'] as $job_education) : ?>
+                <li><a href="<?php echo URLROOT . '/' .$province_slug . '/job_education/' . $job_education->job_education_slug . "/"; ?>"><?php echo $job_education->job_education; ?> (<?php echo $job_education->count; ?>)</a></li>
                 <?php endforeach; ?>
             </ul>
         </div>   
@@ -62,8 +62,8 @@
         </div>
         <div class="province-container filter-container">
             <ul class="province filter multi-collapse collapse" id="owantoni">
-                <?php foreach ($data['ngowantoni'] as $ngowantoni) : ?>
-                <li><a href="<?php echo URLROOT . '/' .$province_slug . '/ngowantoni/' . $ngowantoni->job_category_slug . "/"; ?>"><?php echo $ngowantoni->ngowantoni; ?> (<?php echo $ngowantoni->count; ?>)</a></li>
+                <?php foreach ($data['category'] as $category) : ?>
+                <li><a href="<?php echo URLROOT . '/' .$province_slug . '/category/' . $category->job_category_slug . "/"; ?>"><?php echo $category->category; ?> (<?php echo $category->count; ?>)</a></li>
                 <?php endforeach; ?>
             </ul>
         </div>

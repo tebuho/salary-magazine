@@ -11,7 +11,7 @@
 //
 // If you do not have plugins that depend on this file in your editor build, you can simply
 // ignore it. Otherwise it is strongly recommended to customize this file to match your
-// website requirements and design properly.
+// website job_requirements and design properly.
 //
 // For more information refer to: https://ckeditor.com/docs/ckeditor4/latest/guide/dev_styles.html#style-rules
 

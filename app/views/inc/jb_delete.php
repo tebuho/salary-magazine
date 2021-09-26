@@ -5,7 +5,7 @@
         $umsebenzi = $this->postModel->getPostBySlug($id);
 
         //Check for owner
-        if ($umsebenzi->id_yomntu != $_SESSION['id_yomntu']) {
+        if ($umsebenzi->user_id != $_SESSION['user_id']) {
             redirect($this->province_slug);
         }
         if ($this->postModel->deleteJob($id)) {

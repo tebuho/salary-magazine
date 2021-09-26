@@ -19,10 +19,10 @@
         //Get imisebenzi
         $imisebenzi = $this->postModel->getImisebenzi();
         $ndawoni = $this->postModel->filterImisebenziByLocation();
-        $ngowantoni = $this->postModel->filterImisebenziByType();
+        $category = $this->postModel->filterImisebenziByType();
         $experience = $this->postModel->filterImisebenziByExperience();
         $onjani = $this->postModel->filterImisebenziByOnjani();
-        $mfundo = $this->postModel->filterImisebenziByMfundo();
+        $job_education = $this->postModel->filterImisebenziByMfundo();
         $provinces = $this->postModel->getProvinces();
 
         $range = 2;
@@ -46,9 +46,9 @@
             'page_url' => URLROOT . $path,
             'page_title' => $this->province . ucwords($_GET['search']) . ' Jobs',
             'ndawoni' => $ndawoni,
-            'ngowantoni' => $ngowantoni,
+            'category' => $category,
             'experience' => $experience,
-            'mfundo' => $mfundo,
+            'job_education' => $job_education,
             'onjani' => $onjani,
             'imisebenzi' => $imisebenzi,
             'provinces' => $provinces,

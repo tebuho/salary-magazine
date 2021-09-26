@@ -25,7 +25,7 @@ class Imibuzo extends Controller
 
     public function buza()
     {
-        if (!isset($_SESSION['id_yomntu'])) {
+        if (!isset($_SESSION['user_id'])) {
             redirect('abantu/login');
         }
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -35,7 +35,7 @@ class Imibuzo extends Controller
             $data = [
                 'ungantoni' => trim($_POST['ungantoni']),
                 'slug' => trim($_POST['ungantoni'] . "-" . time()),
-                'id_yomntu' => $_SESSION['id_yomntu'],
+                'user_id' => $_SESSION['user_id'],
                 'umbuzo' => trim($_POST['umbuzo']),
                 'ungantoni_err' => '',
                 'umbuzo_err' => '',
@@ -88,7 +88,7 @@ class Imibuzo extends Controller
             $data = [
                 'id' => $id,
                 'ungantoni' => trim($_POST['ungantoni']),
-                'id_yomntu' => $_SESSION['id_yomntu'],
+                'user_id' => $_SESSION['user_id'],
                 'umbuzo' => $_POST['umbuzo'],
                 'updated_at' => date('Y-m-d'),
                 'ungantoni_err' => '',
@@ -99,7 +99,7 @@ class Imibuzo extends Controller
             if (empty($data['ungantoni'])) {
                 $data['ungantoni_err'] = 'Kufuneka uchaze umbuzo wakho ungantoni.';
             }
-            if ($data['umbuzo'] == 'Khetha') {
+            if ($data['umbuzo'] == 'Select') {
                 $data['umbuzo_err'] = 'Kufuneka ubuze.';
             }
 
@@ -120,7 +120,7 @@ class Imibuzo extends Controller
             $umbuzo = $this->postModel->getUmbuzoById($id);
 
             //Check if ufakwe nguye lombuzo lomntu
-            if ($umbuzo->id_yomntu != $_SESSION['id_yomntu']) {
+            if ($umbuzo->user_id != $_SESSION['user_id']) {
                 redirect("imibuzo/");
             }
 
@@ -149,7 +149,7 @@ class Imibuzo extends Controller
         
     public function umbuzo($id) {
         $umbuzo = $this->postModel->getUmbuzoById($id);
-        $user = $this->userModel->getUserById($umbuzo->id_yomntu);
+        $user = $this->userModel->getUserById($umbuzo->user_id);
         $data = [
                 'page_image' => URLROOT . '/public/img/western-cape-jobs/westernCapeJobs.png',
                 'page_description' => 'Umbuzo',
@@ -173,7 +173,7 @@ class Imibuzo extends Controller
             $umbuzo = $this->postModel->getUmbuzoById($id);
 
             //Check for owner
-            if ($umbuzo->id_yomntu != $_SESSION['id_yomntu']) {
+            if ($umbuzo->user_id != $_SESSION['user_id']) {
                 redirect('imibuzo/');
             }
             if ($this->postModel->deleteUmbuzo($id)) {
@@ -214,7 +214,7 @@ class Imibuzo extends Controller
             $data = [
                 'id' => $id,
                 'impendulo' => trim($_POST['impendulo']),
-                'id_yomntu' => $_SESSION['id_yomntu'],
+                'user_id' => $_SESSION['user_id'],
                 'date' => date('Y-m-d H:i:s'),
                 'impendulo_err' => ''
             ];
@@ -263,7 +263,7 @@ class Imibuzo extends Controller
                     'id' => $id,
                     'id_yombuzo' => $imibuzo->umbuzoId,
                     'data' => $imibuzo,
-                    'id_yomntu' => $imibuzo->id_yomntu,
+                    'user_id' => $imibuzo->user_id,
                     'igama' => ucwords($imibuzo->igama),
                     'fani' => $imibuzo->fani,
                     'initials' => strtoupper($imibuzo->initials),
@@ -283,7 +283,7 @@ class Imibuzo extends Controller
                 $data['fani'] = str_split($data['fani']);
                 $data['fani'] = ucwords($data['fani'][0]);
                 $data['full_name'] = $data['igama'] . ' ' . $data['fani'];
-                $user = $this->userModel->getUserById($_SESSION['id_yomntu']);
+                $user = $this->userModel->getUserById($_SESSION['user_id']);
 
                 // User session username
                 $data['username'] = $user->igama . ' ' . $user->fani;
@@ -309,7 +309,7 @@ class Imibuzo extends Controller
                     'id' => $id,
                     'id_yombuzo' => $imibuzo->umbuzoId,
                     'data' => $imibuzo,
-                    'id_yomntu' => $imibuzo->id_yomntu,
+                    'user_id' => $imibuzo->user_id,
                     'igama' => ucwords($imibuzo->igama),
                     'fani' => $imibuzo->fani,
                     'initials' => strtoupper($imibuzo->initials),
@@ -323,7 +323,7 @@ class Imibuzo extends Controller
                 $data['fani'] = str_split($data['fani']);
                 $data['fani'] = ucfirst($data['fani'][0]);
                 $data['full_name'] = $data['igama'] . ' ' . $data['fani'];
-                $user = $this->userModel->getUserById($_SESSION['id_yomntu']);
+                $user = $this->userModel->getUserById($_SESSION['user_id']);
 
                 // User session username
                 $data['username'] = $user->igama . ' ' . $user->fani;

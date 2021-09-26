@@ -15,10 +15,10 @@
                                     <!-- Employer -->
                                     <div class="input-label__container">
                                         <div class="label-container">
-                                            <label for="employer">Employer</label>
+                                            <label for="job_employer">Employer</label>
                                         </div>
                                         <div class="input-container">
-                                            <input type="text" name="employer" class="form-control form-control-lg <?php echo (!empty($data['employer_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['employer']; ?>" autofocus>
+                                            <input type="text" name="job_employer" class="form-control form-control-lg <?php echo (!empty($data['employer_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['employer']; ?>" autofocus>
                                             <span class="invalid-feedback"><?php echo $data['employer_err']; ?></span>
                                         </div>
                                     </div>
@@ -133,8 +133,8 @@
                                                                 <?php 
                                                                     foreach ($data['categories'] as $category) { ?>
                                                                         <li>
-                                                                            <input id="<?php echo $category->ngowantoni; ?>" type="checkbox" name="categories[]" class="form-check-input <?php echo (!empty($data['categories_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $category->ngowantoni; ?>" <?php echo in_array($category->ngowantoni, $data['cat_from_employers'], true) ? 'checked' : ''; ?>>
-                                                                            <label for="<?php echo $category->ngowantoni; ?>"><?php echo $category->ngowantoni; ?></label>
+                                                                            <input id="<?php echo $category->category; ?>" type="checkbox" name="categories[]" class="form-check-input <?php echo (!empty($data['categories_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $category->category; ?>" <?php echo in_array($category->category, $data['cat_from_employers'], true) ? 'checked' : ''; ?>>
+                                                                            <label for="<?php echo $category->category; ?>"><?php echo $category->category; ?></label>
                                                                             </li>
                                                                 <?php  } ?>
                                                             </div>

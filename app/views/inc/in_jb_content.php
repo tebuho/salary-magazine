@@ -20,18 +20,18 @@
             <div class="card-lo-msebenzi__container highlight-grey">
                 <?php echo flash('comment_message'); ?>
                 <?php echo flash('comment_error'); ?>
-                <?php if ($data['umsebenzi']->closing_date == "0000-00-00" && $data['since_pub_date'] > 7 || $data['umsebenzi']->closing_date == NULL && $data['since_pub_date'] > 7) : ?>
+                <?php if ($data['umsebenzi']->job_closing_date == "1970-01-01" && $data['since_pub_date'] > 7 || $data['umsebenzi']->job_closing_date == NULL && $data['since_pub_date'] > 7) : ?>
                 <p class="mt-2 p-1 border border-danger flash-message" style="line-height:normal"><small>Lo msebenzi uphelelwe. If ubungena closing date then ixesha lawo lidlulile. Imisebenzi engena closing date siyigcina intsuku ezisixhenxe.</small></p>
-                <?php elseif($data['umsebenzi']->closing_date !== "0000-00-00" && $data['umsebenzi']->closing_date < date('Y-m-d')) : ?>
+                <?php elseif($data['umsebenzi']->job_closing_date !== "1970-01-01" && $data['umsebenzi']->job_closing_date < date('Y-m-d')) : ?>
                 <p class="mt-1 p-1 border border-danger flash-message" style="line-height:normal"><small>Lo msebenzi uphelelwe. Closing date yawo ibi nge <?php echo $data['umsebenzi']->closingDate; ?>.</small></p>
                 <?php endif; ?>
                 <!-- Alert when a new job has been successfully uploaded -->
                 <?php echo flash('message_yomsebenzi'); ?>
                 <h3 class="mt-2"><?php echo $data['umsebenzi']->job_title; ?> </h3>
                 <p><?php echo $data['umsebenzi']->gama_le_company; ?> - <?php echo $data['umsebenzi']->ndawoni; ?>, <?php echo $data['umsebenzi']->province; ?></p>
-                <p><?php echo $data['umsebenzi']->msebenzi_onjani; ?><?php echo !empty($data['umsebenzi']->ngowantoni) ? " | " . $data['umsebenzi']->ngowantoni : ""; ?></p>
-                <?php if($data['umsebenzi']->id_yomntu != 2055) : ?>
-                    <p><?php echo $data['umsebenzi']->closing_date == "0000-00-00" ? "Closing date ayichazwanga" : "Closing date yi " . $data['umsebenzi']->closingDate; ?></p>
+                <p><?php echo $data['umsebenzi']->job_type; ?><?php echo !empty($data['umsebenzi']->category) ? " | " . $data['umsebenzi']->category : ""; ?></p>
+                <?php if($data['umsebenzi']->user_id != 2055) : ?>
+                    <p><?php echo $data['umsebenzi']->job_closing_date == "1970-01-01" ? "Closing date ayichazwanga" : "Closing date yi " . $data['umsebenzi']->closingDate; ?></p>
                 <?php endif; ?>
             </div>
             <div class="description-yo__msebenzi p-0">
@@ -41,12 +41,12 @@
                     </div>
                 <?php endif; ?>
                     <?php echo $data['jb_specification']; ?>
-                    <?php if ($data['umsebenzi']->closing_date >= date('Y-m-d') || $data['umsebenzi']->closing_date == "0000-00-00" && $data['since_pub_date'] <= 7 || $data['umsebenzi']->closing_date == NULL && $data['since_pub_date'] <= 7) : ?>
+                    <?php if ($data['umsebenzi']->job_closing_date >= date('Y-m-d') || $data['umsebenzi']->job_closing_date == "1970-01-01" && $data['since_pub_date'] <= 7 || $data['umsebenzi']->job_closing_date == NULL && $data['since_pub_date'] <= 7) : ?>
                         <!-- Application method -->
                         <div class="description-yo__msebenzi pr-0">
                             <?php
-                                if (!empty($data['umsebenzi']->apply_ngesandla)) {
-                                    echo "<div class='highlight-grey'><strong class='mb-1'>Application Address:</strong><br>" . $data['umsebenzi']->apply_ngesandla . "</div>";
+                                if (!empty($data['umsebenzi']->job_hand_application)) {
+                                    echo "<div class='highlight-grey'><strong class='mb-1'>Application Address:</strong><br>" . $data['umsebenzi']->job_hand_application . "</div>";
                                 }
                             ?>
                             <?php
@@ -60,7 +60,7 @@
                                 }
                             ?>
                         </div>
-                    <?php elseif($data['umsebenzi']->closing_date >= date('Y-m-d') || $data['umsebenzi']->closing_date == "0000-00-00" && $data['since_pub_date'] <= 7 || $data['umsebenzi']->closing_date == NULL && $data['since_pub_date'] <= 7): ?>
+                    <?php elseif($data['umsebenzi']->job_closing_date >= date('Y-m-d') || $data['umsebenzi']->job_closing_date == "1970-01-01" && $data['since_pub_date'] <= 7 || $data['umsebenzi']->job_closing_date == NULL && $data['since_pub_date'] <= 7): ?>
                     <p class="mt-1 p-1 border border-danger" style="line-height:normal"><small>Lo msebenzi uphelelwe. Closing date yawo ibingachazwanga and thina imisebenzi engena closing date siyigcina intsuku ezisixhenxe.</small></p>
                     <?php else : ?>
                         <p class="mt-1 p-1 border border-danger flash-message flash-message-bottom" style="line-height:normal"><small>Lo msebenzi uphelelwe. Closing date yawo ibi nge <?php echo $data['umsebenzi']->closingDate; ?>.</small></p>

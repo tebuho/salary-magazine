@@ -107,7 +107,7 @@ class Employer
     public function getIndustry($slug)
     {
         $this->db->query(
-            "SELECT `ngowantoni` FROM `imisebenzi` WHERE `ngowantoni` != 'TEMPLATE PLACEHOLDER' AND `ngowantoni` != '' GROUP BY `ngowantoni`"
+            "SELECT `category` FROM `imisebenzi` WHERE `category` != 'TEMPLATE PLACEHOLDER' AND `category` != '' GROUP BY `category`"
         );
         $this->db->bind(':employer', $slug);
         $results = $this->db->resultSet();
@@ -134,7 +134,7 @@ class Employer
     public function getEducation($slug)
     {
         $this->db->query(
-            "SELECT `mfundo` FROM `imisebenzi` WHERE employer_slug = :employer GROUP BY `mfundo`"
+            "SELECT `job_education` FROM `imisebenzi` WHERE employer_slug = :employer GROUP BY `job_education`"
         );
         $this->db->bind(':employer', $slug);
         $results = $this->db->resultSet();

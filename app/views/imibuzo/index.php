@@ -44,7 +44,7 @@
                                         </div>
                                     </div>
                                     <div class="follow pr-2">
-                                        <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "Admin" || isset($_SESSION['id_yomntu']) && $data['imisebenzi'][$i]->id_yomntu == $_SESSION['id_yomntu']) : ?>
+                                        <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "Admin" || isset($_SESSION['user_id']) && $data['imisebenzi'][$i]->user_id == $_SESSION['user_id']) : ?>
                                         <a id="data['imibuzo'][i]-<?php echo $data['imibuzo'][$i]->id; ?>" href="<?php echo URLROOT; ?>/imibuzo/edit/<?php echo $data['imibuzo'][$i]->slug; ?>" class="edit-umbuzo follow-btn" data-target="#editModal-<?php echo $data['imibuzo'][$i]->id; ?>" data-toggle="modal">Edit</a>
                                         <?php endif; ?>
                                     </div>

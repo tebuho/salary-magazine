@@ -6,9 +6,9 @@ class Tests extends Controller
         $this->postModel = $this->model('Umbuzo');
         $this->userModel = $this->model('Umntu');
 
-        if (isset($_POST['id_yomntu']) && isset($_POST['id_yombuzo']) && isset($_POST['impendulo'])) {
+        if (isset($_POST['user_id']) && isset($_POST['id_yombuzo']) && isset($_POST['impendulo'])) {
             $data = [
-                'id_yomntu' => $_POST['id_yomntu'],
+                'user_id' => $_POST['user_id'],
                 'id_yombuzo' => $_POST['id_yombuzo'],
                 'impendulo' => $_POST['impendulo']
             ];

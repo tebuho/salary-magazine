@@ -8,10 +8,10 @@
             <div class="card-lo-msebenzi heading-container pr-0 pl-0">
                 <div class="job-meta">
                     <div class="job-meta_tags">
-                        <span class="badge badge-light"><?php echo $data['imisebenzi'][$i]->msebenzi_onjani; ?></span>
-                        <span class="badge badge-light"><a href="<?php echo URLROOT . '/pages/ngowantoni/' . $data['imisebenzi'][$i]->ngowantoni;?>"><?php echo $data['imisebenzi'][$i]->ngowantoni; ?></a></span>
+                        <span class="badge badge-light"><?php echo $data['imisebenzi'][$i]->job_type; ?></span>
+                        <span class="badge badge-light"><a href="<?php echo URLROOT . '/pages/category/' . $data['imisebenzi'][$i]->category;?>"><?php echo $data['imisebenzi'][$i]->category; ?></a></span>
                     </div>
-                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "Admin" || isset($_SESSION['id_yomntu']) && $data['imisebenzi'][$i]->id_yomntu == $_SESSION['id_yomntu']) : ?>
+                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "Admin" || isset($_SESSION['user_id']) && $data['imisebenzi'][$i]->user_id == $_SESSION['user_id']) : ?>
                         <div class="follow">
                             <a href="<?php echo URLROOT; ?>/<?php echo $province_slug; ?>/edit/<?php echo $data['imisebenzi'][$i]->slug; ?>" class="edit-link follow-btn">Edit</a>
                         </div>
@@ -29,7 +29,7 @@
         <?php }                   
         //Pagination
         require  APPROOT .'/views/inc/pagination.php';
-    } elseif (isset($_SESSION['id_yomntu']) && $_SESSION['id_yomntu'] == 2 || isset($_SESSION['id_yomntu']) && $_SESSION['id_yomntu'] == 3) { ?>
+    } elseif (isset($_SESSION['user_id']) && $_SESSION['user_id'] == 2 || isset($_SESSION['user_id']) && $_SESSION['user_id'] == 3) { ?>
         <p class="m-0">Ingathi akukho msebenzi okhoyo. Xa ufuna ukufaka omnye <a href="<?php echo URLROOT ; ?>/addJobs/add">Cofa apha.</a></p>
     <?php } else { ?>
         <p class="m-0">Ingathi akukho msebenzi okhoyo.</p>

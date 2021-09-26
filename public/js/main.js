@@ -1,32 +1,6 @@
 $(document).ready(function() {
     $(".description-yo__msebenzi").children("ul, ol").addClass("jb-list");
-
-    $("#hand").click(function(e) {
-        $(".show-input").css("display", "block");
-        $("#ngesandla").removeClass("collapse");
-        $("#website").addClass("collapse");
-        $("#email_address").addClass("collapse");
-    })
-    $("#email").click(function(e) {
-        $(".show-input").css("display", "block");
-        $("#email_address").removeClass("collapse");
-        $("#ngesandla").addClass("collapse");
-        $("#website").addClass("collapse");
-        $("#cke_ngesandla").addClass("collapse");
-    })
-    $("#web").click(function(e) {
-        $(".show-input").css("display", "block");
-        $("#website").removeClass("collapse");
-        $("#ngesandla").addClass("collapse");
-        $("#email_address").addClass("collapse");
-        $("#cke_ngesandla").addClass("collapse");
-    })
-    $("#hayi_andisebenzi").click(function(e) {
-        $("#gqibe_nini, #reason").removeClass("collapse");
-    })
-    $("#ewe_ndiyasebenza").click(function(e) {
-        $("#gqibe_nini, #reason").addClass("collapse");
-    })
+    
     $('.modal').on('shown.bs.modal', function () {
         let editArea = $('.show').find('.edit-area');
         let strLen = editArea.val().length * 2
@@ -279,7 +253,7 @@ if ( urlPathArray.includes("imibuzo") ) {
         e.preventDefault();
         const commentingUser = document.querySelector('.commenting-user');
         const username = commentingUser.dataset.username;
-        let id_yomntu = document.querySelector('.commenting-user').id;
+        let user_id = document.querySelector('.commenting-user').id;
         const id_yombuzo = commentingUser.dataset.post;
         let commentCard = `<div class="card comment-card">
             <div class="responder-box">
@@ -296,7 +270,7 @@ if ( urlPathArray.includes("imibuzo") ) {
         let submitData = new FormData();
         submitData.append('impendulo', impendulo);
         submitData.append('id_yombuzo', id_yombuzo);
-        submitData.append('id_yomntu', id_yomntu);
+        submitData.append('user_id', user_id);
         let xhttp = new XMLHttpRequest();
         xhttp.open("POST", "/new/imibuzo/update", true);
         xhttp.onreadystatechange = function() {
@@ -384,7 +358,7 @@ if ( urlPathArray.includes( "tertiaryEducation" ) || urlPathArray.includes( "exp
 
                 let countBlock = experienceData.length;
                 let formBlock = document.getElementById("formBlock_0");
-                let q = "responsibilities_" + (experienceData.length);
+                let q = "job_responsibilities_" + (experienceData.length);
                 const experienceFormFields = `
                 <div class="form-fields" id="formBlock_${countBlock}">
                     <div class="form-group">
@@ -409,8 +383,8 @@ if ( urlPathArray.includes( "tertiaryEducation" ) || urlPathArray.includes( "exp
                         <span class="invalid-feedback"></span>
                     </div>
                     <div class="form-group">
-                        <label for="responsibilities_${countBlock}">Sixelele izinto obuzenza phaya: <sup class="text-danger">*</sup></label>
-                        <textarea name="responsibilities[]" class="form-control" id="responsibilities_${countBlock}"></textarea>
+                        <label for="job_responsibilities_${countBlock}">Sixelele izinto obuzenza phaya: <sup class="text-danger">*</sup></label>
+                        <textarea name="job_responsibilities[]" class="form-control" id="job_responsibilities_${countBlock}"></textarea>
                         <span class="invalid-feedback"></span>
                     </div>
                     <div class="form-group collapse" id="reason_${countBlock}">
@@ -425,7 +399,7 @@ if ( urlPathArray.includes( "tertiaryEducation" ) || urlPathArray.includes( "exp
                     formBlock.insertAdjacentHTML("beforebegin", fields);
                 }
 
-                let m = document.getElementById("responsibilities_" + (experienceData.length));
+                let m = document.getElementById("job_responsibilities_" + (experienceData.length));
                 let n = CKEDITOR.replace( q );
                 let o = `<script>${n}</script>`;
                 
@@ -456,7 +430,7 @@ if ( urlPathArray.includes( "tertiaryEducation" ) || urlPathArray.includes( "exp
                     <label for="ugqibe_nini_${(experienceData.length)}">Ugqibele nini</label>
                     <div class="input-container col-3 p-0">
                         <select name="ugqibe_nini[]" id="ugqibe_nini_${(experienceData.length)}" class="p-2 form-control custom-select">
-                            <option class="form-control" value="Khetha">Khetha</option>`;
+                            <option class="form-control" value="Select">Select</option>`;
                 
                 keys.forEach(myFunction);
                 start_year += "</select><span class='invalid-feedback'></span>";

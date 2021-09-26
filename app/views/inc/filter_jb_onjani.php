@@ -2,20 +2,20 @@
          
     //Get imisebenzi
     $ndawoni = $this->postModel->filterImisebenziByLocation();
-    $ngowantoni = $this->postModel->filterImisebenziByType();
+    $category = $this->postModel->filterImisebenziByType();
     $experience = $this->postModel->filterImisebenziByExperience();
-    $mfundo = $this->postModel->filterImisebenziByMfundo();
-    $onjani_umsebenzi = $this->postModel->getImisebenziByOnjani($msebenzi_onjani);
+    $job_education = $this->postModel->filterImisebenziByMfundo();
+    $onjani_umsebenzi = $this->postModel->getImisebenziByOnjani($job_type);
     $onjani = $this->postModel->filterImisebenziByOnjani();
     $provinces = $this->postModel->getProvinces();
     
     //Get job type for title tag
     foreach ($onjani_umsebenzi as $job_type) {
-        $type = $job_type->msebenzi_onjani;
+        $type = $job_type->job_type;
     }
 
     foreach($onjani_umsebenzi as $njani) {
-        $msebenzi_onjani = $njani->job_type_slug;
+        $job_type = $njani->job_type_slug;
     }
     
     $range = 2;
@@ -38,11 +38,11 @@
         'page_url' => URLROOT . "/" . $_GET['url'],
         'page_title' => 'Imisebenzi ye ' .  $type,
         'ndawoni' => $ndawoni,
-        'ngowantoni' => $ngowantoni,
+        'category' => $category,
         'experience' => $experience,
-        'mfundo' => $mfundo,
+        'job_education' => $job_education,
         'onjani' => $onjani,
-        'job_type_slug' => $msebenzi_onjani,
+        'job_type_slug' => $job_type,
         'area' => '',
         'njani' => '',
         'imisebenzi' => $onjani_umsebenzi,
@@ -56,7 +56,7 @@
     }
     
     foreach ($data['imisebenzi'] as $onjani) {
-        $data['njani'] = $onjani->msebenzi_onjani;
+        $data['njani'] = $onjani->job_type;
     }
     
     $data['total_pages'] = ceil(count($data['imisebenzi'])/$data['results_per_page']);

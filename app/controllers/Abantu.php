@@ -250,7 +250,7 @@ class Abantu extends Controller {
     }
 
     /**
-     * Log user in, collect province and province location,
+     * Log user in, collect province and province job_location,
      * set cookie, start session
      *
      * @return void
@@ -402,7 +402,7 @@ class Abantu extends Controller {
      */
     public function createUserSession($umntu)
     {
-        $_SESSION["id_yomntu"] = $umntu->id;
+        $_SESSION["user_id"] = $umntu->id;
         $_SESSION["email_yomntu"] = $umntu->email;
         $_SESSION["igama_lomntu"] = $umntu->first_name;
         $_SESSION["role"] = $umntu->role;
@@ -420,7 +420,7 @@ class Abantu extends Controller {
      */
     public function logout()
     {
-        unset($_SESSION["id_yomntu"]);
+        unset($_SESSION["user_id"]);
         unset($_SESSION["email_yomntu"]);
         unset($_SESSION["igama_lomntu"]);
         unset($_SESSION["role"]);
@@ -442,7 +442,7 @@ class Abantu extends Controller {
      */
     public function isLoggedIn()
     {
-        if (isset($_SESSION["id_yomntu"])) {
+        if (isset($_SESSION["user_id"])) {
             return true;
         } else {
             return false;

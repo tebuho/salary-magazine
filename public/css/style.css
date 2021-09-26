@@ -104,7 +104,6 @@ ol {
 .btn:focus {
   outline: 0;
   box-shadow: 0 0 0 0.1rem rgb(182 168 177 / 50%);
-  margin-bottom: 10px;
 }
 .btn-primary-sm:hover {
   background-color: #1c56ac;
@@ -647,7 +646,7 @@ section {
 .description-yo__msebenzi ul {
     padding: 0;
 }
-.requirements {
+.job_requirements {
   font-weight: 500;
   margin-top: .5em;
 }
@@ -696,8 +695,26 @@ section {
   display: flex;
 }
 
+.input-label__container {
+  margin-bottom: 0.5rem;
+}
 .input-label__container h3 {
   line-height: 1.6;
+}
+.label-container.is-invalid {
+  display: flex;
+}
+.input-label__container label {
+  margin: 0;
+}
+.required {
+  display: inline;
+  float: right;
+  flex: 1;
+  text-align: right;
+}
+.is-invalid .required {
+  color: #dc3545;
 }
 
 .search-province .form-control {

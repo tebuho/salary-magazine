@@ -1,7 +1,7 @@
 <?php
     
 $umsebenzi = $this->postModel->getPostBySlug($slug);
-$user = $this->postModel->getUserById($umsebenzi->id_yomntu);
+$user = $this->postModel->getUserById($umsebenzi->user_id);
 $comment = $this->postModel->getImpenduloById($umsebenzi->id);
 $article_ad = '<div class="pr-0 pl-0"><div class="google-ad__container"><div class="google-ad"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-6r+dz+1l-2o+4u" data-ad-client="ca-pub-1034834624649462" data-ad-slot="7207707222"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div>';
 
@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = [
         "id" => $umsebenzi->id,
         "comment" => $_POST(trim($_POST["comment"])),
-        "id_yomntu" => $_SESSION["id_yomntu"],
+        "user_id" => $_SESSION["user_id"],
         "date" => date("Y-m-d H:i:s"),
         "comment_err" => ""
     ];
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $data = [
                 "page_image" => URLROOT . "/img/imisebenzi/" . $umsebenzi->image,
-                "page_description" => strip_tags($umsebenzi->requirements),
+                "page_description" => strip_tags($umsebenzi->job_requirements),
                 "page_type" => "article",
                 "page_url" => URLROOT . "/" . $_GET["url"],
                 "page_title" => $umsebenzi->label,
@@ -75,10 +75,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 "job_slug" => $umsebenzi->slug,
                 "gama_le_company" => $umsebenzi->gama_le_company,
                 "experience" => $umsebenzi->experience,
-                "ngowantoni" => $umsebenzi->ngowantoni,
-                "msebenzi_onjani" => $umsebenzi->msebenzi_onjani,
+                "category" => $umsebenzi->category,
+                "job_type" => $umsebenzi->job_type,
                 "ndawoni" => $umsebenzi->ndawoni,
-                "mfundo" => $umsebenzi->mfundo,
+                "job_education" => $umsebenzi->job_education,
                 "jb_specification" => $umsebenzi->jb_specification,
                 "today" => time(),
                 "pub_date" => strtotime($umsebenzi->created_at),
@@ -95,48 +95,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
             if (!empty($data["umsebenzi"]->purpose) AND !empty($data["umsebenzi"]->skills_competencies) AND !empty($data["umsebenzi"]->additional_info)) {
                 $data["jb_specification"] = "<h3>Purpose</h3>" . $data["umsebenzi"]->purpose;
-                $data["jb_specification"] .= "<h3>Requirements</h3>" . $data["umsebenzi"]->requirements;
+                $data["jb_specification"] .= "<h3>Requirements</h3>" . $data["umsebenzi"]->job_requirements;
                 $data["jb_specification"] .= $article_ad;
                 $data["jb_specification"] .= "<h3>Skills & Competencies</h3>" . $data["umsebenzi"]->skills_competencies;
-                $data["jb_specification"] .= "<h3>Responsibilities</h3>" . $data["umsebenzi"]->responsibilities;
+                $data["jb_specification"] .= "<h3>Responsibilities</h3>" . $data["umsebenzi"]->job_responsibilities;
                 $data["jb_specification"] .= $article_ad;
                 $data["jb_specification"] .= "<h3>Additional Information</h3>" . $data["umsebenzi"]->additional_info;
             } elseif (!empty($data["umsebenzi"]->purpose) AND !empty($data["umsebenzi"]->skills_competencies)) {
                 $data["jb_specification"] = "<h3>Purpose</h3>" . $data["umsebenzi"]->purpose;
-                $data["jb_specification"] .= "<h3>Requirements</h3>" . $data["umsebenzi"]->requirements;
+                $data["jb_specification"] .= "<h3>Requirements</h3>" . $data["umsebenzi"]->job_requirements;
                 $data["jb_specification"] .= $article_ad;
                 $data["jb_specification"] .= "<h3>Skills & Competencies</h3>" . $data["umsebenzi"]->skills_competencies;
-                $data["jb_specification"] .= "<h3>Responsibilities</h3>" . $data["umsebenzi"]->responsibilities;
+                $data["jb_specification"] .= "<h3>Responsibilities</h3>" . $data["umsebenzi"]->job_responsibilities;
             } elseif (!empty($data["umsebenzi"]->purpose) AND !empty($data["umsebenzi"]->additional_info)) {
                 $data["jb_specification"] = "<h3>Purpose</h3>" . $data["umsebenzi"]->purpose;
-                $data["jb_specification"] .= "<h3>Requirements</h3>" . $data["umsebenzi"]->requirements;
+                $data["jb_specification"] .= "<h3>Requirements</h3>" . $data["umsebenzi"]->job_requirements;
                 $data["jb_specification"] .= $article_ad;
-                $data["jb_specification"] .= "<h3>Responsibilities</h3>" . $data["umsebenzi"]->responsibilities;
+                $data["jb_specification"] .= "<h3>Responsibilities</h3>" . $data["umsebenzi"]->job_responsibilities;
                 $data["jb_specification"] .= "<h3>Additional Information</h3>" . $data["umsebenzi"]->additional_info;
             } elseif (!empty($data["umsebenzi"]->purpose)) {
                 $data["jb_specification"] = "<h3>Purpose</h3>" . $data["umsebenzi"]->purpose;
-                $data["jb_specification"] .= "<h3>Requirements</h3>" . $data["umsebenzi"]->requirements;
+                $data["jb_specification"] .= "<h3>Requirements</h3>" . $data["umsebenzi"]->job_requirements;
                 $data["jb_specification"] .= $article_ad;
-                $data["jb_specification"] .= "<h3>Responsibilities</h3>" . $data["umsebenzi"]->responsibilities;
+                $data["jb_specification"] .= "<h3>Responsibilities</h3>" . $data["umsebenzi"]->job_responsibilities;
             } elseif (!empty($data["umsebenzi"]->skills_competencies) AND !empty($data["umsebenzi"]->additional_info)) {
-                $data["jb_specification"] = "<h3>Requirements</h3>" . $data["umsebenzi"]->requirements;
+                $data["jb_specification"] = "<h3>Requirements</h3>" . $data["umsebenzi"]->job_requirements;
                 $data["jb_specification"] .= "<h3>Skills & Competencies</h3>" . $data["umsebenzi"]->skills_competencies;
                 $data["jb_specification"] .= $article_ad;
-                $data["jb_specification"] .= "<h3>Responsibilities</h3>" . $data["umsebenzi"]->responsibilities;
+                $data["jb_specification"] .= "<h3>Responsibilities</h3>" . $data["umsebenzi"]->job_responsibilities;
                 $data["jb_specification"] .= "<h3>Additional Information</h3>" . $data["umsebenzi"]->additional_info;
             } elseif (!empty($data["umsebenzi"]->skills_competencies)) {
-                $data["jb_specification"] = "<h3>Requirements</h3>" . $data["umsebenzi"]->requirements;
+                $data["jb_specification"] = "<h3>Requirements</h3>" . $data["umsebenzi"]->job_requirements;
                 $data["jb_specification"] .= "<h3>Skills & Competencies</h3>" . $data["umsebenzi"]->skills_competencies;
                 $data["jb_specification"] .= $article_ad;
-                $data["jb_specification"] .= "<h3>Responsibilities</h3>" . $data["umsebenzi"]->responsibilities;
+                $data["jb_specification"] .= "<h3>Responsibilities</h3>" . $data["umsebenzi"]->job_responsibilities;
             } elseif (!empty($data["umsebenzi"]->additional_info)) {
-                $data["jb_specification"] = "<h3>Requirements</h3>" . $data["umsebenzi"]->requirements;
-                $data["jb_specification"] .= "<h3>Responsibilities</h3>" . $data["umsebenzi"]->responsibilities;
+                $data["jb_specification"] = "<h3>Requirements</h3>" . $data["umsebenzi"]->job_requirements;
+                $data["jb_specification"] .= "<h3>Responsibilities</h3>" . $data["umsebenzi"]->job_responsibilities;
                 $data["jb_specification"] .= $article_ad;
                 $data["jb_specification"] .= "<h3>Additional Information</h3>" . $data["umsebenzi"]->additional_info;
-            } elseif (!empty($data["umsebenzi"]->requirements) AND !empty($data["umsebenzi"]->responsibilities)) {
-                $data["jb_specification"] = "<h3>Requirements</h3>" . $data["umsebenzi"]->requirements;
-                $data["jb_specification"] .= "<h3>Responsibilities</h3>" . $data["umsebenzi"]->responsibilities;  
+            } elseif (!empty($data["umsebenzi"]->job_requirements) AND !empty($data["umsebenzi"]->job_responsibilities)) {
+                $data["jb_specification"] = "<h3>Requirements</h3>" . $data["umsebenzi"]->job_requirements;
+                $data["jb_specification"] .= "<h3>Responsibilities</h3>" . $data["umsebenzi"]->job_responsibilities;  
             }
             
             $data["date_diff"] = ($data["today"] - $data["pub_date"]);
@@ -152,7 +152,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $data = [
         "page_image" => URLROOT . "/img/imisebenzi/" . $umsebenzi->image,
-        "page_description" => strip_tags($umsebenzi->requirements),
+        "page_description" => strip_tags($umsebenzi->job_requirements),
         "page_type" => "article",
         "page_url" => URLROOT . "/" . $_GET["url"],
         "page_title" => $umsebenzi->label,
@@ -160,10 +160,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         "job_slug" => $umsebenzi->slug,
         "gama_le_company" => $umsebenzi->gama_le_company,
         "experience" => $umsebenzi->experience,
-        "ngowantoni" => $umsebenzi->ngowantoni,
-        "msebenzi_onjani" => $umsebenzi->msebenzi_onjani,
+        "category" => $umsebenzi->category,
+        "job_type" => $umsebenzi->job_type,
         "ndawoni" => $umsebenzi->ndawoni,
-        "mfundo" => $umsebenzi->mfundo,
+        "job_education" => $umsebenzi->job_education,
         "jb_specification" => $umsebenzi->jb_specification,
         "today" => time(),
         "pub_date" => strtotime($umsebenzi->created_at),
@@ -186,48 +186,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!empty($data["umsebenzi"]->purpose) AND !empty($data["umsebenzi"]->skills_competencies) AND !empty($data["umsebenzi"]->additional_info)) {
         $data["jb_specification"] = "<div class='highlight-grey'><h3>Purpose</h3>" . $data["umsebenzi"]->purpose . '</div>';
-        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Requirements</h3>" . $data["umsebenzi"]->requirements . '</div>';
+        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Requirements</h3>" . $data["umsebenzi"]->job_requirements . '</div>';
         $data["jb_specification"] .= $article_ad;
         $data["jb_specification"] .= "<div class='highlight-grey'><h3>Skills & Competencies</h3>" . $data["umsebenzi"]->skills_competencies . '</div>';
-        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Responsibilities</h3>" . $data["umsebenzi"]->responsibilities . '</div>';
+        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Responsibilities</h3>" . $data["umsebenzi"]->job_responsibilities . '</div>';
         $data["jb_specification"] .= $article_ad;
         $data["jb_specification"] .= "<div class='highlight-grey'><h3>Additional Information</h3>" . $data["umsebenzi"]->additional_info . '</div>';
     } elseif (!empty($data["umsebenzi"]->purpose) AND !empty($data["umsebenzi"]->skills_competencies)) {
         $data["jb_specification"] = "<div class='highlight-grey'><h3>Purpose</h3>" . $data["umsebenzi"]->purpose . '</div>';
-        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Requirements</h3>" . $data["umsebenzi"]->requirements . '</div>';
+        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Requirements</h3>" . $data["umsebenzi"]->job_requirements . '</div>';
         $data["jb_specification"] .= $article_ad;
         $data["jb_specification"] .= "<div class='highlight-grey'><h3>Skills & Competencies</h3>" . $data["umsebenzi"]->skills_competencies . '</div>';
-        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Responsibilities</h3>" . $data["umsebenzi"]->responsibilities . '</div>';
+        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Responsibilities</h3>" . $data["umsebenzi"]->job_responsibilities . '</div>';
     } elseif (!empty($data["umsebenzi"]->purpose) AND !empty($data["umsebenzi"]->additional_info)) {
         $data["jb_specification"] = "<div class='highlight-grey'><h3>Purpose</h3>" . $data["umsebenzi"]->purpose . '</div>';
-        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Requirements</h3>" . $data["umsebenzi"]->requirements . '</div>';
+        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Requirements</h3>" . $data["umsebenzi"]->job_requirements . '</div>';
         $data["jb_specification"] .= $article_ad;
-        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Responsibilities</h3>" . $data["umsebenzi"]->responsibilities . '</div>';
+        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Responsibilities</h3>" . $data["umsebenzi"]->job_responsibilities . '</div>';
         $data["jb_specification"] .= "<div class='highlight-grey'><h3>Additional Information</h3>" . $data["umsebenzi"]->additional_info . '</div>';
     } elseif (!empty($data["umsebenzi"]->purpose)) {
         $data["jb_specification"] = "<div class='highlight-grey'><h3>Purpose</h3>" . $data["umsebenzi"]->purpose . '</div>';
-        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Requirements</h3>" . $data["umsebenzi"]->requirements . '</div>';
+        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Requirements</h3>" . $data["umsebenzi"]->job_requirements . '</div>';
         $data["jb_specification"] .= $article_ad;
-        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Responsibilities</h3>" . $data["umsebenzi"]->responsibilities . '</div>';
+        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Responsibilities</h3>" . $data["umsebenzi"]->job_responsibilities . '</div>';
     } elseif (!empty($data["umsebenzi"]->skills_competencies) AND !empty($data["umsebenzi"]->additional_info)) {
-        $data["jb_specification"] = "<div class='highlight-grey'><h3>Requirements</h3>" . $data["umsebenzi"]->requirements . '</div>';
+        $data["jb_specification"] = "<div class='highlight-grey'><h3>Requirements</h3>" . $data["umsebenzi"]->job_requirements . '</div>';
         $data["jb_specification"] .= "<div class='highlight-grey'><h3>Skills & Competencies</h3>" . $data["umsebenzi"]->skills_competencies . '</div>';
         $data["jb_specification"] .= $article_ad;
-        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Responsibilities</h3>" . $data["umsebenzi"]->responsibilities . '</div>';
+        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Responsibilities</h3>" . $data["umsebenzi"]->job_responsibilities . '</div>';
         $data["jb_specification"] .= "<div class='highlight-grey'><h3>Additional Information</h3>" . $data["umsebenzi"]->additional_info . '</div>';
     } elseif (!empty($data["umsebenzi"]->skills_competencies)) {
-        $data["jb_specification"] = "<div class='highlight-grey'><h3>Requirements</h3>" . $data["umsebenzi"]->requirements . '</div>';
+        $data["jb_specification"] = "<div class='highlight-grey'><h3>Requirements</h3>" . $data["umsebenzi"]->job_requirements . '</div>';
         $data["jb_specification"] .= "<div class='highlight-grey'><h3>Skills & Competencies</h3>" . $data["umsebenzi"]->skills_competencies . '</div>';
         $data["jb_specification"] .= $article_ad;
-        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Responsibilities</h3>" . $data["umsebenzi"]->responsibilities . '</div>';
+        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Responsibilities</h3>" . $data["umsebenzi"]->job_responsibilities . '</div>';
     } elseif (!empty($data["umsebenzi"]->additional_info)) {
-        $data["jb_specification"] = "<div class='highlight-grey'><h3>Requirements</h3>" . $data["umsebenzi"]->requirements . '</div>';
-        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Responsibilities</h3>" . $data["umsebenzi"]->responsibilities . '</div>';
+        $data["jb_specification"] = "<div class='highlight-grey'><h3>Requirements</h3>" . $data["umsebenzi"]->job_requirements . '</div>';
+        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Responsibilities</h3>" . $data["umsebenzi"]->job_responsibilities . '</div>';
         $data["jb_specification"] .= $article_ad;
         $data["jb_specification"] .= "<div class='highlight-grey'><h3>Additional Information</h3>" . $data["umsebenzi"]->additional_info . '</div>';
-    } elseif (!empty($data["umsebenzi"]->requirements) AND !empty($data["umsebenzi"]->responsibilities)) {
-        $data["jb_specification"] = "<div class='highlight-grey'><h3>Requirements</h3>" . $data["umsebenzi"]->requirements . '</div>';
-        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Responsibilities</h3>" . $data["umsebenzi"]->responsibilities . '</div>';  
+    } elseif (!empty($data["umsebenzi"]->job_requirements) AND !empty($data["umsebenzi"]->job_responsibilities)) {
+        $data["jb_specification"] = "<div class='highlight-grey'><h3>Requirements</h3>" . $data["umsebenzi"]->job_requirements . '</div>';
+        $data["jb_specification"] .= "<div class='highlight-grey'><h3>Responsibilities</h3>" . $data["umsebenzi"]->job_responsibilities . '</div>';  
     }
     
     $data["date_diff"] = ($data["today"] - $data["pub_date"]);

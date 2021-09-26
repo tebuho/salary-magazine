@@ -576,7 +576,7 @@ supple:
     - poll
     - poll-h
     - search-dollar
-    - search-location
+    - search-job_location
     - supple
   label: Supple
   url: 'https://supple.com.au'

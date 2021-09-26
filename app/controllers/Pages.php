@@ -30,12 +30,12 @@ class Pages extends Controller
      *                      Filter jobs by industry                     *
      *                                                                  *
      ********************************************************************/
-    public function ngowantoni($type, $page = 0)
+    public function category($type, $page = 0)
     {
        
-        include_once "../app/views/inc/filter_jb_ngowantoni.php";
+        include_once "../app/views/inc/filter_jb_category.php";
         
-        $this->view("pages/ngowantoni", $data);
+        $this->view("pages/category", $data);
         
     }
 
@@ -58,7 +58,7 @@ class Pages extends Controller
      *                  Filter jobs by msebenzi onjani                  *
      *                                                                  *
      ********************************************************************/
-    public function onjani($msebenzi_onjani, $page = 0)
+    public function onjani($job_type, $page = 0)
     {
        
         include_once "../app/views/inc/filter_jb_onjani.php";
@@ -118,10 +118,10 @@ class Pages extends Controller
             //Get imisebenzi
             $imisebenzi = $this->postModel->getImisebenzi();
             $ndawoni = $this->postModel->filterImisebenziByLocation();
-            $ngowantoni = $this->postModel->filterImisebenziByType();
+            $category = $this->postModel->filterImisebenziByType();
             $experience = $this->postModel->filterImisebenziByExperience();
             $onjani = $this->postModel->filterImisebenziByOnjani();
-            $mfundo = $this->postModel->filterImisebenziByMfundo();
+            $job_education = $this->postModel->filterImisebenziByMfundo();
             $provinces = $this->postModel->getProvinces();
     
             $range = 2;
@@ -145,9 +145,9 @@ class Pages extends Controller
                 'page_url' => URLROOT . $path,
                 'page_title' => 'Search results for ' . ucwords($_GET['search']) . ' Jobs',
                 'ndawoni' => $ndawoni,
-                'ngowantoni' => $ngowantoni,
+                'category' => $category,
                 'experience' => $experience,
-                'mfundo' => $mfundo,
+                'job_education' => $job_education,
                 'onjani' => $onjani,
                 'imisebenzi' => $imisebenzi,
                 'provinces' => $provinces,

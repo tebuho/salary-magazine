@@ -832,7 +832,7 @@ Fixed Issues:
 * [#13609](https://dev.ckeditor.com/ticket/13609): [Edge] Fixed: The browser crashes when switching to the source mode. Thanks to [Andrew Williams and Mark Smeed](http://webxsolution.com/)!
 * [PR#201](https://github.com/ckeditor/ckeditor-dev/pull/201): Fixed: Buttons in the toolbar configurator cause form submission. Thanks to [colemanw](https://github.com/colemanw)!
 * [#13422](https://dev.ckeditor.com/ticket/13422): Fixed: A monospaced font should be used in the `<textarea>` element storing editor configuration in the toolbar configurator.
-* [#13494](https://dev.ckeditor.com/ticket/13494): Fixed: Error thrown in the toolbar configurator if plugin requirements are not met.
+* [#13494](https://dev.ckeditor.com/ticket/13494): Fixed: Error thrown in the toolbar configurator if plugin job_requirements are not met.
 * [#13409](https://dev.ckeditor.com/ticket/13409): Fixed: List elements incorrectly merged when pressing *Backspace* or *Delete*.
 * [#13434](https://dev.ckeditor.com/ticket/13434): Fixed: Dialog state indicator broken in Right–To–Left environments.
 * [#13460](https://dev.ckeditor.com/ticket/13460): [IE8] Fixed: Copying inline widgets is broken when [Advanced Content Filter](https://ckeditor.com/docs/ckeditor4/latest/guide/dev_acf.html) is disabled.
@@ -895,7 +895,7 @@ Fixed Issues:
 * [#13176](https://dev.ckeditor.com/ticket/13176): [IE8] Fixed: Errors on drag&drop of embed widgets.
 * [#13015](https://dev.ckeditor.com/ticket/13015): Fixed: Dropping an image file on [Enhanced Image](https://ckeditor.com/cke4/addon/image2) causes a page reload.
 * [#13080](https://dev.ckeditor.com/ticket/13080): Fixed: Ugly notification shown when the response contains HTML content.
-* [#13011](https://dev.ckeditor.com/ticket/13011): [IE8] Fixed: Anchors are duplicated on drag&drop in specific locations.
+* [#13011](https://dev.ckeditor.com/ticket/13011): [IE8] Fixed: Anchors are duplicated on drag&drop in specific job_locations.
 * [#13105](https://dev.ckeditor.com/ticket/13105): Fixed: Various issues related to [`CKEDITOR.tools.htmlEncode()`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_tools.html#method-htmlEncode) and [`CKEDITOR.tools.htmlDecode()`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_tools.html#method-htmlDecode) methods.
 * [#11976](https://dev.ckeditor.com/ticket/11976): [Chrome] Fixed: Copy&paste and drag&drop lists from Microsoft Word.
 * [#13128](https://dev.ckeditor.com/ticket/13128): Fixed: Various issues with cloning element IDs:
@@ -1655,7 +1655,7 @@ New Features:
   will be filtered and the editor features (toolbar items, commands, keystrokes) will be enabled if they are allowed.
 
   See the `datafiltering.html` sample, [guides](https://ckeditor.com/docs/ckeditor4/latest/guide/dev_advanced_content_filter.html) and [`CKEDITOR.filter` API documentation](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR.filter.html).
-* [#9387](https://dev.ckeditor.com/ticket/9387): Reintroduced [Shared Spaces](https://ckeditor.com/cke4/addon/sharedspace) - the ability to display toolbar and bottom editor space in selected locations and to share them by different editor instances.
+* [#9387](https://dev.ckeditor.com/ticket/9387): Reintroduced [Shared Spaces](https://ckeditor.com/cke4/addon/sharedspace) - the ability to display toolbar and bottom editor space in selected job_locations and to share them by different editor instances.
 * [#9907](https://dev.ckeditor.com/ticket/9907): Added the [`contentPreview`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR.html#event-contentPreview) event for preview data manipulation.
 * [#9713](https://dev.ckeditor.com/ticket/9713): Introduced the [Source Dialog](https://ckeditor.com/cke4/addon/sourcedialog) plugin that brings raw HTML editing for inline editor instances.
 * Included in [#9829](https://dev.ckeditor.com/ticket/9829): Introduced new events, [`toHtml`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#event-toHtml) and [`toDataFormat`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#event-toDataFormat), allowing for better integration with data processing.

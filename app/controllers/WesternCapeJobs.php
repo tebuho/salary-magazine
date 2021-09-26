@@ -33,13 +33,13 @@ class WesternCapeJobs extends Controller
 
     /********************************************************************
      *                                                                  *
-     *                  Filter jobs by location                         *
+     *                  Filter jobs by job_location                         *
      *                                                                  *
      ********************************************************************/
-    public function ndawoni($location, $page = 0)
+    public function ndawoni($job_location, $page = 0)
     {
        
-        include_once "../app/views/inc/filter_jb_location.php";
+        include_once "../app/views/inc/filter_jb_job_location.php";
         
         $this->view("$this->province_slug/index", $data);
         
@@ -50,7 +50,7 @@ class WesternCapeJobs extends Controller
      *                  Filter jobs by msebenzi onjani                  *
      *                                                                  *
      ********************************************************************/
-    public function onjani($msebenzi_onjani, $page = 0)
+    public function onjani($job_type, $page = 0)
     {
        
         include_once "../app/views/inc/filter_jb_onjani.php";
@@ -61,15 +61,15 @@ class WesternCapeJobs extends Controller
 
     /********************************************************************
      *                                                                  *
-     *                      Filter jobs by mfundo                       *
+     *                      Filter jobs by job_education                       *
      *                                                                  *
      ********************************************************************/
-    public function mfundo($education, $page = 0)
+    public function job_education($education, $page = 0)
     {
        
-        include_once "../app/views/inc/filter_jb_mfundo.php";
+        include_once "../app/views/inc/filter_jb_job_education.php";
         
-        $this->view("$this->province_slug/mfundo", $data);
+        $this->view("$this->province_slug/job_education", $data);
         
     }
 
@@ -92,12 +92,12 @@ class WesternCapeJobs extends Controller
      *                      Filter jobs by industry                     *
      *                                                                  *
      ********************************************************************/
-    public function ngowantoni($type, $page = 0)
+    public function category($type, $page = 0)
     {
        
-        include_once "../app/views/inc/filter_jb_ngowantoni.php";
+        include_once "../app/views/inc/filter_jb_category.php";
         
-        $this->view("$this->province_slug/ngowantoni", $data);
+        $this->view("$this->province_slug/category", $data);
         
     }
 

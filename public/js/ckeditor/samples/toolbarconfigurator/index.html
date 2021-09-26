@@ -154,7 +154,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 	( function() {
 		'use strict';
 
-		var mode = ( window.location.hash.substr( 1 ) === 'advanced' ) ? 'advanced' : 'basic',
+		var mode = ( window.job_location.hash.substr( 1 ) === 'advanced' ) ? 'advanced' : 'basic',
 			configuratorSection = CKEDITOR.document.findOne( 'main > .grid-container.configurator' ),
 			basicInstruction = CKEDITOR.document.findOne( '#help-content .basic' ),
 			advancedInstruction = CKEDITOR.document.findOne( '#help-content .advanced' ),
@@ -175,7 +175,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 		updateSwitcher();
 
 		CKEDITOR.document.getWindow().on( 'hashchange', function( e ) {
-			var hash = window.location.hash.substr( 1 );
+			var hash = window.job_location.hash.substr( 1 );
 			if ( !( hash === 'advanced' || hash === 'basic' ) ) {
 				return;
 			}
@@ -279,7 +279,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 		function toggleModeBasic( callOnRefresh ) {
 			callOnRefresh = ( callOnRefresh !== false );
 			mode = 'basic';
-			window.location.hash = '#basic';
+			window.job_location.hash = '#basic';
 			toogleModeSwitch( modeSwitchBasic, modeSwitchAdvanced, toolbarModifier, toolbarTextModifier );
 
 			configuratorSection.removeClass( 'freed-width' );
@@ -292,7 +292,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 		function toggleModeAdvanced( callOnRefresh ) {
 			callOnRefresh = ( callOnRefresh !== false );
 			mode = 'advanced';
-			window.location.hash = '#advanced';
+			window.job_location.hash = '#advanced';
 			toogleModeSwitch( modeSwitchAdvanced, modeSwitchBasic, toolbarTextModifier, toolbarModifier );
 
 			configuratorSection.addClass( 'freed-width' );

@@ -11817,7 +11817,7 @@
       "terms": [
         "directions",
         "directory",
-        "location",
+        "job_location",
         "menu",
         "navigation",
         "safari",
@@ -22106,7 +22106,7 @@
         "gps",
         "language",
         "localize",
-        "location",
+        "job_location",
         "map",
         "online",
         "place",
@@ -22155,7 +22155,7 @@
         "gps",
         "language",
         "localize",
-        "location",
+        "job_location",
         "map",
         "online",
         "place",
@@ -22204,7 +22204,7 @@
         "gps",
         "language",
         "localize",
-        "location",
+        "job_location",
         "map",
         "online",
         "place",
@@ -22253,7 +22253,7 @@
         "gps",
         "language",
         "localize",
-        "location",
+        "job_location",
         "map",
         "online",
         "place",
@@ -22302,7 +22302,7 @@
         "gps",
         "language",
         "localize",
-        "location",
+        "job_location",
         "map",
         "online",
         "place",
@@ -30360,7 +30360,7 @@
       "solid"
     ]
   },
-  "location-arrow": {
+  "job_location-arrow": {
     "changes": [
       "3.1",
       "5.0.0"
@@ -30382,7 +30382,7 @@
       "solid"
     ],
     "unicode": "f124",
-    "label": "location-arrow",
+    "label": "job_location-arrow",
     "voted": false,
     "svg": {
       "solid": {
@@ -31026,7 +31026,7 @@
         "destination",
         "gps",
         "localize",
-        "location",
+        "job_location",
         "map",
         "navigation",
         "paper",
@@ -31090,7 +31090,7 @@
         "destination",
         "gps",
         "localize",
-        "location",
+        "job_location",
         "map",
         "navigation",
         "paper",
@@ -31139,7 +31139,7 @@
         "destination",
         "gps",
         "localize",
-        "location",
+        "job_location",
         "map",
         "navigation",
         "paper",
@@ -31189,7 +31189,7 @@
         "destination",
         "gps",
         "localize",
-        "location",
+        "job_location",
         "map",
         "navigation",
         "paper",
@@ -31238,7 +31238,7 @@
         "destination",
         "gps",
         "localize",
-        "location",
+        "job_location",
         "map",
         "navigation",
         "paper",
@@ -31290,7 +31290,7 @@
         "destination",
         "gps",
         "localize",
-        "location",
+        "job_location",
         "map",
         "marker",
         "navigation",
@@ -36986,7 +36986,7 @@
         "airplane",
         "destination",
         "fly",
-        "location",
+        "job_location",
         "mode",
         "travel",
         "trip"
@@ -37030,7 +37030,7 @@
         "fly",
         "land",
         "landing",
-        "location",
+        "job_location",
         "mode",
         "travel",
         "trip"
@@ -37073,7 +37073,7 @@
         "departing",
         "destination",
         "fly",
-        "location",
+        "job_location",
         "mode",
         "take off",
         "taking off",
@@ -41130,7 +41130,7 @@
       "solid"
     ]
   },
-  "search-location": {
+  "search-job_location": {
     "changes": [
       "5.3.0"
     ],
@@ -46020,7 +46020,7 @@
     "search": {
       "terms": [
         "directions",
-        "location",
+        "job_location",
         "map",
         "navigation"
       ]
@@ -48574,7 +48574,7 @@
     "search": {
       "terms": [
         "coordinates",
-        "location",
+        "job_location",
         "marker",
         "pin",
         "thumb-tack"
