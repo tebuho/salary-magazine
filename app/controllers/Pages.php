@@ -1,4 +1,7 @@
 <?php
+/**
+ * Controls pages
+ */
 class Pages extends Controller
 {
     public $provinces;
@@ -117,8 +120,8 @@ class Pages extends Controller
     
             //Get imisebenzi
             $imisebenzi = $this->postModel->getImisebenzi();
-            $ndawoni = $this->postModel->filterImisebenziByLocation();
-            $category = $this->postModel->filterImisebenziByType();
+            $job_location = $this->postModel->filterImisebenziByLocation();
+            $job_category = $this->postModel->filterImisebenziByType();
             $experience = $this->postModel->filterImisebenziByExperience();
             $onjani = $this->postModel->filterImisebenziByOnjani();
             $job_education = $this->postModel->filterImisebenziByMfundo();
@@ -144,8 +147,8 @@ class Pages extends Controller
                 'page_type' => 'website',
                 'page_url' => URLROOT . $path,
                 'page_title' => 'Search results for ' . ucwords($_GET['search']) . ' Jobs',
-                'ndawoni' => $ndawoni,
-                'category' => $category,
+                'job_location' => $job_location,
+                'category' => $job_category,
                 'experience' => $experience,
                 'job_education' => $job_education,
                 'onjani' => $onjani,

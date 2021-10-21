@@ -143,6 +143,5 @@ function Validate_Form_input($data) {
     );
 
     return $data;
-    
 }
 ?>

@@ -1,8 +1,8 @@
 <?php
 
     //Get imisebenzi
-    $ndawoni = $this->postModel->filterImisebenziByLocation();
-    $category = $this->postModel->filterImisebenziByType();
+    $job_location = $this->postModel->filterImisebenziByLocation();
+    $job_category = $this->postModel->filterImisebenziByType();
     $experience = $this->postModel->filterImisebenziByExperience();
     $onjani = $this->postModel->filterImisebenziByOnjani();
     $job_education = $this->postModel->filterImisebenziByMfundo();
@@ -12,10 +12,10 @@
     
     //Get job_location for title tag
     foreach ($all_employers as $employer) {
-        $employer_name = $employer->gama_le_company;
+        $employer_name = $employer->job_employer;
     }
     
-    //Get ndawoni slug
+    //Get job_location slug
     foreach ($all_employers as $ndawo_slug) {
         $job_location_slug = $ndawo_slug->job_location_slug;
     }
@@ -39,9 +39,9 @@
         'page_type' => 'website',
         'page_url' => URLROOT . "/" . $_GET['url'],
         'page_title' => $employer_name . ' Jobs',
-        'ndawoni' => $ndawoni,
+        'job_location' => $job_location,
         'job_location_slug' => $job_location_slug,
-        'category' => $category,
+        'category' => $job_category,
         'experience' => $experience,
         'job_education' => $job_education,
         'onjani' => $onjani,

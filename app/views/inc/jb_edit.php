@@ -8,13 +8,13 @@
         $data = [
             'id' => $id,
             'job_id' => $umsebenzi->id,
-            'gama_le_company' => filter_input(INPUT_POST, 'igama_le_company', FILTER_SANITIZE_STRING),
+            'job_employer' => filter_input(INPUT_POST, 'ijob_employer', FILTER_SANITIZE_STRING),
             'user_id' => $_SESSION['user_id'],
             'province' => filter_input(INPUT_POST, 'job_province', FILTER_SANITIZE_STRING),
             'province_slug' => '',
-            'ndawoni' => trim(filter_input(INPUT_POST, 'ndawoni_pha', FILTER_SANITIZE_STRING)),
+            'job_location' => trim(filter_input(INPUT_POST, 'job_location_pha', FILTER_SANITIZE_STRING)),
             'job_title' => trim(filter_input(INPUT_POST, 'job_title', FILTER_SANITIZE_STRING)),
-            'label' => filter_input(INPUT_POST, 'igama_le_company', FILTER_SANITIZE_STRING) . " " . filter_input(INPUT_POST, 'job_title', FILTER_SANITIZE_STRING) . " " . filter_input(INPUT_POST, 'ndawoni_pha', FILTER_SANITIZE_STRING),
+            'label' => filter_input(INPUT_POST, 'ijob_employer', FILTER_SANITIZE_STRING) . " " . filter_input(INPUT_POST, 'job_title', FILTER_SANITIZE_STRING) . " " . filter_input(INPUT_POST, 'job_location_pha', FILTER_SANITIZE_STRING),
             'job_closing_date' => filter_input(INPUT_POST, 'job_closing_date', FILTER_SANITIZE_STRING),
             'job_type' => filter_input(INPUT_POST, 'job_type', FILTER_SANITIZE_STRING),
             'job_education' => filter_input(INPUT_POST, 'job_education', FILTER_SANITIZE_STRING),
@@ -45,7 +45,7 @@
             'experience_slug' => '',
             'job_education_slug' => '',
             'job_category_slug' => '',
-            'gama_le_company_err' => '',
+            'job_employer_err' => '',
             'province_err' => '',
             'job_location_err' => '',
             'job_title_err' => '',
@@ -68,24 +68,24 @@
             $data['job_closing_date'] = "1970-01-01";
         }
         
-        if ($data['gama_le_company'] == "Premier Foods") {
-            $data['gama_le_company'] = "Premier";
+        if ($data['job_employer'] == "Premier Foods") {
+            $data['job_employer'] = "Premier";
         }
         
         //Validate data
-        if (empty($data['gama_le_company'])) {
-            $data['gama_le_company_err'] = 'Kufuneka ufake igama le company.';
-        }if ($data['gama_le_company'] === "Pioneer") {
-            $data['gama_le_company'] = "Pioneer Foods";
+        if (empty($data['job_employer'])) {
+            $data['job_employer_err'] = 'Kufuneka ufake igama le company.';
+        }if ($data['job_employer'] === "Pioneer") {
+            $data['job_employer'] = "Pioneer Foods";
         }
         if ($data['province'] == 'Select') {
             $data['province_err'] = 'Kufuneka ukhethe i-province';
         }
-        if (empty($data['ndawoni'])) {
+        if (empty($data['job_location'])) {
             $data['job_location_err'] = 'Ndawoni pha?';
         }
-        if ($data['ndawoni'] == "Roodepoort") {
-            $data['ndawoni'] = "Roodepoort, Johannesburg";
+        if ($data['job_location'] == "Roodepoort") {
+            $data['job_location'] = "Roodepoort, Johannesburg";
         }
         if (empty($data['job_title'])) {
             $data['job_title_err'] = 'Job title ithini';
@@ -119,10 +119,10 @@
         }
 
         //Create employer slug
-        $data["job_employer_slug"] = strtolower(preg_replace($data['pattern'], '-', $data['gama_le_company']));
+        $data["job_employer_slug"] = strtolower(preg_replace($data['pattern'], '-', $data['job_employer']));
         
-        //Create slug for filtering by job_location/ndawoni
-        $data['job_location_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['ndawoni']));
+        //Create slug for filtering by job_location/job_location
+        $data['job_location_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['job_location']));
         
         //Create slug for filtering by job_education
         $data['job_education_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['job_education']));
@@ -170,7 +170,7 @@
         }
 
         //Create temp slug
-        $data['slug'] = createSlug($data['gama_le_company'] . '-' . $data['job_title'] . '-' . $data['ndawoni'] . '-' . $data['province_slug']);
+        $data['slug'] = createSlug($data['job_employer'] . '-' . $data['job_title'] . '-' . $data['job_location'] . '-' . $data['province_slug']);
         $results = $this->postModel->checkSlug($data);
         
         //Check if temp slug exists
@@ -206,7 +206,7 @@
         $jb_link = URLROOT . "/" . $data['province_slug'] . "/umsebenzi/" . $data['slug'];
 
         //Make sure there no errors
-        if (empty($data['gama_le_company_err']) && empty($data['province_err']) && empty($data['job_location_err']) && empty($data['job_title_err']) && empty($data['job_type_err']) && empty($dta['job_education_err']) && empty($data['experience_err']) && empty($data['job_category_err']) && empty($data['job_requirements_err']) && empty($data['job_responsibilities_err']) && empty($data['application_mode_err'])) {
+        if (empty($data['job_employer_err']) && empty($data['province_err']) && empty($data['job_location_err']) && empty($data['job_title_err']) && empty($data['job_type_err']) && empty($dta['job_education_err']) && empty($data['experience_err']) && empty($data['job_category_err']) && empty($data['job_requirements_err']) && empty($data['job_responsibilities_err']) && empty($data['application_mode_err'])) {
             
             //Validated
             if ($this->postModel->updateJob($data)) {
@@ -225,16 +225,16 @@
                     'page_url' => URLROOT . "/" . $_GET['url'],
                     'page_title' => 'Edit ' . $umsebenzi->label,
                     'page_image' => $umsebenzi->image,
-                    'gama_le_company' => $umsebenzi->gama_le_company,
+                    'job_employer' => $umsebenzi->job_employer,
                     'province' => $umsebenzi->province,
-                    'ndawoni' => $umsebenzi->ndawoni,
+                    'job_location' => $umsebenzi->job_location,
                     'job_title' => $umsebenzi->job_title,
                     'label' => $umsebenzi->label,
                     'job_closing_date' => $umsebenzi->job_closing_date,
                     'job_type' => $umsebenzi->job_type,
                     'job_education' => $umsebenzi->job_education,
                     'experience' => $umsebenzi->experience,
-                    'category' => $umsebenzi->category,
+                    'category' => $umsebenzi->job_category,
                     'purpose' => $umsebenzi->purpose,
                     'job_requirements' => $umsebenzi->job_requirements,
                     'skills_competencies' => $umsebenzi->skills_competencies,
@@ -266,16 +266,16 @@
             'page_url' => URLROOT . "/" . $_GET['url'],
             'page_title' => 'Edit ' . $umsebenzi->label,
             'page_image' => $umsebenzi->image,
-            'gama_le_company' => $umsebenzi->gama_le_company,
+            'job_employer' => $umsebenzi->job_employer,
             'province' => $umsebenzi->province,
-            'ndawoni' => $umsebenzi->ndawoni,
+            'job_location' => $umsebenzi->job_location,
             'job_title' => $umsebenzi->job_title,
             'label' => $umsebenzi->label,
             'job_closing_date' => $umsebenzi->job_closing_date,
             'job_type' => $umsebenzi->job_type,
             'job_education' => $umsebenzi->job_education,
             'experience' => $umsebenzi->experience,
-            'category' => $umsebenzi->category,
+            'category' => $umsebenzi->job_category,
             'purpose' => $umsebenzi->purpose,
             'job_requirements' => $umsebenzi->job_requirements,
             'skills_competencies' => $umsebenzi->skills_competencies,

@@ -16,7 +16,7 @@ class Employer
     public function getAllEmployers()
     {
         $this->db->query(
-            "SELECT `gama_le_company` FROM `imisebenzi` GROUP BY `gama_le_company` ORDER BY `gama_le_company`"
+            "SELECT `job_employer` FROM `imisebenzi` GROUP BY `job_employer` ORDER BY `job_employer`"
         );
         $results = $this->db->resultSet();
         return $results;

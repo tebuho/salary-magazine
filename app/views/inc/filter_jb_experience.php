@@ -4,8 +4,8 @@
     $onjani = $this->postModel->filterImisebenziByOnjani();
     $filter_job_education = $this->postModel->filterImisebenziByMfundo();
     $job_education = $this->postModel->filterImisebenziByMfundo();
-    $ndawoni = $this->postModel->filterImisebenziByLocation();
-    $category = $this->postModel->filterImisebenziByType();
+    $job_location = $this->postModel->filterImisebenziByLocation();
+    $job_category = $this->postModel->filterImisebenziByType();
     $experiences = $this->postModel->filterImisebenziByExperience();
     $imisebenzi_experience = $this->postModel->getImisebenziByExperience($exp);
     $provinces = $this->postModel->getProvinces();
@@ -42,8 +42,8 @@
         'page_type' => 'website',
         'page_url' => URLROOT . "/" . $_GET['url'],
         'page_title' => $experience_years,
-        'ndawoni' => $ndawoni,
-        'category' => $category,
+        'job_location' => $job_location,
+        'category' => $job_category,
         'experience' => $experiences,
         'experience_slug' => $experience_slug,
         'imisebenzi' => $imisebenzi_experience,

@@ -10,7 +10,7 @@ class Controller
      *
      * @param [type] $model the file for the model
      * 
-     * @return void
+     * @return object
      */
     public function model($model)
     {
@@ -23,7 +23,7 @@ class Controller
     /**
      * Loads the view file
      *
-     * @param [type] $view the view
+     * @param string $view the view
      * @param array  $data to be passed to the view
      * 
      * @return void

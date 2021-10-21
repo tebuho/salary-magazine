@@ -110,7 +110,7 @@ class Employers extends Controller
         // From database ye misebenzi
         $categories = $this->postModel->getIndustry($slug);
         // From database ye employers
-        $cat_from_employers = explode("; ", $this->postModel->getIndustryFromEmployers($slug)->category);
+        $cat_from_employers = explode("; ", $this->postModel->getIndustryFromEmployers($slug)->job_category);
         
         // Before updating
         $data = [
@@ -143,11 +143,11 @@ class Employers extends Controller
         $data['provinces'] = explode(", ", $data['provinces']);
 
         $cat_arr = array();
-        foreach ($categories as $category) {
-            if ($category->category == "Safety, Health & Environment Quality") {
-                $category->category = "SHEQ";
+        foreach ($categories as $job_category) {
+            if ($job_category->job_category == "Safety, Health & Environment Quality") {
+                $job_category->job_category = "SHEQ";
             }
-            $cat_arr[] = $category->category;
+            $cat_arr[] = $job_category->job_category;
         }
         $categories = $cat_arr;
         
@@ -169,7 +169,7 @@ class Employers extends Controller
             $data['linkedin'] = trim($_POST['linkedin']);
             $data['twitter'] = trim($_POST['twitter']);
             
-            $new_cat = explode("; ", $cat_from_employers->category);
+            $new_cat = explode("; ", $cat_from_employers->job_category);
             if (!empty($data['categories'])) {
                 if (empty($new_cat[0])) {
                     array_splice($new_cat, 0, 1);

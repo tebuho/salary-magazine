@@ -3,7 +3,7 @@
 require_once 'functions/cookies/logged-in.php';
 require_once 'functions/emails/confirm_email.php';
 require_once 'functions/jobs/sanitize_data.php';
-require_once 'functions/jobs/add_job.php';
+require_once 'functions/jobs/validate_form_input.php';
 require_once 'functions/jobs/relational_data.php';
 require_once 'functions/jobs/form_data.php';
 require_once 'functions/jobs/create_slugs.php';

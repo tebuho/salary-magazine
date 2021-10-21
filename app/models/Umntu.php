@@ -275,7 +275,7 @@ class Umntu
                 fani = :fani,
                 email = :email,
                 province = :province,
-                ndawoni = :ndawoni,
+                job_location = :job_location,
                 uyasebenza = :uyasebenza,
                 gender = :gender,
                 zazise = :zazise,
@@ -288,7 +288,7 @@ class Umntu
         $this->db->bind(':fani', $data['fani']);
         $this->db->bind(':email', $data['email']);
         $this->db->bind(':province', $data['province']);
-        $this->db->bind(':ndawoni', $data['ndawoni']);
+        $this->db->bind(':job_location', $data['job_location']);
         $this->db->bind(':uyasebenza', $data['uyasebenza']);
         $this->db->bind(':gender', $data['gender']);
         $this->db->bind(':zazise', $data['zazise']);
@@ -352,7 +352,7 @@ class Umntu
     public function getUserById($id)
     {
         $this->db->query(
-            "SELECT igama, fani, email, province, ndawoni, CONCAT(LEFT(igama, 1),LEFT(fani, 1)) AS initials, role, zazise, phone_number, phone_number_yesibini, uyasebenza, gender
+            "SELECT igama, fani, email, province, job_location, CONCAT(LEFT(igama, 1),LEFT(fani, 1)) AS initials, role, zazise, phone_number, phone_number_yesibini, uyasebenza, gender
             FROM abantu
             WHERE id = :id
             ");

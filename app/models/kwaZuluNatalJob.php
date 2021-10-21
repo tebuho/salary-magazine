@@ -31,7 +31,7 @@ class kwaZuluNatalJob
     {
         $this->db->query(
            "SELECT * FROM imisebenzi WHERE label = :label AND province = :province
-           AND job_closing_date = '1970-01-01' AND timestampdiff(day, imisebenzi.created_at, now()) <= 7
+           AND job_closing_date = '1970-01-01' AND timestampdiff(day, imisebenzi.job_date_published, now()) <= 7
            OR label = :label AND province = :province job_closing_date >= :namhlanje"
         );
         
@@ -45,17 +45,17 @@ class kwaZuluNatalJob
     public function getImisebenzi()
     {
         $this->db->query(
-            'SELECT job_type, gama_le_company, job_title, ndawoni, user_id, image
+            'SELECT job_type, job_employer, job_title, job_location, user_id, image
             FROM imisebenzi
             WHERE imisebenzi.province = "KwaZulu-Natal"
-            AND imisebenzi.job_closing_date = "1970-01-01" AND timestampdiff(day, imisebenzi.created_at, now()) <= 7
+            AND imisebenzi.job_closing_date = "1970-01-01" AND timestampdiff(day, imisebenzi.job_date_published, now()) <= 7
             OR imisebenzi.province = "KwaZulu-Natal"
             AND imisebenzi.job_closing_date >= :namhlanje
             OR imisebenzi.province = "Nationwide"
-            AND imisebenzi.job_closing_date = "1970-01-01" AND timestampdiff(day, imisebenzi.created_at, now()) <= 7
+            AND imisebenzi.job_closing_date = "1970-01-01" AND timestampdiff(day, imisebenzi.job_date_published, now()) <= 7
             OR imisebenzi.province = "Nationwide"
             AND imisebenzi.job_closing_date >= :namhlanje
-            ORDER BY imisebenzi.created_at DESC
+            ORDER BY imisebenzi.job_date_published DESC
          ');
         $this->db->bind(":namhlanje", date("Y-m-d"));
         $results = $this->db->resultSet();
@@ -67,7 +67,7 @@ class kwaZuluNatalJob
     public function paginateImisebenzi($data)
     {
         $this->db->query(
-            'SELECT job_type, category, gama_le_company, job_title, province_slug, ndawoni, slug, user_id, purpose, image,
+            'SELECT job_type, category, job_employer, job_title, province_slug, job_location, slug, user_id, purpose, image,
              CASE
                 WHEN DAYOFMONTH(`job_closing_date`) IN(1, 2, 3, 4, 5, 20, 22, 23, 24, 25, 29, 30, 31)
                 THEN CONCAT(DATE_FORMAT(`job_closing_date`, "%D"), " ka ", DATE_FORMAT(`job_closing_date`, "%M %Y"))
@@ -79,14 +79,14 @@ class kwaZuluNatalJob
                 END AS "province_slug"
              FROM imisebenzi
             WHERE imisebenzi.province = "KwaZulu-Natal"
-            AND imisebenzi.job_closing_date = "1970-01-01" AND timestampdiff(day, imisebenzi.created_at, now()) <= 7
+            AND imisebenzi.job_closing_date = "1970-01-01" AND timestampdiff(day, imisebenzi.job_date_published, now()) <= 7
             OR imisebenzi.province = "KwaZulu-Natal"
             AND imisebenzi.job_closing_date >= :namhlanje
             OR imisebenzi.province = "Nationwide"
-            AND imisebenzi.job_closing_date = "1970-01-01" AND timestampdiff(day, imisebenzi.created_at, now()) <= 7
+            AND imisebenzi.job_closing_date = "1970-01-01" AND timestampdiff(day, imisebenzi.job_date_published, now()) <= 7
             OR imisebenzi.province = "Nationwide"
             AND imisebenzi.job_closing_date >= :namhlanje
-            ORDER BY imisebenzi.created_at DESC
+            ORDER BY imisebenzi.job_date_published DESC
             LIMIT :start, :rpp
          ');
         $this->db->bind(":namhlanje", date("Y-m-d"));
@@ -114,14 +114,14 @@ class kwaZuluNatalJob
             AND job_closing_date >= :namhlanje AND category = :category
             
             OR NOT slug = :slug AND province = 'KwaZulu-Natal'
-            AND job_closing_date = '1970-01-01' AND timestampdiff(day, created_at, now()) <= 7
+            AND job_closing_date = '1970-01-01' AND timestampdiff(day, job_date_published, now()) <= 7
             AND category = :category
             
             OR NOT slug = :slug AND province = 'Nationwide'
             AND job_closing_date >= :namhlanje AND category = :category
             
             OR NOT slug = :slug AND province = 'Nationwide'
-            AND job_closing_date = '1970-01-01' AND timestampdiff(day, created_at, now()) <= 7
+            AND job_closing_date = '1970-01-01' AND timestampdiff(day, job_date_published, now()) <= 7
             AND category = :category
             
             ORDER BY RAND ()
@@ -143,15 +143,15 @@ class kwaZuluNatalJob
     public function filterImisebenziByLocation()
     {
         $this->db->query(
-            'SELECT ndawoni, job_location_slug, COUNT(*) AS count FROM imisebenzi
+            'SELECT job_location, job_location_slug, COUNT(*) AS count FROM imisebenzi
             
             WHERE province = "KwaZulu-Natal" AND job_closing_date >=  now()
-            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "Nationwide" AND job_closing_date >=  now()
-            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
-            GROUP BY ndawoni
+            GROUP BY job_location
          ');
         $this->db->bind(":namhlanje", date("Y-m-d"));
         $results = $this->db->resultSet();
@@ -169,17 +169,17 @@ class kwaZuluNatalJob
         $this->db->query(
             'SELECT * FROM imisebenzi
             
-            WHERE province = "KwaZulu-Natal" AND job_closing_date >=  now() AND job_location_slug = :ndawoni
-            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
-            AND job_location_slug = :ndawoni
+            WHERE province = "KwaZulu-Natal" AND job_closing_date >=  now() AND job_location_slug = :job_location
+            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
+            AND job_location_slug = :job_location
             
-            OR province = "Nationwide" AND job_closing_date >=  now() AND job_location_slug = :ndawoni
-            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
-            AND job_location_slug = :ndawoni
+            OR province = "Nationwide" AND job_closing_date >=  now() AND job_location_slug = :job_location
+            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
+            AND job_location_slug = :job_location
             
-            ORDER BY created_at DESC
+            ORDER BY job_date_published DESC
          ');
-        $this->db->bind(":ndawoni", $job_location);
+        $this->db->bind(":job_location", $job_location);
         $results = $this->db->resultSet();
 
         return $results;
@@ -193,31 +193,31 @@ class kwaZuluNatalJob
     public function paginateImisebenziNgeNdawo($data)
     {
         $this->db->query(
-            'SELECT job_type, category, gama_le_company, job_title, province_slug, ndawoni, slug, user_id, purpose, image,
+            'SELECT job_type, category, job_employer, job_title, province_slug, job_location, slug, user_id, purpose, image,
              CASE
                 WHEN DAYOFMONTH(`job_closing_date`) IN(1, 2, 3, 4, 5, 20, 22, 23, 24, 25, 29, 30, 31)
                 THEN CONCAT(DATE_FORMAT(`job_closing_date`, "%D"), " ka ", DATE_FORMAT(`job_closing_date`, "%M %Y"))
                 ELSE CONCAT(DATE_FORMAT(`job_closing_date`, "%e"), " ka ", DATE_FORMAT(`job_closing_date`, "%M %Y"))
              END AS "closingDate"
              FROM imisebenzi
-            WHERE province = "KwaZulu-Natal" AND ndawoni = :ndawoni
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            WHERE province = "KwaZulu-Natal" AND job_location = :job_location
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "KwaZulu-Natal"
-            AND job_closing_date >= now() AND ndawoni = :ndawoni
+            AND job_closing_date >= now() AND job_location = :job_location
             
-            OR province = "Nationwide" AND ndawoni = :ndawoni
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "Nationwide" AND job_location = :job_location
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "Nationwide"
-            AND job_closing_date >= now() AND ndawoni = :ndawoni
+            AND job_closing_date >= now() AND job_location = :job_location
             
-            ORDER BY created_at DESC
+            ORDER BY job_date_published DESC
             LIMIT :start, :rpp
          ');
         $this->db->bind(":namhlanje", date("Y-m-d"));
         $this->db->bind(":start", $data['start']);
-        $this->db->bind(":ndawoni", $data['area']);
+        $this->db->bind(":job_location", $data['area']);
         $this->db->bind(":rpp", $data['results_per_page']);
         $results = $this->db->resultSet();
 
@@ -235,10 +235,10 @@ class kwaZuluNatalJob
             'SELECT category, job_category_slug, COUNT(*) AS count FROM imisebenzi
             
             WHERE province = "KwaZulu-Natal" AND job_closing_date >=  now()
-            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "Nationwide" AND job_closing_date >=  now()
-            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             GROUP BY category
          ');
@@ -259,14 +259,14 @@ class kwaZuluNatalJob
             'SELECT * FROM imisebenzi
             
             WHERE province = "KwaZulu-Natal" AND job_closing_date >=  now() AND job_category_slug = :category
-            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             AND job_category_slug = :category
             
             OR province = "Nationwide" AND job_closing_date >=  now() AND job_category_slug = :category
-            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             AND job_category_slug = :category
             
-            ORDER BY created_at DESC
+            ORDER BY job_date_published DESC
          ');
         $this->db->bind(":category", $type);
         $results = $this->db->resultSet();
@@ -282,7 +282,7 @@ class kwaZuluNatalJob
     public function paginateImisebenziByType($data)
     {
         $this->db->query(
-            'SELECT job_type, category, gama_le_company, job_title, province_slug, ndawoni, slug, user_id, purpose, image,
+            'SELECT job_type, category, job_employer, job_title, province_slug, job_location, slug, user_id, purpose, image,
              CASE
                 WHEN DAYOFMONTH(`job_closing_date`) IN(1, 2, 3, 4, 5, 20, 22, 23, 24, 25, 29, 30, 31)
                 THEN CONCAT(DATE_FORMAT(`job_closing_date`, "%D"), " ka ", DATE_FORMAT(`job_closing_date`, "%M %Y"))
@@ -291,18 +291,18 @@ class kwaZuluNatalJob
              FROM imisebenzi
             
             WHERE province = "KwaZulu-Natal" AND category = :category
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "KwaZulu-Natal"
             AND job_closing_date >= now() AND category = :category
             
             OR province = "Nationwide" AND category = :category
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "Nationwide"
             AND job_closing_date >= now() AND category = :category
             
-            ORDER BY created_at DESC
+            ORDER BY job_date_published DESC
             LIMIT :start, :rpp
          ');
         $this->db->bind(":namhlanje", date("Y-m-d"));
@@ -322,15 +322,15 @@ class kwaZuluNatalJob
     public function filterImisebenziByEmployer()
     {
         $this->db->query(
-            'SELECT DISTINCT gama_le_company, employer_slug, COUNT(*) AS count FROM imisebenzi
+            'SELECT DISTINCT job_employer, employer_slug, COUNT(*) AS count FROM imisebenzi
             
             WHERE province = "KwaZulu-Natal" AND job_closing_date >=  now()
-            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "Nationwide" AND job_closing_date >=  now()
-            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
-            GROUP BY gama_le_company
+            GROUP BY job_employer
          ');
         $this->db->bind(":namhlanje", date("Y-m-d"));
         $results = $this->db->resultSet();
@@ -349,14 +349,14 @@ class kwaZuluNatalJob
             'SELECT * FROM imisebenzi
             
             WHERE province = "KwaZulu-Natal" AND job_closing_date >=  now() AND employer_slug = :employer
-            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             AND employer_slug = :employer
             
             OR province = "Nationwide" AND job_closing_date >=  now() AND employer_slug = :employer
-            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             AND employer_slug = :employer
             
-            ORDER BY created_at DESC
+            ORDER BY job_date_published DESC
          ');
         $this->db->bind(":employer", $employer);
         $results = $this->db->resultSet();
@@ -372,7 +372,7 @@ class kwaZuluNatalJob
     public function paginateImisebenziByEmployer($data)
     {
         $this->db->query(
-            'SELECT job_type, category, gama_le_company, job_title, province_slug, ndawoni, slug, user_id, purpose, image,
+            'SELECT job_type, category, job_employer, job_title, province_slug, job_location, slug, user_id, purpose, image,
              CASE
                 WHEN DAYOFMONTH(`job_closing_date`) IN(1, 2, 3, 4, 5, 20, 22, 23, 24, 25, 29, 30, 31)
                 THEN CONCAT(DATE_FORMAT(`job_closing_date`, "%D"), " ka ", DATE_FORMAT(`job_closing_date`, "%M %Y"))
@@ -380,19 +380,19 @@ class kwaZuluNatalJob
              END AS "closingDate"
              FROM imisebenzi
             
-            WHERE province = "KwaZulu-Natal" AND gama_le_company = :employer
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            WHERE province = "KwaZulu-Natal" AND job_employer = :employer
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "KwaZulu-Natal"
-            AND job_closing_date >= now() AND gama_le_company = :employer
+            AND job_closing_date >= now() AND job_employer = :employer
             
-            OR province = "Nationwide" AND gama_le_company = :employer
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "Nationwide" AND job_employer = :employer
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "Nationwide"
-            AND job_closing_date >= now() AND gama_le_company = :employer
+            AND job_closing_date >= now() AND job_employer = :employer
             
-            ORDER BY created_at DESC
+            ORDER BY job_date_published DESC
             LIMIT :start, :rpp
          ');
         $this->db->bind(":namhlanje", date("Y-m-d"));
@@ -415,10 +415,10 @@ class kwaZuluNatalJob
             'SELECT experience, experience_slug, COUNT(*) AS count FROM imisebenzi
             
             WHERE province = "KwaZulu-Natal" AND job_closing_date >=  now()
-            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "Nationwide" AND job_closing_date >=  now()
-            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             GROUP BY experience
          ');
@@ -439,14 +439,14 @@ class kwaZuluNatalJob
             'SELECT * FROM imisebenzi
             
             WHERE province = "KwaZulu-Natal" AND job_closing_date >=  now() AND experience_slug = :experience
-            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             AND experience_slug = :experience
             
             OR province = "Nationwide" AND job_closing_date >=  now() AND experience_slug = :experience
-            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             AND experience_slug = :experience
             
-            ORDER BY created_at DESC
+            ORDER BY job_date_published DESC
             
          ');
         $this->db->bind(":experience", $exp);
@@ -463,7 +463,7 @@ class kwaZuluNatalJob
     public function paginateImisebenziNgeExperience($data)
     {
         $this->db->query(
-            'SELECT job_type, category, gama_le_company, job_title, province_slug, ndawoni, slug, user_id, purpose, image,
+            'SELECT job_type, category, job_employer, job_title, province_slug, job_location, slug, user_id, purpose, image,
              CASE
                 WHEN DAYOFMONTH(`job_closing_date`) IN(1, 2, 3, 4, 5, 20, 22, 23, 24, 25, 29, 30, 31)
                 THEN CONCAT(DATE_FORMAT(`job_closing_date`, "%D"), " ka ", DATE_FORMAT(`job_closing_date`, "%M %Y"))
@@ -472,18 +472,18 @@ class kwaZuluNatalJob
              FROM imisebenzi
             
             WHERE province = "KwaZulu-Natal" AND experience = :experience
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "KwaZulu-Natal"
             AND job_closing_date >= now() AND experience = :experience
             
             OR province = "Nationwide" AND experience = :experience
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "Nationwide"
             AND job_closing_date >= now() AND experience = :experience
             
-            ORDER BY created_at DESC
+            ORDER BY job_date_published DESC
             LIMIT :start, :rpp
          ');
         $this->db->bind(":namhlanje", date("Y-m-d"));
@@ -506,10 +506,10 @@ class kwaZuluNatalJob
             'SELECT job_type, job_type_slug, COUNT(*) AS count FROM imisebenzi
             
             WHERE province = "KwaZulu-Natal" AND job_closing_date >=  now()
-            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "Nationwide" AND job_closing_date >=  now()
-            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             GROUP BY job_type ASC
          ');
@@ -529,14 +529,14 @@ class kwaZuluNatalJob
             'SELECT * FROM imisebenzi
             
             WHERE province = "KwaZulu-Natal" AND job_closing_date >=  now() AND job_type_slug = :onjani
-            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             AND job_type_slug = :onjani
             
             OR province = "Nationwide" AND job_closing_date >=  now() AND job_type_slug = :onjani
-            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             AND job_type_slug = :onjani
             
-            ORDER BY created_at DESC
+            ORDER BY job_date_published DESC
          ');
          
         $this->db->bind(":onjani", $onjani);
@@ -553,7 +553,7 @@ class kwaZuluNatalJob
     public function paginateImisebenziNgoBunjani($data)
     {
         $this->db->query(
-            'SELECT job_type, category, gama_le_company, job_title, province_slug, ndawoni, slug, user_id, purpose, image,
+            'SELECT job_type, category, job_employer, job_title, province_slug, job_location, slug, user_id, purpose, image,
              CASE
                 WHEN DAYOFMONTH(`job_closing_date`) IN(1, 2, 3, 4, 5, 20, 22, 23, 24, 25, 29, 30, 31)
                 THEN CONCAT(DATE_FORMAT(`job_closing_date`, "%D"), " ka ", DATE_FORMAT(`job_closing_date`, "%M %Y"))
@@ -561,18 +561,18 @@ class kwaZuluNatalJob
              END AS "closingDate"
              FROM imisebenzi
             WHERE province = "KwaZulu-Natal" AND job_type = :onjani
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "KwaZulu-Natal"
             AND job_closing_date >= now() AND job_type = :onjani
             
             OR province = "Nationwide" AND job_type = :onjani
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "Nationwide"
             AND job_closing_date >= now() AND job_type = :onjani
             
-            ORDER BY created_at DESC
+            ORDER BY job_date_published DESC
             LIMIT :start, :rpp
          ');
         $this->db->bind(":namhlanje", date("Y-m-d"));
@@ -595,10 +595,10 @@ class kwaZuluNatalJob
             'SELECT job_education, job_education_slug, COUNT(*) AS count FROM imisebenzi
             
             WHERE province = "KwaZulu-Natal" AND job_closing_date >=  now()
-            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "Nationwide" AND job_closing_date >=  now()
-            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             GROUP BY job_education ASC
             
@@ -620,14 +620,14 @@ class kwaZuluNatalJob
             'SELECT * FROM imisebenzi
             
             WHERE province = "KwaZulu-Natal" AND job_closing_date >=  now() AND job_education_slug = :job_education
-            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "KwaZulu-Natal" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             AND job_education_slug = :job_education
             
             OR province = "Nationwide" AND job_closing_date >=  now() AND job_education_slug = :job_education
-            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             AND job_education_slug = :job_education
             
-            ORDER BY created_at DESC
+            ORDER BY job_date_published DESC
          ');
         $this->db->bind(":job_education", $education);
         $results = $this->db->resultSet();
@@ -643,7 +643,7 @@ class kwaZuluNatalJob
     public function paginateImisebenziNgeMfundo($data)
     {
         $this->db->query(
-            'SELECT job_type, category, gama_le_company, job_title, province_slug, ndawoni, slug, user_id, purpose, image,
+            'SELECT job_type, category, job_employer, job_title, province_slug, job_location, slug, user_id, purpose, image,
              CASE
                 WHEN DAYOFMONTH(`job_closing_date`) IN(1, 2, 3, 4, 5, 20, 22, 23, 24, 25, 29, 30, 31)
                 THEN CONCAT(DATE_FORMAT(`job_closing_date`, "%D"), " ka ", DATE_FORMAT(`job_closing_date`, "%M %Y"))
@@ -651,16 +651,16 @@ class kwaZuluNatalJob
              END AS "closingDate"
              FROM imisebenzi
             WHERE province = "KwaZulu-Natal" AND job_education = :job_education
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             OR province = "KwaZulu-Natal"
             AND job_closing_date >= now() AND job_education = :job_education
             
             OR province = "Nationwide" AND job_education = :job_education
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             OR province = "Nationwide"
             AND job_closing_date >= now() AND job_education = :job_education
             
-            ORDER BY created_at DESC
+            ORDER BY job_date_published DESC
             LIMIT :start, :rpp
          ');
         $this->db->bind(":namhlanje", date("Y-m-d"));
@@ -681,7 +681,7 @@ class kwaZuluNatalJob
     {
         $this->db->query(
             'SELECT province, province_slug, COUNT(*) AS "count" FROM imisebenzi
-            WHERE job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            WHERE job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             AND province != "Not Applicable" AND province != "Other - Non-South African Location"
             AND province != "Nationwide"
             OR job_closing_date >= :namhlanje AND province != "Not Applicable" AND province != "Nationwide"
@@ -702,8 +702,8 @@ class kwaZuluNatalJob
     public function getEmployers()
     {
         $this->db->query(
-            'SELECT gama_le_company FROM imisebenzi
-            WHERE job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            'SELECT job_employer FROM imisebenzi
+            WHERE job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             AND province = "KwaZulu-Natal"
             AND province != "Not Applicable" AND province != "Other - Non-South African Location"
             AND province != "Nationwide"
@@ -726,10 +726,10 @@ class kwaZuluNatalJob
     {
         $this->db->query(
             "UPDATE imisebenzi SET
-                gama_le_company = :gama_le_company,
+                job_employer = :job_employer,
                 employer_slug = :employer_slug,
                 province = :province,
-                ndawoni = :ndawoni,
+                job_location = :job_location,
                 job_location_slug = :job_location_slug,
                 job_title = :job_title,
                 label = :label,
@@ -759,10 +759,10 @@ class kwaZuluNatalJob
         
         $this->db->bind(':id', $data['job_id']);
         $this->db->bind(':slug', $data['slug']);
-        $this->db->bind(':gama_le_company', $data['gama_le_company']);
+        $this->db->bind(':job_employer', $data['job_employer']);
         $this->db->bind(":employer_slug", $data['employer_slug']);
         $this->db->bind(':province', $data['province']);
-        $this->db->bind(":ndawoni", $data['ndawoni']);
+        $this->db->bind(":job_location", $data['job_location']);
         $this->db->bind(":job_location_slug", $data['job_location_slug']);
         $this->db->bind(':job_title', $data['job_title']);
         $this->db->bind(':label', $data['label']);
@@ -803,12 +803,12 @@ class kwaZuluNatalJob
     public function getPostBySlug($slug)
     {
         $this->db->query(
-            "SELECT gama_le_company, employer_slug, province,
-            ndawoni, job_location_slug, job_title, job_type, job_type_slug, job_education,
+            "SELECT job_employer, employer_slug, province,
+            job_location, job_location_slug, job_title, job_type, job_type_slug, job_education,
             experience, category, job_category_slug, job_requirements, purpose, skills_competencies, 
             job_responsibilities, additional_info, apply_nge_website, job_hand_application,
             apply_nge_email, image, user_id, label, job_closing_date,
-            jb_specification, slug, id, created_at,
+            jb_specification, slug, id, job_date_published,
             CASE
             WHEN DAYOFMONTH(`job_closing_date`) IN(1, 2, 3, 4, 5, 20, 22, 23, 24, 25, 29, 30, 31)
             THEN CONCAT(DATE_FORMAT(`job_closing_date`, '%D'), ' ka ', DATE_FORMAT(`job_closing_date`, '%M %Y'))
@@ -872,54 +872,54 @@ class kwaZuluNatalJob
              END AS "closingDate"
              FROM imisebenzi
             
-            WHERE province = "KwaZulu-Natal" AND gama_le_company LIKE :search AND job_closing_date >=  CURDATE()
+            WHERE province = "KwaZulu-Natal" AND job_employer LIKE :search AND job_closing_date >=  CURDATE()
             
-            OR province = "KwaZulu-Natal" AND gama_le_company LIKE :search
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "KwaZulu-Natal" AND job_employer LIKE :search
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
-            OR province = "KwaZulu-Natal" AND ndawoni LIKE :search AND job_closing_date >=  now() 
+            OR province = "KwaZulu-Natal" AND job_location LIKE :search AND job_closing_date >=  now() 
             
-            OR province = "KwaZulu-Natal" AND ndawoni LIKE :search
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            OR province = "KwaZulu-Natal" AND job_location LIKE :search
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "KwaZulu-Natal" AND job_title LIKE :search AND job_closing_date >=  now()
             
             OR province = "KwaZulu-Natal" AND job_title LIKE :search
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "KwaZulu-Natal" AND category LIKE :search AND job_closing_date >=  now()
             
             OR province = "KwaZulu-Natal" AND category LIKE :search
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "KwaZulu-Natal" AND job_education LIKE :search AND job_closing_date >=  now()
             
             OR province = "KwaZulu-Natal" AND job_education LIKE :search
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "KwaZulu-Natal" AND job_responsibilities LIKE :search AND job_closing_date >=  now()
             
             OR province = "KwaZulu-Natal" AND job_responsibilities LIKE :search
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "KwaZulu-Natal" AND skills_competencies LIKE :search
             AND job_closing_date >=  now()
             
             OR province = "KwaZulu-Natal" AND skills_competencies LIKE :search
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "KwaZulu-Natal" AND job_requirements LIKE :search
             AND job_closing_date >=  now()
             
             OR province = "KwaZulu-Natal" AND job_requirements LIKE :search
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
             
             OR province = "KwaZulu-Natal" AND additional_info LIKE :search
             AND job_closing_date >=  now()
             
             OR province = "KwaZulu-Natal" AND additional_info LIKE :search
-            AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
-            ORDER BY created_at DESC
+            AND job_closing_date = "1970-01-01" AND timestampdiff(day, job_date_published, now()) <= 7
+            ORDER BY job_date_published DESC
          ');
          
         $this->db->bind(':search', $data['search']);

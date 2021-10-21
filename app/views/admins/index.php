@@ -17,7 +17,7 @@
                             <form action="<?php echo URLROOT; ?>/admins/search/1" method="GET">
                                 <div class="col search-imisebenzi mt-3 col-sm-12 search-home pl-0">
                                     <input type="text" name="search" class="mb-0 form-control form-control-lg" placeholder="Ukhangela ntoni? Bhala apha and search" autofocus>
-                                    <button type="submit" class="btn btn-primary-sm">Search</button>
+                                    <button type="submit" class="btn btn btn-info">Search</button>
                                 </div>
                             </form>
                         </div>
@@ -74,7 +74,7 @@
                                     }
                                     ?>
                                     
-                                    <td><?php echo $data['imisebenzi'][$x]->gama_le_company; ?></td>
+                                    <td><?php echo $data['imisebenzi'][$x]->job_employer; ?></td>
                                     <td><?php echo $data['imisebenzi'][$x]->job_title; ?></td>
                                     <td style="white-space:nowrap"><?php echo $data['imisebenzi'][$x]->igama == "G. Ats" ? "Graylink" : $data['imisebenzi'][$x]->igama; ?></td>
                                     <td style="white-space:nowrap"><?php echo $data['imisebenzi'][$x]->province; ?></td>

@@ -4,7 +4,7 @@
             <?php if ($_GET['url'] != "addJobs/add") : ?>
             <h1 class="page-container">Edit</h1>
             <h3><?php echo $data['job_title']; ?></h3>
-            <p><?php echo $data['gama_le_company']; ?> - <?php echo $data['ndawoni']; ?>, <?php echo $data['province']; ?></p>
+            <p><?php echo $data['job_employer']; ?> - <?php echo $data['job_location']; ?>, <?php echo $data['province']; ?></p>
             <?php endif; ?>
             <?php echo flash('message_yomsebenzi'); ?>
             <h1>Wufake Apha Umsebenzi</h1>

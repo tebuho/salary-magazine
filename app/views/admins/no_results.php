@@ -13,7 +13,7 @@
                             <form action="<?php echo URLROOT; ?>/admins/search/1" method="GET">
                                 <div class="col search-imisebenzi mt-3 col-sm-12 search-home pl-0">
                                     <input type="text" name="search" class="mb-0 form-control form-control-lg" placeholder="Ukhangela ntoni? Bhala apha and search" autofocus>
-                                    <button type="submit" class="btn btn-primary-sm">Search</button>
+                                    <button type="submit" class="btn btn btn-info">Search</button>
                                 </div>
                             </form>
                         </div>

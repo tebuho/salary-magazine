@@ -3,6 +3,12 @@
  * Receives data from the view
  * Processes it and sends it to the model
  */
+/**
+ * Receives data from the view
+ * Processes it and sends it to the model
+ * 
+ * @property array $data 
+ */
 class addJobs extends Controller
 {
     public $data = [];

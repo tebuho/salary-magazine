@@ -1,5 +1,7 @@
 <div class="right-side col-md-3">
-    <div class="empty"></div>
+    <div class="empty">
+        <ul id="empty-li"></ul>
+    </div>
     <div class="sidebar-container">
         <h3>Please note</h3>
         <hr />

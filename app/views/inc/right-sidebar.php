@@ -4,7 +4,7 @@
         <h3>Ukuba Unomdla</h3>
         <div class="sidebar-profile">
             <div class="sidebar-profile__info">
-                <a href=""><h4><?php echo $data['umsebenzi']->gama_le_company; ?></h4></a>
+                <a href=""><h4><?php echo $data['umsebenzi']->job_employer; ?></h4></a>
                 <p>Private hospital yase South Africa. Head Office yayo ise Stellenbosch, Western Cape.</p>
             </div>
             <div class="follow">
@@ -29,19 +29,19 @@
             <li><p class="jb-recommend m-0 p-0"><a href="<?php echo URLROOT . "/" . $province_slug . '/onjani/' . $data['umsebenzi']->job_type_slug . "/"; ?>"><?php echo $data['umsebenzi']->job_type; ?></a>
             </p></li>
             <?php endif; ?>
-            <?php if(!empty($data['umsebenzi']->category)) : ?>
+            <?php if(!empty($data['umsebenzi']->job_category)) : ?>
                 <li>
                 <p class="jb-recommend m-0 p-0">
-                <?php if($data["umsebenzi"]->category == "Government") : ?>
-                <a href="<?php echo URLROOT . '/pages' . '/category/' . $data['umsebenzi']->job_category_slug . "/"; ?>"><?php echo $data['umsebenzi']->category; ?></a>
-                <?php elseif($data["umsebenzi"]->category == "Driver") : ?>
+                <?php if($data["umsebenzi"]->job_category == "Government") : ?>
+                <a href="<?php echo URLROOT . '/pages' . '/category/' . $data['umsebenzi']->job_category_slug . "/"; ?>"><?php echo $data['umsebenzi']->job_category; ?></a>
+                <?php elseif($data["umsebenzi"]->job_category == "Driver") : ?>
                 <a href="<?php echo URLROOT . '/pages' . '/category/' . $data['umsebenzi']->job_category_slug . "/"; ?>">qhuba</a>
-                <?php elseif($data["umsebenzi"]->category == "Cashier" || $data["umsebenzi"]->category == "Security") : ?>
-                <a href="<?php echo URLROOT . '/pages' . '/category/' . $data['umsebenzi']->job_category_slug . "/"; ?>"><?php echo $data['umsebenzi']->category; ?></a>
-                <?php elseif($data["umsebenzi"]->category == "Call Centre" || $data["umsebenzi"]->category == "Municipality") : ?>
-                <a href="<?php echo URLROOT . '/pages' . '/category/' . $data['umsebenzi']->job_category_slug . "/"; ?>"><?php echo $data['umsebenzi']->category; ?></a>
+                <?php elseif($data["umsebenzi"]->job_category == "Cashier" || $data["umsebenzi"]->job_category == "Security") : ?>
+                <a href="<?php echo URLROOT . '/pages' . '/category/' . $data['umsebenzi']->job_category_slug . "/"; ?>"><?php echo $data['umsebenzi']->job_category; ?></a>
+                <?php elseif($data["umsebenzi"]->job_category == "Call Centre" || $data["umsebenzi"]->job_category == "Municipality") : ?>
+                <a href="<?php echo URLROOT . '/pages' . '/category/' . $data['umsebenzi']->job_category_slug . "/"; ?>"><?php echo $data['umsebenzi']->job_category; ?></a>
                 <?php else : ?>
-                    <a href="<?php echo URLROOT . '/pages' . '/category/' . $data['umsebenzi']->job_category_slug . "/"; ?>"><?php echo $data['umsebenzi']->category; ?></a>
+                    <a href="<?php echo URLROOT . '/pages' . '/category/' . $data['umsebenzi']->job_category_slug . "/"; ?>"><?php echo $data['umsebenzi']->job_category; ?></a>
                 <?php endif; ?>
             </p>
                 </li>
@@ -51,22 +51,22 @@
                 <?php $college = "College";
                 $university = "University";
                 $municipality = "Municipality";
-                $varsity = strpos($data['umsebenzi']->gama_le_company, $university);
-                $municipality = strpos($data['umsebenzi']->gama_le_company, $municipality);
-                $str = strpos($data['umsebenzi']->gama_le_company, $college);?>
+                $varsity = strpos($data['umsebenzi']->job_employer, $university);
+                $municipality = strpos($data['umsebenzi']->job_employer, $municipality);
+                $str = strpos($data['umsebenzi']->job_employer, $college);?>
                 <?php if($str !== false || $varsity !== false || $municipality !== false) : ?>
-                    <a href="<?php echo URLROOT . '/pages' . '/employer/' . $data['umsebenzi']->employer_slug . "/"; ?>"><?php echo $data['umsebenzi']->gama_le_company; ?></a>
+                    <a href="<?php echo URLROOT . '/pages' . '/employer/' . $data['umsebenzi']->employer_slug . "/"; ?>"><?php echo $data['umsebenzi']->job_employer; ?></a>
                 <?php else : ?>
-                <a href="<?php echo URLROOT . '/pages' . '/employer/' . $data['umsebenzi']->employer_slug . "/"; ?>"><?php echo $data['umsebenzi']->gama_le_company; ?></a>
+                <a href="<?php echo URLROOT . '/pages' . '/employer/' . $data['umsebenzi']->employer_slug . "/"; ?>"><?php echo $data['umsebenzi']->job_employer; ?></a>
                 <?php endif; ?>
             </p>
                     </li>
                 <li>            
                     <p class="jb-recommend m-0 p-0">
-                <?php if($data['umsebenzi']->ndawoni == "Various Areas") : ?>
-                <a href="<?php echo URLROOT . '/' . $province_slug . '/ndawoni/' . $data['umsebenzi']->job_location_slug . "/"; ?>">ndawo ezohlukeneyo</a>
+                <?php if($data['umsebenzi']->job_location == "Various Areas") : ?>
+                <a href="<?php echo URLROOT . '/' . $province_slug . '/job_location/' . $data['umsebenzi']->job_location_slug . "/"; ?>">ndawo ezohlukeneyo</a>
                 <?php else : ?>
-                 <a href="<?php echo URLROOT . '/' . $province_slug . '/ndawoni/' . $data['umsebenzi']->job_location_slug . "/"; ?>"><?php echo $data['umsebenzi']->ndawoni; ?></a>
+                 <a href="<?php echo URLROOT . '/' . $province_slug . '/job_location/' . $data['umsebenzi']->job_location_slug . "/"; ?>"><?php echo $data['umsebenzi']->job_location; ?></a>
                 <?php endif; ?>
                 </p>
             </li>
@@ -86,7 +86,7 @@
     <table class="table table-borderless highlight-grey p-3 meta-table">
         <thead>
             <tr>
-                <th class="p-0 pb-3"><h3><?php echo $data['umsebenzi']->gama_le_company ?></h3></th>
+                <th class="p-0 pb-3"><h3><?php echo $data['umsebenzi']->job_employer ?></h3></th>
             </tr>
         </thead>
         <tbody>

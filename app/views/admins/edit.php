@@ -131,10 +131,10 @@
                                                         <ul class="pl-3">
                                                             <div class="cat-column">
                                                                 <?php 
-                                                                    foreach ($data['categories'] as $category) { ?>
+                                                                    foreach ($data['categories'] as $job_category) { ?>
                                                                         <li>
-                                                                            <input id="<?php echo $category->category; ?>" type="checkbox" name="categories[]" class="form-check-input <?php echo (!empty($data['categories_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $category->category; ?>" <?php echo in_array($category->category, $data['cat_from_employers'], true) ? 'checked' : ''; ?>>
-                                                                            <label for="<?php echo $category->category; ?>"><?php echo $category->category; ?></label>
+                                                                            <input id="<?php echo $job_category->job_category; ?>" type="checkbox" name="categories[]" class="form-check-input <?php echo (!empty($data['categories_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $job_category->job_category; ?>" <?php echo in_array($job_category->job_category, $data['cat_from_employers'], true) ? 'checked' : ''; ?>>
+                                                                            <label for="<?php echo $job_category->job_category; ?>"><?php echo $job_category->job_category; ?></label>
                                                                             </li>
                                                                 <?php  } ?>
                                                             </div>

@@ -3,8 +3,8 @@
     $onjani = $this->postModel->filterImisebenziByOnjani();
     $filter_job_education = $this->postModel->filterImisebenziByMfundo();
     $job_education = $this->postModel->filterImisebenziByMfundo();
-    $ndawoni = $this->postModel->filterImisebenziByLocation();
-    $category = $this->postModel->filterImisebenziByType();
+    $job_location = $this->postModel->filterImisebenziByLocation();
+    $job_category = $this->postModel->filterImisebenziByType();
     $experiences = $this->postModel->filterImisebenziByExperience();
     $imisebenzi_category = $this->postModel->getImisebenziByType($type);
     $provinces = $this->postModel->getProvinces();
@@ -18,10 +18,10 @@
     
     //Get job function for title tag
     foreach ($imisebenzi_category as $msebenzi_wantoni) {
-        if ($msebenzi_wantoni->category == "Government") {
+        if ($msebenzi_wantoni->job_category == "Government") {
             $function = "Imisebenzi yakwa government";
         } else {
-            $function = "Imisebenzi ye " . $msebenzi_wantoni->category;   
+            $function = "Imisebenzi ye " . $msebenzi_wantoni->job_category;   
         }
     }
     
@@ -49,8 +49,8 @@
         'page_type' => 'website',
         'page_url' => URLROOT . "/" . $_GET['url'],
         'page_title' => $function,
-        'ndawoni' => $ndawoni,
-        'category' => $category,
+        'job_location' => $job_location,
+        'category' => $job_category,
         'job_category_slug' => $function_slug,
         'experience' => $experiences,
         'imisebenzi' => $imisebenzi_category,
@@ -68,7 +68,7 @@
     }
     
     foreach ($data['imisebenzi'] as $umsebenzi) {
-        $data['type'] = $umsebenzi->category;
+        $data['type'] = $umsebenzi->job_category;
     }
     
     $data['total_pages'] = ceil(count($data['imisebenzi'])/$data['results_per_page']);

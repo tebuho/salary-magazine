@@ -4,8 +4,8 @@
     $imisebenzi_job_education = $this->postModel->getImisebenziByMfundo($education);
     $filter_job_education = $this->postModel->filterImisebenziByMfundo();
     $job_education = $this->postModel->filterImisebenziByMfundo();
-    $ndawoni = $this->postModel->filterImisebenziByLocation();
-    $category = $this->postModel->filterImisebenziByType();
+    $job_location = $this->postModel->filterImisebenziByLocation();
+    $job_category = $this->postModel->filterImisebenziByType();
     $experience = $this->postModel->filterImisebenziByExperience();
     $provinces = $this->postModel->getProvinces();
     
@@ -44,8 +44,8 @@
         'page_type' => 'website',
         'page_url' => URLROOT . "/" . $_GET['url'],
         'page_title' => 'Imisebenzi efuna i-' . $education,
-        'ndawoni' => $ndawoni,
-        'category' => $category,
+        'job_location' => $job_location,
+        'category' => $job_category,
         'experience' => $experience,
         'imisebenzi' => $imisebenzi_job_education,
         'job_education_jobs_filtered' => $filter_job_education,

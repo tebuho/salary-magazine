@@ -11,6 +11,8 @@ body {
     background-color: #fff;
     background-color: rgba(255, 255, 255, 1);
     line-height: 1.6;
+    height: 100vh;
+    overflow: auto;
 }
 
 .container {
@@ -84,15 +86,7 @@ ol {
 .comments-section {
   box-shadow: none!important;
 }
-
-.btn-primary-sm {
-  background-color: #012169;
-  border-color: #fff;
-  color: #fff;
-  border-width: 2px;
-  padding: 5px 25px;
-}
-.form-control::placeholder {
+::placeholder {
   line-height: 20px;
   color: #012169;
 }
@@ -104,23 +98,6 @@ ol {
 .btn:focus {
   outline: 0;
   box-shadow: 0 0 0 0.1rem rgb(182 168 177 / 50%);
-}
-.btn-primary-sm:hover {
-  background-color: #1c56ac;
-  border-color: #1c56ac;
-  color: #fff;
-  padding-left: 32px;
-  padding-right: 32px;
-}
-
-.btn-primary {
-  box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4);
-}
-.btn-light {
-    color: #fff;
-    background-color: #333;
-    border-color: #333;
-    font-size: 13px;
 }
 .btn-warning,
 .jb-title,
@@ -134,6 +111,9 @@ label,
     font-family: 'Roboto', 'Open Sans', sans-serif;
     font-weight: 700;
 }
+.province-header .label {
+  font-size: 14px;
+}
 
 .province-header span {
   font-size: 14px;
@@ -145,6 +125,10 @@ label,
 }
 
 /* Navbar */
+.nav-container {
+  margin-bottom: 0;
+  border-bottom: 1px solid #a2a9b1;
+}
 .navbar-expand-lg .navbar-nav li {
     line-height: 30px;
 }
@@ -184,6 +168,9 @@ label,
   }
   .job-search__btn:hover {
     color: #fff;
+  }
+  .filter input:checked ~ {
+    background-color: #17a2b8;
   }
   a:focus,
   button:focus,
@@ -272,6 +259,7 @@ button {
   .main-content {
     padding: 10px 20px;
     margin-bottom: 60px;
+    height: 100%;
   }
   .main-content__home {
     padding: 60px 0;
@@ -319,6 +307,7 @@ section {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  height: 100%;
 }
 .body-container__employers {
   display: grid;
@@ -363,6 +352,11 @@ section {
 }
 .top-ad .google-ad__container {
   min-height:auto;
+}
+.center-side .centre-scroll {
+  overflow: auto;
+  height: inherit;
+  padding-right: 29px;
 }
 .add-job {
     background-color: #fff;
@@ -427,6 +421,10 @@ section {
     background-color: #1c56ac;
     color: #fff;
     border-color: 1px solid #b4cfdc!important
+}
+.btn-info {
+  font-size: 14px;
+  padding: 3px 25px;
 }
 .follow-btn {
   color: #0051c3;
@@ -502,12 +500,17 @@ section {
   flex: 1;
   order: 1;
   padding: 0;
+  max-width: fit-content;
+  overflow-y: scroll;
+  height: 100%;
 }
 .center-side {
     flex: 3;
     order: 2;
-    margin: 0 29px;
+    margin: 0 0 0 29px;
     padding: 0;
+    height: inherit;
+    padding-right: 35px;
 }
 
 .profile-form__container  {
@@ -609,7 +612,7 @@ section {
     margin: auto;
 }
 .description-yo__msebenzi {
-  padding: 15px 15px 15px 0;
+  padding: 0 15px 15px 0;
   background-color: #fff;
 }
 .alert-info {
@@ -620,15 +623,16 @@ section {
   border-radius: 0;
 }
 .highlight-grey {
-  background: #f9f9f9!important;
-  border: 1px solid #a2a9b1;
+  /* background: #f9f9f9!important; */
+  /* border: 1px solid #a2a9b1; */
   padding: 10px 15px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 .highlight-grey h3,
 .square-bx h3 {
   margin: 8px 0;
   font-size: 1rem;
+  color: darkblue;
 }
 .highlight-grey ul,
 .highlight-grey ol {
@@ -661,14 +665,16 @@ section {
   display: flex;
   flex-wrap: wrap;
   flex: 2;
+  height: 100%;
   justify-content: center;
   order: 3;
-  overflow: hidden;
+  overflow: auto;
   margin: 0 auto;
   padding: 0;
 }
-.empty {
-  height: 90px;
+.right-side .empty {
+  border:1px solid #17a2b8;
+  height: 300px;
   flex: 1 1 100%;
   margin-bottom: 15px;
 }
@@ -742,6 +748,9 @@ textarea {
   display: flex;
   padding-top: 15px;
 }
+.province label {
+  margin: 0;
+}
 .filter-container {
   padding-top: 5px;
 }
@@ -755,8 +764,13 @@ textarea {
 .content p a {
     text-decoration: none;
 }
+
 .label {
     flex: 1;
+}
+.label .fas,
+.label .fa {
+  font-size: 12px;
 }
 
 .label h6 {
@@ -961,7 +975,8 @@ textarea {
 }
 .filter li {
   font-size: 14px;
-  line-height: 2;
+  line-height: normal;
+  list-style-type: none;
 }
 .sidebar-container h3 {
   margin: .5rem 0;
@@ -1004,7 +1019,8 @@ table {
   margin-top: 0;
 }
 .jb-recommend {
-  padding-bottom: 10px;
+  padding: 0;
+
 }
 .jb-recommend h3 {
   margin: 0;
@@ -1047,10 +1063,10 @@ table {
 .cke_chrome {
   background-color: #ffffff;
   border: 1px solid #a2a9b1;
-  border-radius: 0;
+  border-radius: 0.25rem;
   box-shadow: inset 0 1px 2px rgba(27,31,35,.075);
   line-height: 1.6;
-  min-height: 34px;
+  height: 34px;
   margin-bottom: 15px;
   margin-right: 10px;
   flex: 1;
@@ -1072,10 +1088,8 @@ table {
 .form-control:focus,
 .form-control:active,
 .cke_chrome:focus-within {
-
-  border: 2px solid #0051c3;
+  border: 2px solid #17a2b8;
   box-shadow: none;
-
 }
 
 .form-btn__primary {
@@ -1409,7 +1423,7 @@ add-comment__a {
     padding-bottom: 15px;
   }
   .google-ad {
-      border: 0 none;
+      border: 1px solid #17a2b8;
       display: inline-block;
       height: auto;
       width: inherit;
@@ -1478,8 +1492,7 @@ add-comment__a {
     display: block;
   }
   .job-search__btn,
-  .form-btn__primary,
-  .btn-primary-sm {
+  .form-btn__primary {
       font-size: 0.875rem;
       margin-top: 10px;
   }
@@ -1558,6 +1571,7 @@ add-comment__a {
   nav li:last-child {
   border-right: none;
   }
+  
   .fa-align-left {
     font-size: 24px;
   }

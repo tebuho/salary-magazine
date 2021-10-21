@@ -73,22 +73,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 "page_title" => $umsebenzi->label,
                 "umsebenzi" => $umsebenzi,
                 "job_slug" => $umsebenzi->slug,
-                "gama_le_company" => $umsebenzi->gama_le_company,
+                "job_employer" => $umsebenzi->job_employer,
                 "experience" => $umsebenzi->experience,
-                "category" => $umsebenzi->category,
+                "category" => $umsebenzi->job_category,
                 "job_type" => $umsebenzi->job_type,
-                "ndawoni" => $umsebenzi->ndawoni,
+                "job_location" => $umsebenzi->job_location,
                 "job_education" => $umsebenzi->job_education,
                 "jb_specification" => $umsebenzi->jb_specification,
                 "today" => time(),
-                "pub_date" => strtotime($umsebenzi->created_at),
+                "pub_date" => strtotime($umsebenzi->job_date_published),
                 "date_diff" => "",
                 "since_pub_date" => "",
                 "results" => "",
                 "umntu" => $user,
                 "comments" => $comment,
                 "comment_err" => "Comment ayikwazi ukuba empty",
-                "pos" => strpos($umsebenzi->gama_le_company, "University"),
+                "pos" => strpos($umsebenzi->job_employer, "University"),
             ];
             
             flash("comment_error", "Comment yakho ayikwazi ukuba empty", "border border-danger p-2");
@@ -158,29 +158,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         "page_title" => $umsebenzi->label,
         "umsebenzi" => $umsebenzi,
         "job_slug" => $umsebenzi->slug,
-        "gama_le_company" => $umsebenzi->gama_le_company,
+        "job_employer" => $umsebenzi->job_employer,
         "experience" => $umsebenzi->experience,
-        "category" => $umsebenzi->category,
+        "category" => $umsebenzi->job_category,
         "job_type" => $umsebenzi->job_type,
-        "ndawoni" => $umsebenzi->ndawoni,
+        "job_location" => $umsebenzi->job_location,
         "job_education" => $umsebenzi->job_education,
         "jb_specification" => $umsebenzi->jb_specification,
         "today" => time(),
-        "pub_date" => strtotime($umsebenzi->created_at),
+        "pub_date" => strtotime($umsebenzi->job_date_published),
         "date_diff" => "",
         "since_pub_date" => "",
         "results" => "",
         "umntu" => $user,
         "comments" => $comment,
-        "pos" => strpos($umsebenzi->gama_le_company, "University"),
+        "pos" => strpos($umsebenzi->job_employer, "University"),
     ];
     
-    switch($data['umsebenzi']->gama_le_company) {
+    switch($data['umsebenzi']->job_employer) {
         case "Independent Communications Authority of South Africa":
-            $data['umsebenzi']->gama_le_company = "ICASA";
+            $data['umsebenzi']->job_employer = "ICASA";
             break;
         case "PSG Management Services":
-            $data['umsebenzi']->gama_le_company = "PSG";
+            $data['umsebenzi']->job_employer = "PSG";
             break;
     }
 

@@ -46,7 +46,7 @@ class easternCapeJob
     public function getImisebenzi()
     {
         $this->db->query(
-            'SELECT job_type, gama_le_company, job_title, ndawoni, user_id, image
+            'SELECT job_type, job_employer, job_title, job_location, user_id, image
             FROM imisebenzi
             WHERE imisebenzi.province = "Eastern Cape"
             AND imisebenzi.job_closing_date = "1970-01-01" AND timestampdiff(day, imisebenzi.created_at, now()) <= 7
@@ -68,7 +68,7 @@ class easternCapeJob
     public function paginateImisebenzi($data)
     {
         $this->db->query(
-            "SELECT job_type, category, gama_le_company, job_title, province, province_slug, ndawoni, slug, user_id, purpose, image,
+            "SELECT job_type, category, job_employer, job_title, province, province_slug, job_location, slug, user_id, purpose, image,
              CASE
                 WHEN DAYOFMONTH(`job_closing_date`) IN(1, 2, 3, 4, 5, 20, 22, 23, 24, 25, 29, 30, 31)
                 THEN CONCAT(DATE_FORMAT(`job_closing_date`, '%D'), ' ka ', DATE_FORMAT(`job_closing_date`, '%M %Y'))
@@ -145,7 +145,7 @@ class easternCapeJob
     public function filterImisebenziByLocation()
     {
         $this->db->query(
-            'SELECT ndawoni, job_location_slug, COUNT(*) AS count FROM imisebenzi
+            'SELECT job_location, job_location_slug, COUNT(*) AS count FROM imisebenzi
             
             WHERE province = "Eastern Cape" AND job_closing_date >=  now()
             OR province = "Eastern Cape" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
@@ -153,7 +153,7 @@ class easternCapeJob
             OR province = "Nationwide" AND job_closing_date >=  now()
             OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
             
-            GROUP BY ndawoni
+            GROUP BY job_location
          ');
          
         $results = $this->db->resultSet();
@@ -171,17 +171,17 @@ class easternCapeJob
         $this->db->query(
             'SELECT * FROM imisebenzi
             
-            WHERE province = "Eastern Cape" AND job_closing_date >=  now() AND job_location_slug = :ndawoni
+            WHERE province = "Eastern Cape" AND job_closing_date >=  now() AND job_location_slug = :job_location
             OR province = "Eastern Cape" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
-            AND job_location_slug = :ndawoni
+            AND job_location_slug = :job_location
             
-            OR province = "Nationwide" AND job_closing_date >=  now() AND job_location_slug = :ndawoni
+            OR province = "Nationwide" AND job_closing_date >=  now() AND job_location_slug = :job_location
             OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
-            AND job_location_slug = :ndawoni
+            AND job_location_slug = :job_location
             
             ORDER BY created_at DESC
          ');
-        $this->db->bind(":ndawoni", $job_location);
+        $this->db->bind(":job_location", $job_location);
         $results = $this->db->resultSet();
 
         return $results;
@@ -195,31 +195,31 @@ class easternCapeJob
     public function paginateImisebenziNgeNdawo($data)
     {
         $this->db->query(
-            "SELECT job_type, category, gama_le_company, job_title, province_slug, ndawoni, slug, user_id, purpose, image,
+            "SELECT job_type, category, job_employer, job_title, province_slug, job_location, slug, user_id, purpose, image,
              CASE
                 WHEN DAYOFMONTH(`job_closing_date`) IN(1, 2, 3, 4, 5, 20, 22, 23, 24, 25, 29, 30, 31)
                 THEN CONCAT(DATE_FORMAT(`job_closing_date`, '%D'), ' ka ', DATE_FORMAT(`job_closing_date`, '%M %Y'))
                 ELSE CONCAT(DATE_FORMAT(`job_closing_date`, '%e'), ' ka ', DATE_FORMAT(`job_closing_date`, '%M %Y'))
              END AS 'closingDate'
              FROM imisebenzi
-            WHERE province = 'Eastern Cape' AND ndawoni = :ndawoni
+            WHERE province = 'Eastern Cape' AND job_location = :job_location
             AND job_closing_date = '1970-01-01' AND timestampdiff(day, created_at, now()) <= 7
             
             OR province = 'Eastern Cape'
-            AND job_closing_date >= now() AND ndawoni = :ndawoni
+            AND job_closing_date >= now() AND job_location = :job_location
             
-            OR province = 'Nationwide' AND ndawoni = :ndawoni
+            OR province = 'Nationwide' AND job_location = :job_location
             AND job_closing_date = '1970-01-01' AND timestampdiff(day, created_at, now()) <= 7
             
             OR province = 'Nationwide'
-            AND job_closing_date >= now() AND ndawoni = :ndawoni
+            AND job_closing_date >= now() AND job_location = :job_location
             
             ORDER BY created_at DESC
             LIMIT :start, :rpp
          ");
         $this->db->bind(":namhlanje", date("Y-m-d"));
         $this->db->bind(":start", $data['start']);
-        $this->db->bind(":ndawoni", $data['area']);
+        $this->db->bind(":job_location", $data['area']);
         $this->db->bind(":rpp", $data['results_per_page']);
         $results = $this->db->resultSet();
 
@@ -287,7 +287,7 @@ class easternCapeJob
     public function paginateImisebenziByType($data)
     {
         $this->db->query(
-            "SELECT job_type, category, gama_le_company, job_title, province_slug, ndawoni, slug, user_id, purpose, image,
+            "SELECT job_type, category, job_employer, job_title, province_slug, job_location, slug, user_id, purpose, image,
              CASE
                 WHEN DAYOFMONTH(`job_closing_date`) IN(1, 2, 3, 4, 5, 20, 22, 23, 24, 25, 29, 30, 31)
                 THEN CONCAT(DATE_FORMAT(`job_closing_date`, '%D'), ' ka ', DATE_FORMAT(`job_closing_date`, '%M %Y'))
@@ -327,7 +327,7 @@ class easternCapeJob
     public function filterImisebenziByEmployer()
     {
         $this->db->query(
-            'SELECT DISTINCT gama_le_company, employer_slug, COUNT(*) AS count FROM imisebenzi
+            'SELECT DISTINCT job_employer, employer_slug, COUNT(*) AS count FROM imisebenzi
             
             WHERE province = "Eastern Cape" AND job_closing_date >=  now()
             OR province = "Eastern Cape" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
@@ -335,7 +335,7 @@ class easternCapeJob
             OR province = "Nationwide" AND job_closing_date >=  now()
             OR province = "Nationwide" AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
             
-            GROUP BY gama_le_company
+            GROUP BY job_employer
          ');
          
         $results = $this->db->resultSet();
@@ -377,7 +377,7 @@ class easternCapeJob
     public function paginateImisebenziByEmployer($data)
     {
         $this->db->query(
-            'SELECT job_type, category, gama_le_company, job_title, province_slug, ndawoni, slug, user_id, purpose, image,
+            'SELECT job_type, category, job_employer, job_title, province_slug, job_location, slug, user_id, purpose, image,
              CASE
                 WHEN DAYOFMONTH(`job_closing_date`) IN(1, 2, 3, 4, 5, 20, 22, 23, 24, 25, 29, 30, 31)
                 THEN CONCAT(DATE_FORMAT(`job_closing_date`, "%D"), " ka ", DATE_FORMAT(`job_closing_date`, "%M %Y"))
@@ -385,17 +385,17 @@ class easternCapeJob
              END AS "closingDate"
              FROM imisebenzi
             
-            WHERE province = "Eastern Cape" AND gama_le_company = :employer
+            WHERE province = "Eastern Cape" AND job_employer = :employer
             AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
             
             OR province = "Eastern Cape"
-            AND job_closing_date >= now() AND gama_le_company = :employer
+            AND job_closing_date >= now() AND job_employer = :employer
             
-            OR province = "Nationwide" AND gama_le_company = :employer
+            OR province = "Nationwide" AND job_employer = :employer
             AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) <= 7
             
             OR province = "Nationwide"
-            AND job_closing_date >= now() AND gama_le_company = :employer
+            AND job_closing_date >= now() AND job_employer = :employer
             
             ORDER BY created_at DESC
             LIMIT :start, :rpp
@@ -469,7 +469,7 @@ class easternCapeJob
     public function paginateImisebenziNgeExperience($data)
     {
         $this->db->query(
-            "SELECT job_type, category, gama_le_company, job_title, province_slug, ndawoni, slug, user_id, purpose, image,
+            "SELECT job_type, category, job_employer, job_title, province_slug, job_location, slug, user_id, purpose, image,
              CASE
                 WHEN DAYOFMONTH(`job_closing_date`) IN(1, 2, 3, 4, 5, 20, 22, 23, 24, 25, 29, 30, 31)
                 THEN CONCAT(DATE_FORMAT(`job_closing_date`, '%D'), ' ka ', DATE_FORMAT(`job_closing_date`, '%M %Y'))
@@ -560,7 +560,7 @@ class easternCapeJob
     public function paginateImisebenziNgoBunjani($data)
     {
         $this->db->query(
-            "SELECT job_type, category, gama_le_company, job_title, province_slug, ndawoni, slug, user_id, purpose, image,
+            "SELECT job_type, category, job_employer, job_title, province_slug, job_location, slug, user_id, purpose, image,
              CASE
                 WHEN DAYOFMONTH(`job_closing_date`) IN(1, 2, 3, 4, 5, 20, 22, 23, 24, 25, 29, 30, 31)
                 THEN CONCAT(DATE_FORMAT(`job_closing_date`, '%D'), ' ka ', DATE_FORMAT(`job_closing_date`, '%M %Y'))
@@ -650,7 +650,7 @@ class easternCapeJob
     public function paginateImisebenziNgeMfundo($data)
     {
         $this->db->query(
-            "SELECT job_type, category, gama_le_company, job_title, province_slug, ndawoni, slug, user_id, purpose, image,
+            "SELECT job_type, category, job_employer, job_title, province_slug, job_location, slug, user_id, purpose, image,
              CASE
                 WHEN DAYOFMONTH(`job_closing_date`) IN(1, 2, 3, 4, 5, 20, 22, 23, 24, 25, 29, 30, 31)
                 THEN CONCAT(DATE_FORMAT(`job_closing_date`, '%D'), ' ka ', DATE_FORMAT(`job_closing_date`, '%M %Y'))
@@ -705,10 +705,10 @@ class easternCapeJob
     {
         $this->db->query(
             "UPDATE imisebenzi SET
-                gama_le_company = :gama_le_company,
+                job_employer = :job_employer,
                 employer_slug = :employer_slug,
                 province = :province,
-                ndawoni = :ndawoni,
+                job_location = :job_location,
                 job_location_slug = :job_location_slug,
                 job_title = :job_title,
                 label = :label,
@@ -738,10 +738,10 @@ class easternCapeJob
         
         $this->db->bind(':id', $data['job_id']);
         $this->db->bind(':slug', $data['slug']);
-        $this->db->bind(':gama_le_company', $data['gama_le_company']);
+        $this->db->bind(':job_employer', $data['job_employer']);
         $this->db->bind(":employer_slug", $data['employer_slug']);
         $this->db->bind(':province', $data['province']);
-        $this->db->bind(":ndawoni", $data['ndawoni']);
+        $this->db->bind(":job_location", $data['job_location']);
         $this->db->bind(":job_location_slug", $data['job_location_slug']);
         $this->db->bind(':job_title', $data['job_title']);
         $this->db->bind(':label', $data['label']);
@@ -777,8 +777,8 @@ class easternCapeJob
     public function getPostBySlug($slug)
     {
         $this->db->query(
-            "SELECT gama_le_company, employer_slug, province,
-            ndawoni, job_location_slug, job_title, job_type, job_type_slug, job_education,
+            "SELECT job_employer, employer_slug, province,
+            job_location, job_location_slug, job_title, job_type, job_type_slug, job_education,
             experience, category, job_category_slug, job_requirements, purpose, skills_competencies, 
             job_responsibilities, additional_info, apply_nge_website, job_hand_application,
             apply_nge_email, image, user_id, label, job_closing_date,
@@ -837,14 +837,14 @@ class easternCapeJob
              END AS "closingDate"
              FROM imisebenzi
             
-            WHERE province = "Eastern Cape" AND gama_le_company LIKE :search AND job_closing_date >=  now()
+            WHERE province = "Eastern Cape" AND job_employer LIKE :search AND job_closing_date >=  now()
             
-            OR province = "Eastern Cape" AND gama_le_company LIKE :search
+            OR province = "Eastern Cape" AND job_employer LIKE :search
             AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) < 7
             
-            OR province = "Eastern Cape" AND ndawoni LIKE :search AND job_closing_date >=  now() 
+            OR province = "Eastern Cape" AND job_location LIKE :search AND job_closing_date >=  now() 
             
-            OR province = "Eastern Cape" AND ndawoni LIKE :search
+            OR province = "Eastern Cape" AND job_location LIKE :search
             AND job_closing_date = "1970-01-01" AND timestampdiff(day, created_at, now()) < 7
             
             OR province = "Eastern Cape" AND job_title LIKE :search AND job_closing_date >=  now()

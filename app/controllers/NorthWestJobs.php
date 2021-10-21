@@ -34,12 +34,12 @@ class NorthWestJobs extends Controller
      *                  Filter jobs by job_location                         *
      *                                                                  *
      ********************************************************************/
-    public function ndawoni($job_location, $page = 0)
+    public function job_location($job_location, $page = 0)
     {
        
         include_once "../app/views/inc/filter_jb_job_location.php";
         
-        $this->view("$this->province_slug/ndawoni", $data);
+        $this->view("$this->province_slug/job_location", $data);
         
     }
 

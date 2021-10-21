@@ -2,8 +2,8 @@
 
     //Get imisebenzi
     $imisebenzi = $this->postModel->getImisebenzi();
-    $ndawoni = $this->postModel->filterImisebenziByLocation();
-    $category = $this->postModel->filterImisebenziByType();
+    $job_location = $this->postModel->filterImisebenziByLocation();
+    $job_category = $this->postModel->filterImisebenziByType();
     $experience = $this->postModel->filterImisebenziByExperience();
     $onjani = $this->postModel->filterImisebenziByOnjani();
     $job_education = $this->postModel->filterImisebenziByMfundo();
@@ -17,11 +17,12 @@
     $page = 1;
     }
     
-    if(!empty($imisebenzi)) {
-        $imisebenzi_image = $imisebenzi[0]->image;
+    if (!empty($imisebenzi)) {
+        $imisebenzi_image = "";
     } else {
         $imisebenzi_image = "";
     }
+
     $data = [
         'results_per_page' => 15,
         'start' => '',
@@ -34,8 +35,8 @@
         'page_type' => 'website',
         'page_url' => URLROOT . "/",
         'page_title' => "Imisebenzi ese $this->province",
-        'ndawoni' => $ndawoni,
-        'category' => $category,
+        'job_location' => $job_location,
+        'category' => $job_category,
         'experience' => $experience,
         'job_education' => $job_education,
         'onjani' => $onjani,
@@ -57,7 +58,11 @@
     $data['total_pages'] = ceil(count($data['imisebenzi'])/$data['results_per_page']);
 
     //Get imisebenzi with limit and offset
-    $imisebenzi = $this->postModel->paginateImisebenzi($data);
+    // $imisebenzi = $this->postModel->paginateImisebenzi($data);
     $data['imisebenzi'] = $imisebenzi;
+    $my_file = fopen("jb-all.json", "w");
+    $em_all = json_encode($imisebenzi);
+    fwrite($my_file, $em_all);
+    fclose($my_file);
     
 ?>

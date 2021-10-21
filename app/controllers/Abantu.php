@@ -197,7 +197,7 @@ class Abantu extends Controller {
                 "first_name" => "",
                 "last_name" => "",
                 "email" => "",
-                "ndawoni" => "",
+                "job_location" => "",
                 "password" => "",
                 "confirm_password" => "",
                 "first_name_err" => "",

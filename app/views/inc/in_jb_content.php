@@ -28,8 +28,8 @@
                 <!-- Alert when a new job has been successfully uploaded -->
                 <?php echo flash('message_yomsebenzi'); ?>
                 <h3 class="mt-2"><?php echo $data['umsebenzi']->job_title; ?> </h3>
-                <p><?php echo $data['umsebenzi']->gama_le_company; ?> - <?php echo $data['umsebenzi']->ndawoni; ?>, <?php echo $data['umsebenzi']->province; ?></p>
-                <p><?php echo $data['umsebenzi']->job_type; ?><?php echo !empty($data['umsebenzi']->category) ? " | " . $data['umsebenzi']->category : ""; ?></p>
+                <p><?php echo $data['umsebenzi']->job_employer; ?> - <?php echo $data['umsebenzi']->job_location; ?>, <?php echo $data['umsebenzi']->province; ?></p>
+                <p><?php echo $data['umsebenzi']->job_type; ?><?php echo !empty($data['umsebenzi']->job_category) ? " | " . $data['umsebenzi']->job_category : ""; ?></p>
                 <?php if($data['umsebenzi']->user_id != 2055) : ?>
                     <p><?php echo $data['umsebenzi']->job_closing_date == "1970-01-01" ? "Closing date ayichazwanga" : "Closing date yi " . $data['umsebenzi']->closingDate; ?></p>
                 <?php endif; ?>
@@ -70,7 +70,7 @@
                     </div>
                     <div class="contributor">
                         <?php if ($data['umntu']->igama != "Graylink"): ?>
-                            <em>Lo msebenzi ufakwe ngu <a href="<?php echo URLROOT; ?>/abantu/cv/<?php echo $data['umntu']->id ?>"><?php echo $data['umntu']->igama . " " . $data['umntu']->fani; ?></a> nge <?php echo $date->convertDayDate($data['umsebenzi']->created_at); ?> ka <?php echo $date->convertMonthYear($data['umsebenzi']->created_at); ?></em>
+                            <em>Lo msebenzi ufakwe ngu <a href="<?php echo URLROOT; ?>/abantu/cv/<?php echo $data['umntu']->id ?>"><?php echo $data['umntu']->igama . " " . $data['umntu']->fani; ?></a> nge <?php echo $date->convertDayDate($data['umsebenzi']->job_date_published); ?> ka <?php echo $date->convertMonthYear($data['umsebenzi']->job_date_published); ?></em>
                         <?php endif; ?>
                     </div>
             </div>

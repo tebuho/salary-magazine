@@ -1,15 +1,15 @@
 <div class="left-side col-md-2" style="visibility: visible">
     <h4 class="filter-label">Select</h4>
     <div class="province-header">
-        <a data-toggle="collapse" role="button" aria-expanded="false" aria-controls="ndawoni" href="#ndawoni" class="collapsed jb-collapse">
+        <a data-toggle="collapse" role="button" aria-expanded="false" aria-controls="job_location" href="#job_location" class="collapsed jb-collapse">
             <span class="label">Ndawoni</span>
             <span class="rsaquo">&rsaquo;</span>
         </a>
     </div>
     <div class="province-container filter-container">
-        <ul class="province filter multi-collapse collapse" id="ndawoni">
-            <?php foreach ($data['ndawoni'] as $job_location) : ?>
-            <li><a href="<?php echo URLROOT . '/limpopoJobs/ndawoni/' . $job_location->job_location_slug; ?>"><?php echo $job_location->ndawoni; ?> (<?php echo $job_location->count; ?>)</a></li>
+        <ul class="province filter multi-collapse collapse" id="job_location">
+            <?php foreach ($data['job_location'] as $job_location) : ?>
+            <li><a href="<?php echo URLROOT . '/limpopoJobs/job_location/' . $job_location->job_location_slug; ?>"><?php echo $job_location->job_location; ?> (<?php echo $job_location->count; ?>)</a></li>
             <?php endforeach; ?>
         </ul>
     </div>
@@ -60,8 +60,8 @@
     </div>
     <div class="province-container filter-container">
         <ul class="province filter multi-collapse collapse" id="owantoni">
-            <?php foreach ($data['category'] as $category) : ?>
-            <li><a href="<?php echo URLROOT . '/limpopoJobs/category/' . $category->job_category_slug; ?>"><?php echo $category->category; ?> (<?php echo $category->count; ?>)</a></li>
+            <?php foreach ($data['category'] as $job_category) : ?>
+            <li><a href="<?php echo URLROOT . '/limpopoJobs/category/' . $job_category->job_category_slug; ?>"><?php echo $job_category->job_category; ?> (<?php echo $job_category->count; ?>)</a></li>
             <?php endforeach; ?>
         </ul>
     </div>

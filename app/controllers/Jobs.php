@@ -20,8 +20,8 @@ class Jobs extends Controller
     {
         //Get imisebenzi
         $imisebenzi = $this->postModel->getImisebenzi();
-        $ndawoni = $this->postModel->filterImisebenziByLocation();
-        $category = $this->postModel->filterImisebenziByType();
+        $job_location = $this->postModel->filterImisebenziByLocation();
+        $job_category = $this->postModel->filterImisebenziByType();
         $experience = $this->postModel->filterImisebenziByExperience();
         $onjani = $this->postModel->filterImisebenziByOnjani();
         $job_education = $this->postModel->filterImisebenziByMfundo();
@@ -46,8 +46,8 @@ class Jobs extends Controller
             'page_type' => 'website',
             'page_url' => URLROOT . "/" . $_GET['url'],
             'page_title' => 'Imisebenzi ese Eastern Cape',
-            'ndawoni' => $ndawoni,
-            'category' => $category,
+            'job_location' => $job_location,
+            'category' => $job_category,
             'experience' => $experience,
             'job_education' => $job_education,
             'onjani' => $onjani,
@@ -75,12 +75,12 @@ class Jobs extends Controller
      *                  Filter jobs by job_location                         *
      *                                                                  *
      ********************************************************************/
-    public function ndawoni($job_location, $page = 0)
+    public function job_location($job_location, $page = 0)
     {
         //Get imisebenzi
         $imisebenzi = $this->postModel->getImisebenziByLocation($job_location);
-        $ndawoni = $this->postModel->filterImisebenziByLocation();
-        $category = $this->postModel->filterImisebenziByType();
+        $job_location = $this->postModel->filterImisebenziByLocation();
+        $job_category = $this->postModel->filterImisebenziByType();
         $experience = $this->postModel->filterImisebenziByExperience();
         $onjani = $this->postModel->filterImisebenziByOnjani();
         $job_education = $this->postModel->filterImisebenziByMfundo();
@@ -94,10 +94,10 @@ class Jobs extends Controller
        
        //Get job_location for title tag
        foreach ($imisebenzi as $ndawo) {
-           $job_location = $ndawo->ndawoni;
+           $job_location = $ndawo->job_location;
        }
        
-       //Get ndawoni slug
+       //Get job_location slug
        foreach ($imisebenzi as $ndawo_slug) {
            $job_location_slug = $ndawo_slug->job_location_slug;
        }
@@ -121,9 +121,9 @@ class Jobs extends Controller
             'page_type' => 'website',
             'page_url' => URLROOT . "/" . $_GET['url'],
             'page_title' => 'Imisebenzi ese ' . $job_location . ", Eastern Cape",
-            'ndawoni' => $ndawoni,
+            'job_location' => $job_location,
             'job_location_slug' => $job_location_slug,
-            'category' => $category,
+            'category' => $job_category,
             'experience' => $experience,
             'job_education' => $job_education,
             'onjani' => $onjani,
@@ -139,7 +139,7 @@ class Jobs extends Controller
         }
         
         foreach ($data['imisebenzi'] as $area) {
-            $data['area'] = $area->ndawoni;
+            $data['area'] = $area->job_location;
         }
         
         $data['total_pages'] = ceil(count($data['imisebenzi'])/$data['results_per_page']);
@@ -148,7 +148,7 @@ class Jobs extends Controller
         $imisebenzi = $this->postModel->paginateImisebenziNgeNdawo($data);
         $data['imisebenzi'] = $imisebenzi;
         
-        $this->view('easternCapeJobs/ndawoni', $data);
+        $this->view('easternCapeJobs/job_location', $data);
     }
 
     /********************************************************************
@@ -160,8 +160,8 @@ class Jobs extends Controller
     {
          
         //Get imisebenzi
-        $ndawoni = $this->postModel->filterImisebenziByLocation();
-        $category = $this->postModel->filterImisebenziByType();
+        $job_location = $this->postModel->filterImisebenziByLocation();
+        $job_category = $this->postModel->filterImisebenziByType();
         $experience = $this->postModel->filterImisebenziByExperience();
         $job_education = $this->postModel->filterImisebenziByMfundo();
         $onjani_umsebenzi = $this->postModel->getImisebenziByOnjani($job_type);
@@ -202,8 +202,8 @@ class Jobs extends Controller
             'page_type' => 'website',
             'page_url' => URLROOT . "/" . $_GET['url'],
             'page_title' => 'Imisebenzi ye ' .  $type,
-            'ndawoni' => $ndawoni,
-            'category' => $category,
+            'job_location' => $job_location,
+            'category' => $job_category,
             'experience' => $experience,
             'job_education' => $job_education,
             'onjani' => $onjani,
@@ -245,8 +245,8 @@ class Jobs extends Controller
         $imisebenzi_job_education = $this->postModel->getImisebenziByMfundo($education);
         $filter_job_education = $this->postModel->filterImisebenziByMfundo();
         $job_education = $this->postModel->filterImisebenziByMfundo();
-        $ndawoni = $this->postModel->filterImisebenziByLocation();
-        $category = $this->postModel->filterImisebenziByType();
+        $job_location = $this->postModel->filterImisebenziByLocation();
+        $job_category = $this->postModel->filterImisebenziByType();
         $experience = $this->postModel->filterImisebenziByExperience();
         $provinces = $this->postModel->getProvinces();
         
@@ -285,8 +285,8 @@ class Jobs extends Controller
             'page_type' => 'website',
             'page_url' => URLROOT . "/" . $_GET['url'],
             'page_title' => 'Imisebenzi efuna i-' . $education,
-            'ndawoni' => $ndawoni,
-            'category' => $category,
+            'job_location' => $job_location,
+            'category' => $job_category,
             'experience' => $experience,
             'imisebenzi' => $imisebenzi_job_education,
             'job_education_jobs_filtered' => $filter_job_education,
@@ -329,8 +329,8 @@ class Jobs extends Controller
         $onjani = $this->postModel->filterImisebenziByOnjani();
         $filter_job_education = $this->postModel->filterImisebenziByMfundo();
         $job_education = $this->postModel->filterImisebenziByMfundo();
-        $ndawoni = $this->postModel->filterImisebenziByLocation();
-        $category = $this->postModel->filterImisebenziByType();
+        $job_location = $this->postModel->filterImisebenziByLocation();
+        $job_category = $this->postModel->filterImisebenziByType();
         $experiences = $this->postModel->filterImisebenziByExperience();
         $imisebenzi_experience = $this->postModel->getImisebenziByExperience($exp);
         $provinces = $this->postModel->getProvinces();
@@ -374,8 +374,8 @@ class Jobs extends Controller
             'page_type' => 'website',
             'page_url' => URLROOT . "/" . $_GET['url'],
             'page_title' => $experience_years,
-            'ndawoni' => $ndawoni,
-            'category' => $category,
+            'job_location' => $job_location,
+            'category' => $job_category,
             'experience' => $experiences,
             'experience_slug' => $experience_slug,
             'imisebenzi' => $imisebenzi_experience,
@@ -418,8 +418,8 @@ class Jobs extends Controller
         $onjani = $this->postModel->filterImisebenziByOnjani();
         $filter_job_education = $this->postModel->filterImisebenziByMfundo();
         $job_education = $this->postModel->filterImisebenziByMfundo();
-        $ndawoni = $this->postModel->filterImisebenziByLocation();
-        $category = $this->postModel->filterImisebenziByType();
+        $job_location = $this->postModel->filterImisebenziByLocation();
+        $job_category = $this->postModel->filterImisebenziByType();
         $experiences = $this->postModel->filterImisebenziByExperience();
         $imisebenzi_category = $this->postModel->getImisebenziByType($type);
         $provinces = $this->postModel->getProvinces();
@@ -432,10 +432,10 @@ class Jobs extends Controller
        
        //Get job function for title tag
        foreach ($imisebenzi_category as $msebenzi_wantoni) {
-           if ($msebenzi_wantoni->category == "Government") {
+           if ($msebenzi_wantoni->job_category == "Government") {
                $function = "Imisebenzi yakwa government";
            } else {
-             $function = "Imisebenzi ye " . $msebenzi_wantoni->category;   
+             $function = "Imisebenzi ye " . $msebenzi_wantoni->job_category;   
            }
        }
        
@@ -463,8 +463,8 @@ class Jobs extends Controller
             'page_type' => 'website',
             'page_url' => URLROOT . "/" . $_GET['url'],
             'page_title' => $function,
-            'ndawoni' => $ndawoni,
-            'category' => $category,
+            'job_location' => $job_location,
+            'category' => $job_category,
             'job_category_slug' => $function_slug,
             'experience' => $experiences,
             'imisebenzi' => $imisebenzi_category,
@@ -482,7 +482,7 @@ class Jobs extends Controller
         }
         
         foreach ($data['imisebenzi'] as $umsebenzi) {
-            $data['type'] = $umsebenzi->category;
+            $data['type'] = $umsebenzi->job_category;
         }
         
         $data['total_pages'] = ceil(count($data['imisebenzi'])/$data['results_per_page']);
@@ -504,12 +504,12 @@ class Jobs extends Controller
             $data = [
                 'id' => $id,
                 'job_id' => $umsebenzi->id,
-                'gama_le_company' => filter_input(INPUT_POST, 'igama_le_company', FILTER_SANITIZE_STRING),
+                'job_employer' => filter_input(INPUT_POST, 'ijob_employer', FILTER_SANITIZE_STRING),
                 'user_id' => $_SESSION['user_id'],
                 'province' => filter_input(INPUT_POST, 'job_province', FILTER_SANITIZE_STRING),
-                'ndawoni' => filter_input(INPUT_POST, 'ndawoni_pha', FILTER_SANITIZE_STRING),
+                'job_location' => filter_input(INPUT_POST, 'job_location_pha', FILTER_SANITIZE_STRING),
                 'job_title' => filter_input(INPUT_POST, 'job_title', FILTER_SANITIZE_STRING),
-                'label' => filter_input(INPUT_POST, 'igama_le_company', FILTER_SANITIZE_STRING) . " " . filter_input(INPUT_POST, 'job_title', FILTER_SANITIZE_STRING) . " " . filter_input(INPUT_POST, 'ndawoni_pha', FILTER_SANITIZE_STRING),
+                'label' => filter_input(INPUT_POST, 'ijob_employer', FILTER_SANITIZE_STRING) . " " . filter_input(INPUT_POST, 'job_title', FILTER_SANITIZE_STRING) . " " . filter_input(INPUT_POST, 'job_location_pha', FILTER_SANITIZE_STRING),
                 'job_closing_date' => filter_input(INPUT_POST, 'job_closing_date', FILTER_SANITIZE_STRING),
                 'job_type' => filter_input(INPUT_POST, 'job_type', FILTER_SANITIZE_STRING),
                 'job_education' => filter_input(INPUT_POST, 'job_education', FILTER_SANITIZE_STRING),
@@ -536,7 +536,7 @@ class Jobs extends Controller
                 'job_education_slug' => '',
                 'job_category_slug' => '',
                 'updated_at' => date('Y-m-d'),
-                'gama_le_company_err' => '',
+                'job_employer_err' => '',
                 'province_err' => '',
                 'job_location_err' => '',
                 'job_title_err' => '',
@@ -551,8 +551,8 @@ class Jobs extends Controller
                 'job_email_application_err' => '',
             ];
             
-            //Create slug for filtering by job_location/ndawoni
-            $data['job_location_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['ndawoni']));
+            //Create slug for filtering by job_location/job_location
+            $data['job_location_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['job_location']));
             
             //Create slug for filtering by job_education
             $data['job_education_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['job_education']));
@@ -567,13 +567,13 @@ class Jobs extends Controller
             $data['job_category_slug'] = strtolower(preg_replace($data['pattern'], '-', $data['category']));
             
             //Validate data
-            if (empty($data['gama_le_company'])) {
-                $data['gama_le_company_err'] = 'Kufuneka ufake igama le company.';
+            if (empty($data['job_employer'])) {
+                $data['job_employer_err'] = 'Kufuneka ufake igama le company.';
             }
             if ($data['province'] == 'Select') {
                 $data['province_err'] = 'Kufuneka ukhethe i-province';
             }
-            if (empty($data['ndawoni'])) {
+            if (empty($data['job_location'])) {
                 $data['job_location_err'] = 'Ndawoni pha?';
             }
             if (empty($data['job_title'])) {
@@ -621,13 +621,13 @@ class Jobs extends Controller
             }
 
             //Make sure there no errors
-            if (empty($data['gama_le_company_err']) && empty($data['province_err']) && empty($data['job_location_err']) && empty($data['job_title_err']) && empty($data['job_type_err']) && empty($dta['job_education_err']) && empty($data['experience_err']) && empty($data['job_category_err']) && empty($data['job_requirements_err']) && empty($data['job_responsibilities_err']) && empty($data['application_mode_err'])) {
+            if (empty($data['job_employer_err']) && empty($data['province_err']) && empty($data['job_location_err']) && empty($data['job_title_err']) && empty($data['job_type_err']) && empty($dta['job_education_err']) && empty($data['experience_err']) && empty($data['job_category_err']) && empty($data['job_requirements_err']) && empty($data['job_responsibilities_err']) && empty($data['application_mode_err'])) {
                 
                 //Validate image type
                 move_uploaded_file($data['tmp_name'], $data['dir'] . $data['image_name']);
                     
                 //Create temp slug
-                $data['slug'] = createSlug($data['gama_le_company'] . '-' . $data['job_title'] . '-' . $data['ndawoni']);
+                $data['slug'] = createSlug($data['job_employer'] . '-' . $data['job_title'] . '-' . $data['job_location']);
                 
                 $results = $this->postModel->checkSlug($data);
                 
@@ -664,15 +664,15 @@ class Jobs extends Controller
                 'page_title' => 'Edit ' . $umsebenzi->label,
                 'id' => $id,
                 'job_id' => $umsebenzi->id,
-                'gama_le_company' => $umsebenzi->gama_le_company,
+                'job_employer' => $umsebenzi->job_employer,
                 'province' => $umsebenzi->province,
-                'ndawoni' => $umsebenzi->ndawoni,
+                'job_location' => $umsebenzi->job_location,
                 'job_title' => $umsebenzi->job_title,
                 'job_closing_date' => $umsebenzi->job_closing_date,
                 'job_type' => $umsebenzi->job_type,
                 'job_education' => $umsebenzi->job_education,
                 'experience' => $umsebenzi->experience,
-                'category' => $umsebenzi->category,
+                'category' => $umsebenzi->job_category,
                 'purpose' => $umsebenzi->purpose,
                 'job_requirements' => $umsebenzi->job_requirements,
                 'skills_competencies' => $umsebenzi->skills_competencies,
@@ -701,11 +701,11 @@ class Jobs extends Controller
             'page_title' => $umsebenzi->label,
             'umsebenzi' => $umsebenzi,
             'slug' => $umsebenzi->slug,
-            'gama_le_company' => $umsebenzi->gama_le_company,
+            'job_employer' => $umsebenzi->job_employer,
             'experience' => $umsebenzi->experience,
-            'category' => $umsebenzi->category,
+            'category' => $umsebenzi->job_category,
             'job_type' => $umsebenzi->job_type,
-            'ndawoni' => $umsebenzi->ndawoni,
+            'job_location' => $umsebenzi->job_location,
             'job_education' => $umsebenzi->job_education,
             'jb_specification' => $umsebenzi->jb_specification,
             'today' => time(),

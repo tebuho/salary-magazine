@@ -16,11 +16,11 @@
             //     $country = trim($item->country);
             //     $province = trim($item->province);
             //     $city = trim($item->city);
-            //     $category = trim($item->category);
+            //     $job_category = trim($item->job_category);
             //     $onjani = trim($item->classification_type);
             //     $url = trim($item->url);
             //     $description = trim($item->description);
-            //     $category = trim($item->category);
+            //     $job_category = trim($item->job_category);
             //     $job_type = trim($item->jobtype);
     
             //     //Determine closing date after 7 days
@@ -38,7 +38,7 @@
             //     }
             //     if ($url == "https://unitrans.erecruit.co/candidateapp/Jobs/View/UNI210622-1") {
             //         $city = "Mobeni, Durban";
-            //         $category = "General Work";
+            //         $job_category = "General Work";
             //     }
             //     if (isset($item->state)) {
             //         $province = trim($item->state);
@@ -49,17 +49,17 @@
             //     }
                 
             //     if ($title == "ASP.NET Developer") {
-            //         $category = "IT";
+            //         $job_category = "IT";
             //     } if ($title == "Pharmacy Manager - Amalinda") {
             //         $title = "Pharmacy Manager";
             //         $city = "Amalinda, East London";
-            //         $category = "Pharmacy";
+            //         $job_category = "Pharmacy";
             //     }
 
             //     if ($title == "Recruitment Officer ( Temporary position )") {
             //         $title = "Recruitment Officer (Temporary position)";
             //         $onjani = "Contract";
-            //         $category = "Human Resources";
+            //         $job_category = "Human Resources";
 
             //     }
                 
@@ -68,14 +68,14 @@
             //     ) {
             //         $city = "Eerste River, Cape Town";
             //         $title = "Pharmacist Assistant (Post-Basic)";
-            //         $category = "Pharmacy";
+            //         $job_category = "Pharmacy";
             //     }
             //     if ($title == "Pharmacist's Assistant (Post-Basic) - Medirite Zevenwacht"
             //         || $city == "Kuils River"
             //     ) {
             //         $city = "Kuils River, Cape Town";
             //         $title = "Pharmacist Assistant (Post-Basic)";
-            //         $category = "Pharmacy";
+            //         $job_category = "Pharmacy";
             //     }
             //     if ($company == "TB HIV Care" && $city == "Head Office") {
             //         $city = "Adderley Street, Cape Town";
@@ -85,8 +85,8 @@
             //         $city = "Fisantekraal, Cape Town";
             //     }
                 
-            //     if ($category == "TEMPLATE PLACEHOLDER") {
-            //         $category = "Logistics";
+            //     if ($job_category == "TEMPLATE PLACEHOLDER") {
+            //         $job_category = "Logistics";
             //     }
 
             //     if ($city == "OR Tambo" || $city == "O.R. Tambo") {
@@ -154,7 +154,7 @@
             //     ) {
             //         $city = "Retreat, Cape Town";
             //         $title = "Customer Advisor";
-            //         $category = "Call Centre";
+            //         $job_category = "Call Centre";
             //     }
 
             //     if ($city == "Durban - Queen Nandi Drive") {
@@ -191,7 +191,7 @@
             //         "job_type" => filter_var($onjani, FILTER_SANITIZE_STRING),
             //         "job_education" => null,
             //         "experience" => filter_var($title, FILTER_SANITIZE_STRING),
-            //         "category" => filter_var($category, FILTER_SANITIZE_STRING),
+            //         "category" => filter_var($job_category, FILTER_SANITIZE_STRING),
             //         "job_employer_slug" => "",
             //         "job_requirements" => "",
             //         "job_purpose" => "",

@@ -2,8 +2,8 @@
 
     //Get imisebenzi
     $imisebenzi = $this->postModel->getImisebenziByLocation($job_location);
-    $ndawoni = $this->postModel->filterImisebenziByLocation();
-    $category = $this->postModel->filterImisebenziByType();
+    $job_location = $this->postModel->filterImisebenziByLocation();
+    $job_category = $this->postModel->filterImisebenziByType();
     $experience = $this->postModel->filterImisebenziByExperience();
     $onjani = $this->postModel->filterImisebenziByOnjani();
     $job_education = $this->postModel->filterImisebenziByMfundo();
@@ -11,10 +11,10 @@
     
     //Get job_location for title tag
     foreach ($imisebenzi as $ndawo) {
-        $job_location = $ndawo->ndawoni;
+        $job_location = $ndawo->job_location;
     }
     
-    //Get ndawoni slug
+    //Get job_location slug
     foreach ($imisebenzi as $ndawo_slug) {
         $job_location_slug = $ndawo_slug->job_location_slug;
     }
@@ -38,9 +38,9 @@
         'page_type' => 'website',
         'page_url' => URLROOT . "/" . $_GET['url'],
         'page_title' => 'Imisebenzi ese ' . $job_location,
-        'ndawoni' => $ndawoni,
+        'job_location' => $job_location,
         'job_location_slug' => $job_location_slug,
-        'category' => $category,
+        'category' => $job_category,
         'experience' => $experience,
         'job_education' => $job_education,
         'onjani' => $onjani,
@@ -56,7 +56,7 @@
     }
     
     foreach ($data['imisebenzi'] as $area) {
-        $data['area'] = $area->ndawoni;
+        $data['area'] = $area->job_location;
     }
     
     $data['total_pages'] = ceil(count($data['imisebenzi'])/$data['results_per_page']);

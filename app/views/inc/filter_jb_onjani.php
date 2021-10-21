@@ -1,8 +1,8 @@
 <?php
          
     //Get imisebenzi
-    $ndawoni = $this->postModel->filterImisebenziByLocation();
-    $category = $this->postModel->filterImisebenziByType();
+    $job_location = $this->postModel->filterImisebenziByLocation();
+    $job_category = $this->postModel->filterImisebenziByType();
     $experience = $this->postModel->filterImisebenziByExperience();
     $job_education = $this->postModel->filterImisebenziByMfundo();
     $onjani_umsebenzi = $this->postModel->getImisebenziByOnjani($job_type);
@@ -37,8 +37,8 @@
         'page_type' => 'website',
         'page_url' => URLROOT . "/" . $_GET['url'],
         'page_title' => 'Imisebenzi ye ' .  $type,
-        'ndawoni' => $ndawoni,
-        'category' => $category,
+        'job_location' => $job_location,
+        'category' => $job_category,
         'experience' => $experience,
         'job_education' => $job_education,
         'onjani' => $onjani,

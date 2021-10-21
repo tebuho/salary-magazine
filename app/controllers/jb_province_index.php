@@ -2,7 +2,7 @@
     <div class="job-meta">
         <div class="job-meta_tags">
             <span class="badge badge-light"><?php echo $data['imisebenzi'][$i]->job_type; ?></span>
-            <span class="badge badge-light"><?php echo $data['imisebenzi'][$i]->category; ?></span>
+            <span class="badge badge-light"><?php echo $data['imisebenzi'][$i]->job_category; ?></span>
         </div>
         <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "Admin" || isset($_SESSION['user_id']) && $data['imisebenzi'][$i]->user_id == $_SESSION['user_id']) : ?>
             <div class="follow">
@@ -15,7 +15,7 @@
             <a href="<?php echo URLROOT; ?>/<?php echo $province_slug; ?>/umsebenzi/<?php echo $data['imisebenzi'][$i]->slug; ?>" class="umsebenzi-card__title">
                 <h6><?php echo $data['imisebenzi'][$i]->job_title; ?> </h6>
             </a>
-            <p><?php echo $data['imisebenzi'][$i]->gama_le_company; ?> - <?php echo $data['imisebenzi'][$i]->ndawoni; ?></p>
+            <p><?php echo $data['imisebenzi'][$i]->job_employer; ?> - <?php echo $data['imisebenzi'][$i]->job_location; ?></p>
         </div>
     </div>
 </div>

@@ -8,9 +8,9 @@
             <h3 class="label">Ndawoni</h3>
         </div>
         <div class="province-container filter-container">
-            <ul class="province filter jb-recommend" id="ndawoni">
-                <?php foreach ($data['ndawoni'] as $job_location) : ?>
-                <li class="p-0"><a href="<?php echo URLROOT . '/' .$province_slug . '/ndawoni/' . $job_location->job_location_slug . "/"; ?>"><?php echo $job_location->ndawoni; ?></a></li>
+            <ul class="province filter jb-recommend" id="job_location">
+                <?php foreach ($data['job_location'] as $job_location) : ?>
+                <li class="p-0"><a href="<?php echo URLROOT . '/' .$province_slug . '/job_location/' . $job_location->job_location_slug . "/"; ?>"><?php echo $job_location->job_location; ?></a></li>
                 <?php endforeach; ?>
             </ul>
         </div>
@@ -62,8 +62,8 @@
         </div>
         <div class="province-container filter-container">
             <ul class="province filter multi-collapse collapse" id="owantoni">
-                <?php foreach ($data['category'] as $category) : ?>
-                <li><a href="<?php echo URLROOT . '/' .$province_slug . '/category/' . $category->job_category_slug . "/"; ?>"><?php echo $category->category; ?> (<?php echo $category->count; ?>)</a></li>
+                <?php foreach ($data['category'] as $job_category) : ?>
+                <li><a href="<?php echo URLROOT . '/' .$province_slug . '/category/' . $job_category->job_category_slug . "/"; ?>"><?php echo $job_category->job_category; ?> (<?php echo $job_category->count; ?>)</a></li>
                 <?php endforeach; ?>
             </ul>
         </div>
